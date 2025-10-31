@@ -90,7 +90,7 @@ export default function Step1Slide1({ onNext, onWebsiteSubmit }) {
 
   useEffect(() => {
     recomputePanelHeight();
-    }, [showInput, currentState, messages.length]);
+  }, [showInput, currentState, messages.length]);
 
   /* ---------------- Auto-scroll ---------------- */
   useEffect(() => {
@@ -126,8 +126,6 @@ export default function Step1Slide1({ onNext, onWebsiteSubmit }) {
       );
     } catch {}
     setSite("");
-    // Hide input immediately and show Next button
-    setShowInput(false);
   };
 
   const handleNext = () => onNext?.();
@@ -137,6 +135,10 @@ export default function Step1Slide1({ onNext, onWebsiteSubmit }) {
     setError("");
     setSite("");
     setShowInput(true);
+  };
+  const handleNo = () => {
+    setCurrentState("confirmed");
+    setShowInput(false);
   };
 
   return (
@@ -221,7 +223,7 @@ export default function Step1Slide1({ onNext, onWebsiteSubmit }) {
                 </p>
                 <p className="text-[11px] sm:text-[12px] md:text-[13px] text-gray-400 mt-2 sm:mt-3">
                   <span className="font-semibold text-gray-700">
-                    For more information please Go to INFO tab
+                    For more information please go to INFO tab
                   </span>
                 </p>
               </div>
@@ -236,20 +238,22 @@ export default function Step1Slide1({ onNext, onWebsiteSubmit }) {
 
               {currentState === "submitted" && (
                 <div className="w-full">
-                  {/* Info Tab on a new line */}
                   <h3 className="text-[15px] sm:text-[16px] md:text-[18px] font-bold text-gray-900 mb-1.5 sm:mb-2.5">
-                    Here’s your site report — take a quick look on
-                    <br /> the Info Tab.
+                    Here’s your site report — take a quick look on the Info Tab.
                   </h3>
-                  {/* Keep the helper copy */}
                   <p className="text-[12px] sm:text-[13px] md:text-[15px] text-gray-600 mt-1.5">
                     If not, you can also try a different URL?
                   </p>
-                  {/* Single grey action */}
-                  <div className="mt-4 sm:mt-5 text-[12px] sm:text-[13px]">
+                  <div className="flex items-center gap-6 sm:gap-10 mt-4 sm:mt-5 text-[12px] sm:text-[13px]">
+                    <button
+                      onClick={handleNo}
+                      className="text-gray-700 hover:text-gray-900 font-medium"
+                    >
+                      NO
+                    </button>
                     <button
                       onClick={handleTryDifferent}
-                      className="text-gray-500 hover:text-gray-700 font-semibold"
+                      className="text-[#d45427] hover:brightness-110 font-medium"
                     >
                       YES, Try different URL!
                     </button>

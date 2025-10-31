@@ -167,6 +167,17 @@ export default function Home() {
     }
   }, [currentStep]);
 
+  // --- NEW: listen for "wizard:navigate" from Step5Slide2 "Edit …" buttons
+  useEffect(() => {
+    const onWizardNavigate = (e) => {
+      const step = e?.detail?.step ?? e?.step ?? null; // supports CustomEvent or plain object
+      if (!step) return;
+      setCurrentStep(step);
+    };
+    window.addEventListener("wizard:navigate", onWizardNavigate);
+    return () => window.removeEventListener("wizard:navigate", onWizardNavigate);
+  }, []);
+
   const handleNextStep = () => {
     if (currentStep === 5) {
       setCurrentStep("5b");

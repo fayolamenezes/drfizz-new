@@ -17,6 +17,7 @@ export default function StepSlide3({ onNext, onBack, onLanguageLocationSubmit })
   const panelRef = useRef(null);
   const scrollRef = useRef(null);
   const bottomBarRef = useRef(null);
+  const tailRef = useRef(null); // <-- anchor for auto-scroll-to-bottom
   const [panelHeight, setPanelHeight] = useState(null);
 
   // submit guard
@@ -95,6 +96,23 @@ export default function StepSlide3({ onNext, onBack, onLanguageLocationSubmit })
       onLanguageLocationSubmit?.(payload);
     }
   }, [selectedLanguage, selectedCountry, selectedState, selectedCity, onLanguageLocationSubmit]);
+
+  /* ---------------- Auto-scroll to bottom (matches Step1/2 pattern) ---------------- */
+  useEffect(() => {
+    if (tailRef.current) {
+      // wait a frame so new DOM has rendered/measured before scrolling
+      requestAnimationFrame(() => {
+        tailRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+      });
+    }
+  }, [
+    selectedLanguage,
+    selectedCountry,
+    selectedState,
+    selectedCity,
+    openDropdown,         // optional: follow dropdown open/close
+    selectionsComplete,   // ensures we scroll when the summary appears
+  ]);
 
   /* ---------------- Handlers ---------------- */
   const handleNext = () => onNext?.();
@@ -361,6 +379,7 @@ export default function StepSlide3({ onNext, onBack, onLanguageLocationSubmit })
               )}
 
               <div className="h-2" />
+              <div ref={tailRef} /> {/* <-- tail element to anchor auto-scroll */}
             </div>
           </div>
         </div>

@@ -1,4 +1,3 @@
-// /mnt/data/StepSlide4.js
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
@@ -23,6 +22,7 @@ export default function StepSlide4({ onNext, onBack, onKeywordSubmit }) {
   const panelRef = useRef(null);
   const scrollRef = useRef(null);
   const bottomBarRef = useRef(null);
+  const tailRef = useRef(null); // <-- anchor for auto-scroll-to-bottom
   const [panelHeight, setPanelHeight] = useState(null);
 
   const lastSubmittedData = useRef(null);
@@ -237,12 +237,20 @@ export default function StepSlide4({ onNext, onBack, onKeywordSubmit }) {
     }
   }, [selectedKeywords, onKeywordSubmit]);
 
-  // scroll to top when summary appears
+  /* ---------------- Auto-scroll to bottom (align with StepSlide2/3 behavior) ---------------- */
   useEffect(() => {
-    if (scrollRef.current && showSummary) {
-      scrollRef.current.scrollTo({ top: 0, behavior: "smooth" });
+    if (tailRef.current) {
+      // wait a frame so the new DOM (summary/chips) has rendered before scrolling
+      requestAnimationFrame(() => {
+        tailRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+      });
     }
-  }, [showSummary]);
+  }, [
+    showSummary,                // scroll when the summary appears
+    selectedKeywords.length,    // scroll as user adds/removes keywords
+    showInlineMoreInput,        // scroll when inline input opens/closes
+    isLoadingKeywords,          // optional: scroll after suggestions finish loading
+  ]);
 
   /* ---------------- UI ---------------- */
   return (
@@ -344,7 +352,6 @@ export default function StepSlide4({ onNext, onBack, onKeywordSubmit }) {
                               ? "bg-white text-[var(--text)] border-[#d45427]"
                               : "bg-[#F7F7F7] text-gray-500 border-[var(--border)] hover:bg-[#EDEDED]"
                           }`}
-
                         >
                           <span>{keyword}</span>
 
@@ -375,11 +382,11 @@ export default function StepSlide4({ onNext, onBack, onKeywordSubmit }) {
               {/* System message / CTA (after at least one selection) — updated copy */}
               {showSummary && (
                 <div className="max-w-[640px] text-left self-start mt-5 sm:mt-6">
-                <h3 className="text-[15px] sm:text-[16px] md:text-[18px] font-bold text-[var(--text)] mb-2.5 sm:mb-3">
-                  Here’s your site report — take a quick look on
-                  <br />
-                  the Info Tab.
-                </h3>
+                  <h3 className="text-[15px] sm:text-[16px] md:text-[18px] font-bold text-[var(--text)] mb-2.5 sm:mb-3">
+                    Here’s your site report — take a quick look on
+                    <br />
+                    the Info Tab.
+                  </h3>
                   <p className="text-[12px] sm:text-[13px] md:text-[15px] text-[var(--muted)]">
                     You can always view more information in Info Tab
                   </p>
@@ -387,6 +394,7 @@ export default function StepSlide4({ onNext, onBack, onKeywordSubmit }) {
               )}
 
               <div className="h-2" />
+              <div ref={tailRef} /> {/* <-- tail element to anchor auto-scroll */}
             </div>
           </div>
         </div>

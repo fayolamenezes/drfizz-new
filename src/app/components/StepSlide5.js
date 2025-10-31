@@ -27,6 +27,7 @@ export default function StepSlide5({ onNext, onBack, onCompetitorSubmit }) {
   const panelRef = useRef(null);
   const scrollRef = useRef(null);
   const bottomBarRef = useRef(null);
+  const tailRef = useRef(null); // <-- anchor for auto-scroll-to-bottom
   const [panelHeight, setPanelHeight] = useState(null);
 
   const lastSubmittedData = useRef(null);
@@ -248,12 +249,22 @@ export default function StepSlide5({ onNext, onBack, onCompetitorSubmit }) {
     }
   }, [selectedBusinessCompetitors, selectedSearchCompetitors, onCompetitorSubmit]);
 
-  // Scroll to top when summary shows
+  /* ---------------- Auto-scroll to bottom (align with StepSlide3/4 pattern) ---------------- */
   useEffect(() => {
-    if (scrollRef.current && showSummary) {
-      scrollRef.current.scrollTo({ top: 0, behavior: "smooth" });
+    if (tailRef.current) {
+      // wait a frame so any new DOM (chips/summary/inputs) is rendered before scrolling
+      requestAnimationFrame(() => {
+        tailRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+      });
     }
-  }, [showSummary]);
+  }, [
+    showSummary,                             // when the summary appears
+    selectedBusinessCompetitors.length,      // as chips are added/removed
+    selectedSearchCompetitors.length,
+    addingBusiness,                          // when inline inputs open/close
+    addingSearch,
+    isLoading,                               // after suggestions finish loading
+  ]);
 
   /* ---------------- Reusable chip renderer ---------------- */
   const Chip = ({ label, isSelected, onClick, disabled }) => (
@@ -462,6 +473,7 @@ export default function StepSlide5({ onNext, onBack, onCompetitorSubmit }) {
               )}
 
               <div className="h-2" />
+              <div ref={tailRef} /> {/* <-- tail element to anchor auto-scroll */}
             </div>
           </div>
         </div>

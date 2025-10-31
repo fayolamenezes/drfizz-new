@@ -19,6 +19,7 @@ export default function StepSlide2({ onNext, onBack, onBusinessDataSubmit }) {
   const panelRef = useRef(null);
   const scrollRef = useRef(null);
   const bottomBarRef = useRef(null);
+  const tailRef = useRef(null); // <-- anchor for auto-scroll-to-bottom
   const [panelHeight, setPanelHeight] = useState(null);
 
   // remember last submitted payload
@@ -87,7 +88,11 @@ export default function StepSlide2({ onNext, onBack, onBusinessDataSubmit }) {
 
       if (industryValue && categoryValue) {
         setShowSummary(true);
-        const newData = { industry: industryValue, offering: selectedOffering, category: categoryValue };
+        const newData = {
+          industry: industryValue,
+          offering: selectedOffering,
+          category: categoryValue,
+        };
         const dataString = JSON.stringify(newData);
         const lastDataString = JSON.stringify(lastSubmittedData.current);
         if (dataString !== lastDataString && onBusinessDataSubmit) {
@@ -109,17 +114,30 @@ export default function StepSlide2({ onNext, onBack, onBusinessDataSubmit }) {
     onBusinessDataSubmit,
   ]);
 
-  // Auto scroll to top when summary appears
+  /* ---------------- Auto-scroll to bottom (matches Step1Slide1 intent) ---------------- */
   useEffect(() => {
-    if (scrollRef.current && showSummary) {
-      scrollRef.current.scrollTo({ top: 0, behavior: "smooth" });
+    // Always scroll to the tail after content/summary changes.
+    if (tailRef.current) {
+      // wait one frame so the DOM has measured/rendered the new content
+      requestAnimationFrame(() => {
+        tailRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+      });
     }
-  }, [showSummary]);
+  }, [
+    selectedIndustry,
+    selectedOffering,
+    selectedCategory,
+    customIndustry,
+    customCategory,
+    showSummary,
+    openDropdown, // also scroll as dropdowns open/close (optional, feels nice)
+  ]);
 
   /* ---------------- Handlers ---------------- */
   const handleNext = () => onNext?.();
   const handleBack = () => onBack?.();
-  const handleDropdownToggle = (name) => setOpenDropdown((prev) => (prev === name ? null : name));
+  const handleDropdownToggle = (name) =>
+    setOpenDropdown((prev) => (prev === name ? null : name));
 
   const handleIndustrySelect = (industry) => {
     setSelectedIndustry(industry);
@@ -165,16 +183,27 @@ export default function StepSlide2({ onNext, onBack, onBusinessDataSubmit }) {
         <div
           ref={panelRef}
           className="mx-auto w-full max-w-[1120px] rounded-2xl bg-transparent box-border"
-          style={{ padding: "0px 24px", height: panelHeight ? `${panelHeight}px` : "auto" }}
+          style={{
+            padding: "0px 24px",
+            height: panelHeight ? `${panelHeight}px` : "auto",
+          }}
         >
           {/* Hide scrollbars for inner area */}
           <style jsx>{`
-            .inner-scroll { scrollbar-width: none; -ms-overflow-style: none; }
-            .inner-scroll::-webkit-scrollbar { display: none; }
+            .inner-scroll {
+              scrollbar-width: none;
+              -ms-overflow-style: none;
+            }
+            .inner-scroll::-webkit-scrollbar {
+              display: none;
+            }
           `}</style>
 
           {/* Inner scrollable area */}
-          <div ref={scrollRef} className="inner-scroll h-full w-full overflow-y-auto">
+          <div
+            ref={scrollRef}
+            className="inner-scroll h-full w-full overflow-y-auto"
+          >
             <div className="flex flex-col items-start text-start gap-5 sm:gap-6 md:gap-8 max-w-[820px] mx-auto">
               {/* Step label */}
               <div className="text-[11px] sm:text-[12px] md:text-[13px] text-[var(--muted)] font-medium">
@@ -188,7 +217,8 @@ export default function StepSlide2({ onNext, onBack, onBusinessDataSubmit }) {
                   Tell us about your business
                 </h1>
                 <p className="text-[13px] sm:text-[14px] md:text-[15px] text-[var(--muted)] leading-relaxed">
-                  Pick the closest category that best describes your business. This tailors benchmarks and keyword ideas.
+                  Pick the closest category that best describes your business.
+                  This tailors benchmarks and keyword ideas.
                 </p>
               </div>
 
@@ -198,14 +228,19 @@ export default function StepSlide2({ onNext, onBack, onBusinessDataSubmit }) {
                   <div className="space-y-2 text-[13px] sm:text-[14px] md:text-[15px]">
                     <div className="text-[var(--text)]">
                       <span className="font-semibold">Industry Sector:</span>{" "}
-                      {selectedIndustry === "Others" ? customIndustry : selectedIndustry}
+                      {selectedIndustry === "Others"
+                        ? customIndustry
+                        : selectedIndustry}
                     </div>
                     <div className="text-[var(--text)]">
-                      <span className="font-semibold">Offering Type:</span> {selectedOffering}
+                      <span className="font-semibold">Offering Type:</span>{" "}
+                      {selectedOffering}
                     </div>
                     <div className="text-[var(--text)]">
                       <span className="font-semibold">Category:</span>{" "}
-                      {selectedCategory === "Others" ? customCategory : selectedCategory}
+                      {selectedCategory === "Others"
+                        ? customCategory
+                        : selectedCategory}
                     </div>
                   </div>
                 </div>
@@ -224,12 +259,20 @@ export default function StepSlide2({ onNext, onBack, onBusinessDataSubmit }) {
                       type="button"
                       className="w-full bg-[var(--input)] border border-[var(--border)] rounded-lg px-4 py-2.5 sm:py-3 text-left flex items-center justify-between hover:border-[var(--border)] focus:outline-none focus:border-[var(--border)] transition-colors"
                     >
-                      <span className={`${selectedIndustry ? "text-[var(--text)]" : "text-[var(--muted)]"} text-[12px] sm:text-[13px] md:text-[14px]`}>
+                      <span
+                        className={`${
+                          selectedIndustry
+                            ? "text-[var(--text)]"
+                            : "text-[var(--muted)]"
+                        } text-[12px] sm:text-[13px] md:text-[14px]`}
+                      >
                         {selectedIndustry || "Industry Sector"}
                       </span>
                       <ChevronDown
                         size={20}
-                        className={`transition-transform ${openDropdown === "industry" ? "rotate-180" : ""}`}
+                        className={`transition-transform ${
+                          openDropdown === "industry" ? "rotate-180" : ""
+                        }`}
                       />
                     </button>
 
@@ -268,7 +311,11 @@ export default function StepSlide2({ onNext, onBack, onBusinessDataSubmit }) {
                     style={{ zIndex: openDropdown === "offering" ? 1000 : 1 }}
                   >
                     <button
-                      onClick={() => (selectedIndustry ? handleDropdownToggle("offering") : null)}
+                      onClick={() =>
+                        selectedIndustry
+                          ? handleDropdownToggle("offering")
+                          : null
+                      }
                       disabled={!selectedIndustry}
                       type="button"
                       className={`w-full bg-[var(--input)] border border-[var(--border)] rounded-lg px-4 py-2.5 sm:py-3 text-left flex items-center justify-between focus:outline-none transition-colors ${
@@ -277,12 +324,20 @@ export default function StepSlide2({ onNext, onBack, onBusinessDataSubmit }) {
                           : "opacity-50 cursor-not-allowed"
                       }`}
                     >
-                      <span className={`${selectedOffering ? "text-[var(--text)]" : "text-[var(--muted)]"} text-[12px] sm:text-[13px] md:text-[14px]`}>
+                      <span
+                        className={`${
+                          selectedOffering
+                            ? "text-[var(--text)]"
+                            : "text-[var(--muted)]"
+                        } text-[12px] sm:text-[13px] md:text-[14px]`}
+                      >
                         {selectedOffering || "Offering Type"}
                       </span>
                       <ChevronDown
                         size={20}
-                        className={`transition-transform ${openDropdown === "offering" ? "rotate-180" : ""}`}
+                        className={`transition-transform ${
+                          openDropdown === "offering" ? "rotate-180" : ""
+                        }`}
                       />
                     </button>
 
@@ -311,7 +366,11 @@ export default function StepSlide2({ onNext, onBack, onBusinessDataSubmit }) {
                     style={{ zIndex: openDropdown === "category" ? 1000 : 1 }}
                   >
                     <button
-                      onClick={() => (selectedOffering ? handleDropdownToggle("category") : null)}
+                      onClick={() =>
+                        selectedOffering
+                          ? handleDropdownToggle("category")
+                          : null
+                      }
                       disabled={!selectedOffering}
                       type="button"
                       className={`w-full bg-[var(--input)] border border-[var(--border)] rounded-lg px-4 py-2.5 sm:py-3 text-left flex items-center justify-between focus:outline-none transition-colors ${
@@ -320,13 +379,23 @@ export default function StepSlide2({ onNext, onBack, onBusinessDataSubmit }) {
                           : "opacity-50 cursor-not-allowed"
                       }`}
                     >
-                      <span className={`${selectedCategory ? "text-[var(--text)]" : "text-[var(--muted)]"} text-[12px] sm:text-[13px] md:text-[14px]`}>
+                      <span
+                        className={`${
+                          selectedCategory
+                            ? "text-[var(--text)]"
+                            : "text-[var(--muted)]"
+                        } text-[12px] sm:text-[13px] md:text-[14px]`}
+                      >
                         {selectedCategory ||
-                          `Specific Category for ${selectedOffering?.toLowerCase() || "service"}`}
+                          `Specific Category for ${
+                            selectedOffering?.toLowerCase() || "service"
+                          }`}
                       </span>
                       <ChevronDown
                         size={20}
-                        className={`transition-transform ${openDropdown === "category" ? "rotate-180" : ""}`}
+                        className={`transition-transform ${
+                          openDropdown === "category" ? "rotate-180" : ""
+                        }`}
                       />
                     </button>
 
@@ -366,7 +435,8 @@ export default function StepSlide2({ onNext, onBack, onBusinessDataSubmit }) {
                 <div className="max-w-[640px] text-left self-start">
                   <div>
                     <h3 className="text-[15px] sm:text-[16px] md:text-[18px] font-bold text-[var(--text)] mb-2.5 sm:mb-3">
-                      Here’s your site report — take a quick look on the Info Tab.
+                      Here’s your site report — take a quick look on the Info
+                      Tab.
                     </h3>
                     <p className="text-[12px] sm:text-[13px] md:text-[15px] text-[var(--muted)]">
                       If not, Want to do some changes?
@@ -385,6 +455,7 @@ export default function StepSlide2({ onNext, onBack, onBusinessDataSubmit }) {
               )}
 
               <div className="h-2" />
+              <div ref={tailRef} /> {/* <-- tail element to anchor auto-scroll */}
             </div>
           </div>
         </div>

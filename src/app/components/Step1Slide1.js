@@ -221,7 +221,7 @@ export default function Step1Slide1({ onNext, onWebsiteSubmit }) {
                 </p>
                 <p className="text-[11px] sm:text-[12px] md:text-[13px] text-gray-400 mt-2 sm:mt-3">
                   <span className="font-semibold text-gray-700">
-                    For more information please go to INFO tab
+                    For more information please Go to INFO tab
                   </span>
                 </p>
               </div>

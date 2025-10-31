@@ -444,10 +444,10 @@ export default function InfoPanel({
 
       <div>
         <div className="flex items-center gap-2">
-          <div className="w-4 h-4 bg-gray-800 rounded-sm flex items-center justify-center">
-            <span className="text-white text-xs">!</span>
+          <div className="w-4 h-4 rounded-sm flex items-center justify-center fixthis-badge">
+            <span className="text-xs font-bold">!</span>
           </div>
-          <h4 className="text-sm font-bold text-gray-800">FIX THIS</h4>
+          <h4 className="text-sm font-bold fixthis-title">FIX THIS</h4>
         </div>
         <div className="place-items-center flex justify-center">
           <div className="divider-gradient-line h-[1px] w-[100%] bg-[image:var(--brand-gradient)] my-2 mb-5"></div>
@@ -482,10 +482,10 @@ export default function InfoPanel({
     <div className="space-y-6">
       <WebsiteStatsCard website={displayWebsite} stats={stats} />
       <div className="flex items-center gap-2">
-        <div className="w-4 h-4 bg-gray-800 rounded-sm flex items-center justify-center">
-          <span className="text-white text-xs">!</span>
+        <div className="w-4 h-4 rounded-sm flex items-center justify-center fixthis-badge">
+          <span className="text-xs font-bold">!</span>
         </div>
-        <h4 className="text-sm font-bold text-gray-800">FIX THIS</h4>
+        <h4 className="text-sm font-bold fixthis-title">FIX THIS</h4>
       </div>
       <div className="space-y-4">
         <ContentCard
@@ -511,10 +511,10 @@ export default function InfoPanel({
     <div className="space-y-6">
       <WebsiteStatsCard website={displayWebsite} stats={stats} />
       <div className="flex items-center gap-2">
-        <div className="w-4 h-4 bg-gray-800 rounded-sm flex items-center justify-center">
-          <span className="text-white text-xs">!</span>
+        <div className="w-4 h-4 rounded-sm flex items-center justify-center fixthis-badge">
+          <span className="text-xs font-bold">!</span>
         </div>
-        <h4 className="text-sm font-bold text-gray-800">FIX THIS</h4>
+        <h4 className="text-sm font-bold fixthis-title">FIX THIS</h4>
       </div>
       <div className="space-y-4">
         <ContentCard
@@ -548,10 +548,10 @@ export default function InfoPanel({
     <div className="space-y-6">
       <WebsiteStatsCard website={displayWebsite} stats={stats} />
       <div className="flex items-center gap-2">
-        <div className="w-4 h-4 bg-gray-800 rounded-sm flex items-center justify-center">
-          <span className="text-white text-xs">!</span>
+        <div className="w-4 h-4 rounded-sm flex items-center justify-center fixthis-badge">
+          <span className="text-xs font-bold">!</span>
         </div>
-        <h4 className="text-sm font-bold text-gray-800">FIX THIS</h4>
+        <h4 className="text-sm font-bold fixthis-title">FIX THIS</h4>
       </div>
       <div className="space-y-4">
         <ContentCard
@@ -577,25 +577,6 @@ export default function InfoPanel({
         />
       </div>
 
-      {keywordData?.length ? (
-        <div className="bg-white rounded-lg p-4 shadow-sm border dark:bg-[var(--extra-input-dark)]">
-          <div className="text-xs text-gray-600 dark:text-[var(--muted)] font-medium mb-2">
-            Selected Keywords ({keywordData.length})
-          </div>
-          <div className="flex flex-wrap gap-2">
-            {keywordData.slice(0, 6).map((kw, i) => (
-              <span key={i} className="px-3 py-1 bg-blue-600 text-white rounded-full text-sm">
-                {kw}
-              </span>
-            ))}
-            {keywordData.length > 6 && (
-              <span className="bg-gray-200 text-gray-600 text-xs px-2 py-1 rounded">
-                +{keywordData.length - 6} more
-              </span>
-            )}
-          </div>
-        </div>
-      ) : null}
     </div>
   );
 
@@ -607,61 +588,15 @@ export default function InfoPanel({
   } = competitorData || {};
 
   const renderStep5Content = () => {
-    const hasAny =
-      businessCompetitors.length > 0 || searchCompetitors.length > 0 || totalCompetitors.length > 0;
-
     return (
       <div className="space-y-6">
         <WebsiteStatsCard website={displayWebsite} stats={stats} />
         <div className="flex items-center gap-2">
-          <div className="w-4 h-4 bg-gray-800 rounded-sm flex items-center justify-center">
-            <span className="text-white text-xs">!</span>
+          <div className="w-4 h-4 rounded-sm flex items-center justify-center fixthis-badge">
+            <span className="text-xs font-bold">!</span>
           </div>
-          <h4 className="text-sm font-bold text-gray-800">FIX THIS</h4>
+          <h4 className="text-sm font-bold fixthis-title">FIX THIS</h4>
         </div>
-        {hasAny ? (
-          <>
-            {businessCompetitors.length > 0 && (
-              <div className="bg-white rounded-lg p-4 shadow-sm border dark:bg-[var(--extra-input-dark)]">
-                <div className="text-xs text-gray-600 dark:text-[var(--muted)] font-medium mb-2">
-                  Selected Business Competitors ({businessCompetitors.length})
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {businessCompetitors.map((c, i) => (
-                    <span
-                      key={`b-${i}`}
-                      className="px-3 py-1 bg-white text-gray-900 border border-blue-600 rounded-full text-sm"
-                    >
-                      {cleanLabel(c)}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            )}
-            {searchCompetitors.length > 0 && (
-              <div className="bg-white rounded-lg p-4 shadow-sm border dark:bg-[var(--extra-input-dark)]">
-                <div className="text-xs text-gray-600 dark:text-[var(--muted)] font-medium mb-2">
-                  Selected Search Engine Competitors ({searchCompetitors.length})
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {searchCompetitors.map((c, i) => (
-                    <span
-                      key={`s-${i}`}
-                      className="px-3 py-1 bg-white text-gray-900 border border-green-600 rounded-full text-sm"
-                    >
-                      {cleanLabel(c)}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            )}
-          </>
-        ) : (
-          <div className="bg-yellow-50 border border-yellow-200 text-yellow-800 text-sm rounded p-3">
-            No competitors selected yet. Pick some to see them here.
-          </div>
-        )}
-
         <div className="space-y-4">
           <ContentCard
             title="Business vs. Search Competitors"
@@ -670,14 +605,19 @@ export default function InfoPanel({
             videoUrl={DEFAULT_VIDEO}
             poster="/assets/poster.png"
           />
+
           <ContentCard
             title="Competitive Intelligence"
-            lines={["Strategy insights & gap analysis", "Analyze your competitors' strengths and gaps"]}
+            lines={[
+              "Strategy insights & gap analysis",
+              "Analyze your competitors' strengths and gaps",
+            ]}
             badge={{ text: "Analyse, Compare, Discover & Optimize.", tone: "warning" }}
             videoTitle="Spy on Competitors"
             videoUrl={DEFAULT_VIDEO}
             poster="/assets/poster.png"
           />
+
           <ContentCard
             title="How to Find Them?"
             subtitle="Ask customers & search your keywords"

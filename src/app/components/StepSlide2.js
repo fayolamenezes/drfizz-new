@@ -432,28 +432,25 @@ export default function StepSlide2({ onNext, onBack, onBusinessDataSubmit }) {
 
               {/* Summary CTA */}
               {showSummary && (
-                <div className="max-w-[640px] text-left self-start">
-                  <div>
-                    <h3 className="text-[15px] sm:text-[16px] md:text-[18px] font-bold text-[var(--text)] mb-2.5 sm:mb-3">
-                      Here’s your site report — take a quick look on the Info
-                      Tab.
-                    </h3>
-                    <p className="text-[12px] sm:text-[13px] md:text-[15px] text-[var(--muted)]">
-                      If not, Want to do some changes?
-                    </p>
-                  </div>
-
-                  <div className="flex items-center gap-8 sm:gap-10 mt-4 sm:mt-5 text-[12px] sm:text-[13px]">
+                <div className="mt-5 self-start">
+                  <h3 className="text-[15px] sm:text-[16px] md:text-[18px] font-bold text-[var(--text)] mb-2.5 sm:mb-3">
+                    Here’s your site report — take a quick look on the
+                    <br /> Info Tab.
+                  </h3>
+                  <p className="text-[12px] sm:text-[13px] md:text-[15px] text-[var(--muted)]">
+                    If not, Want to do some changes?
+                  </p>
+                  <div className="mt-3 text-[12px] sm:text-[13px]">
                     <button
                       onClick={handleResetSelections}
-                      className="text-[#d45427] hover:brightness-110 font-medium"
+                      className="text-gray-500 hover:text-gray-700 font-semibold"
+                      type="button"
                     >
                       YES!
                     </button>
                   </div>
                 </div>
               )}
-
               <div className="h-2" />
               <div ref={tailRef} /> {/* <-- tail element to anchor auto-scroll */}
             </div>

@@ -72,7 +72,7 @@ export default function Step1Slide1({ onNext, onWebsiteSubmit }) {
     const vpH = window.innerHeight;
     const barH = bottomBarRef.current?.getBoundingClientRect().height ?? 0;
     const topOffset = panelRef.current.getBoundingClientRect().top;
-    const extraGutters = 24;
+    const extraGutters = 0; // remove top/bottom gutters entirely
     const h = Math.max(320, vpH - barH - topOffset - extraGutters);
     setPanelHeight(h);
   };
@@ -90,7 +90,7 @@ export default function Step1Slide1({ onNext, onWebsiteSubmit }) {
 
   useEffect(() => {
     recomputePanelHeight();
-    }, [showInput, currentState, messages.length]);
+  }, [showInput, currentState, messages.length]);
 
   /* ---------------- Auto-scroll ---------------- */
   useEffect(() => {
@@ -153,10 +153,11 @@ export default function Step1Slide1({ onNext, onWebsiteSubmit }) {
       `}</style>
 
       {/* ---------------- Content Section ---------------- */}
-      <div className="px-3 sm:px-4 md:px-6 pt-4 sm:pt-5 md:pt-6 pb-2 sm:pb-3">
+      {/* keep left/right (px-*) only; remove top/bottom */}
+      <div className="px-3 sm:px-4 md:px-6">
         <div
           ref={panelRef}
-          className="box-border mx-auto w-full max-w-screen-sm md:max-w-[820px] rounded-2xl bg-transparent p-3 sm:p-4 md:p-6"
+          className="box-border mx-auto w-full max-w-screen-sm md:max-w-[820px] rounded-2xl bg-transparent px-3 sm:px-4 md:px-6 py-0"
           style={{ height: panelHeight ? `${panelHeight}px` : "auto" }}
         >
           <div
@@ -184,7 +185,6 @@ export default function Step1Slide1({ onNext, onWebsiteSubmit }) {
                     }}
                     aria-hidden
                   >
-                    {/* swapped the emoji for the SVG — same wrapper & sizing */}
                     <Image
                       src="/assets/hand.svg"
                       alt="Waving hand"
@@ -236,16 +236,13 @@ export default function Step1Slide1({ onNext, onWebsiteSubmit }) {
 
               {currentState === "submitted" && (
                 <div className="w-full">
-                  {/* Info Tab on a new line */}
                   <h3 className="text-[15px] sm:text-[16px] md:text-[18px] font-bold text-gray-900 mb-1.5 sm:mb-2.5">
                     Here’s your site report — take a quick look on
                     <br /> the Info Tab.
                   </h3>
-                  {/* Keep the helper copy */}
                   <p className="text-[12px] sm:text-[13px] md:text-[15px] text-gray-600 mt-1.5">
                     If not, you can also try a different URL?
                   </p>
-                  {/* Single grey action */}
                   <div className="mt-4 sm:mt-5 text-[12px] sm:text-[13px]">
                     <button
                       onClick={handleTryDifferent}

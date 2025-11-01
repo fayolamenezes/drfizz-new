@@ -240,7 +240,7 @@ export default function ContentEditor({ data, onBackToDashboard }) {
   /* listen for multiple "new doc" event names */
   useEffect(() => {
     const handler = (e) => resetToNewDocument(e?.detail || {});
-    const names = ["content-editor:new", "content-editor:open", "new-document"];
+    const names = ["content-editor:new", "new-document"];
     names.forEach((n) => window.addEventListener(n, handler));
     return () => names.forEach((n) => window.removeEventListener(n, handler));
   }, [resetToNewDocument]);

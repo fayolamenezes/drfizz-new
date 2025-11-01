@@ -1412,9 +1412,6 @@ const seoTableProg = Math.max(0, prog);
 
         <OpportunitiesSection onOpenContentEditor={onOpenContentEditor} />
 
-
-    
-
 {/* New on page SEO opportunity (table) */}
 <h2 className="text-[16px] font-bold text-[var(--text)] mb-2 ml-1">New on page SEO opportunity</h2>
 <p className="ml-1 mb-4 text-[12px] text-[var(--muted)]">

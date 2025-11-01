@@ -351,12 +351,12 @@ export default function OpportunitiesSection({ onOpenContentEditor }) {
     setStartOpen(false);
   };
 
-  const handleCreateWithStyle = (styleId) => {
-    const tpl = styleTemplate(styleId);
-    // New doc seeded with content & styleId (CE can read it if needed)
-    dispatchNew({ ...tpl, kind: "blog", styleId });
-    setStartOpen(false);
-  };
+ const handleCreateWithStyle = (styleId) => {
+   const tpl = styleTemplate(styleId);
+   // New doc seeded with content & styleId (CE can read it if needed)
+   dispatchNew({ ...tpl, kind: "blog", styleId });
+   setStartOpen(false);
+ };
 
   /* ---------- Small UI pieces ---------- */
 

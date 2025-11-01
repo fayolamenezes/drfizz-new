@@ -1,7 +1,7 @@
 // components/content-editor/CE.ContentArea.js
 "use client";
 
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState, useCallback } from "react";
 import CEToolbar from "./CE.Toolbar";
 import CECanvas from "./CE.Canvas";
 import CEResearchPanel from "./CE.ResearchPanel";
@@ -48,15 +48,15 @@ export default function CEContentArea({
   activeTab,
   onTabChange,
   lastEdited = "1 day ago",
-  query,                // live keyword from UI
+  query, // live keyword from UI
   onQueryChange,
   onStart,
   seoMode: seoModeProp,
   metrics: metricsProp,
-  setMetrics,           // sync metrics back to parent
+  setMetrics, // sync metrics back to parent
   content,
   setContent,
-  primaryKeyword,       // fallback keyword from parent/config
+  primaryKeyword, // fallback keyword from parent/config
   lsiKeywords,
 }) {
   const editorRef = useRef(null);
@@ -98,6 +98,24 @@ export default function CEContentArea({
     }
   }, [metricsProp?.wordTarget]);
 
+  /** ========= Throttled emit to parent (smoothes MetricsStrip animations) ========= */
+  const metricsTimerRef = useRef(null);
+  const emitMetricsThrottled = useCallback(
+    (next) => {
+      if (!setMetrics) return;
+      clearTimeout(metricsTimerRef.current);
+      // ~12fps cadence is a good balance for typing; adjust if needed
+      metricsTimerRef.current = setTimeout(() => {
+        setMetrics(next);
+      }, 80);
+    },
+    [setMetrics]
+  );
+
+  useEffect(() => {
+    return () => clearTimeout(metricsTimerRef.current);
+  }, []);
+
   // ----- Recompute metrics (PK / LSI / plagiarism / words) -----
   useEffect(() => {
     const plain = normalizePlain(content);
@@ -121,7 +139,7 @@ export default function CEContentArea({
         },
       }));
 
-      setMetrics?.(emptyMetrics);
+      emitMetricsThrottled(emptyMetrics);
       return;
     }
 
@@ -181,14 +199,15 @@ export default function CEContentArea({
       },
     }));
 
-    setMetrics?.(next);
+    // Throttle the upstream update so MetricsStrip animations aren't restarted on every keystroke
+    emitMetricsThrottled(next);
   }, [
     content,
-    query,                 // ← recompute when the Query field changes
+    query, // ← recompute when the Query field changes
     PRIMARY_KEYWORD,
     LSI_KEYWORDS,
-    setMetrics,
     metricsInternal.wordTarget,
+    emitMetricsThrottled,
   ]);
 
   const metrics = metricsProp ?? metricsInternal;
@@ -211,9 +230,6 @@ export default function CEContentArea({
             title={title}
             content={content}
             setContent={setContent}
-            primaryKeyword={PRIMARY_KEYWORD}
-            lsiKeywords={LSI_KEYWORDS}
-            highlightEnabled
           />
         </div>
       </div>

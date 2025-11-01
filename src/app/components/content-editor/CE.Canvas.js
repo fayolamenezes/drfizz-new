@@ -14,9 +14,6 @@ const CECanvas = forwardRef(function CECanvas(
     title = "Untitled",
     content = "",
     setContent,
-    primaryKeyword,
-    lsiKeywords = [],
-    highlightEnabled = false,
   },
   ref
 ) {
@@ -28,9 +25,12 @@ const CECanvas = forwardRef(function CECanvas(
   const autosaveTimer = useRef(null);
 
   // “source-of-truth” guards
-  const lastLocalHtmlRef = useRef("");          // last html we emitted via setContent
-  const lastLocalEditAtRef = useRef(0);         // timestamp of last local edit
-  const LOCAL_GRACE_MS = 600;                   // window to ignore stale external props
+  const lastLocalHtmlRef = useRef(""); // last html we emitted via setContent
+  const lastLocalEditAtRef = useRef(0); // timestamp of last local edit
+  const LOCAL_GRACE_MS = 600; // window to ignore stale external props
+
+  // NEW: re-entrancy guard to prevent onInput → setContent loops
+  const suppressInputRef = useRef(false);
 
   const AUTOSAVE_MS = 800;
   const AUTOSAVE_KEY = `ce:autosave:${title || "untitled"}`;
@@ -60,72 +60,6 @@ const CECanvas = forwardRef(function CECanvas(
   }, [content]);
 
   /** =========================
-   * Highlight helpers
-   * ========================= */
-  const unwrapHighlights = (root) => {
-    const nodes = root.querySelectorAll('span[data-ce-hl="1"]');
-    nodes.forEach((span) => {
-      const parent = span.parentNode;
-      while (span.firstChild) parent.insertBefore(span.firstChild, span);
-      parent.removeChild(span);
-    });
-  };
-
-  const markInTextNode = (node, start, len, style) => {
-    const text = node.nodeValue;
-    const before = document.createTextNode(text.slice(0, start));
-    const middle = document.createTextNode(text.slice(start, start + len));
-    const after = document.createTextNode(text.slice(start + len));
-
-    const span = document.createElement("span");
-    span.setAttribute("data-ce-hl", "1");
-    span.style.backgroundColor = style.bg;
-    span.style.borderRadius = "3px";
-    span.appendChild(middle);
-
-    const frag = document.createDocumentFragment();
-    if (before.nodeValue) frag.appendChild(before);
-    frag.appendChild(span);
-    if (after.nodeValue) frag.appendChild(after);
-    node.parentNode.replaceChild(frag, node);
-    return after;
-  };
-
-  // LINT-CLEAN: memoize and use as a dep
-  const highlightTerm = useCallback((root, term, style) => {
-    if (!term || term.length < 2) return;
-    const safe = term.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-    const rx = new RegExp(`\\b${safe}\\b`, "gi");
-    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
-      acceptNode(n) {
-        if (!n.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
-        const p = n.parentNode;
-        if (!p) return NodeFilter.FILTER_REJECT;
-        const tag = p.nodeName;
-        if (
-          tag === "SCRIPT" ||
-          tag === "STYLE" ||
-          p.getAttribute?.("data-ce-hl") === "1"
-        )
-          return NodeFilter.FILTER_REJECT;
-        return NodeFilter.FILTER_ACCEPT;
-      },
-    });
-
-    let node;
-    while ((node = walker.nextNode())) {
-      let m;
-      while ((m = rx.exec(node.nodeValue))) {
-        const start = m.index;
-        const matchLen = m[0].length;
-        node = markInTextNode(node, start, matchLen, style);
-        rx.lastIndex = 0;
-        if (!node || !node.nodeValue) break;
-      }
-    }
-  }, []);
-
-  /** =========================
    * Selection helpers
    * ========================= */
   function saveSelectionSnapshot() {
@@ -148,25 +82,10 @@ const CECanvas = forwardRef(function CECanvas(
   }
 
   /** =========================
-   * Highlighter core
+   * Highlighter core (disabled)
    * ========================= */
-  const runHighlights = useCallback(() => {
-    if (!highlightEnabled) return;
-    const el = editorRef.current;
-    if (!el) return;
-
-    saveSelectionSnapshot();
-    unwrapHighlights(el);
-
-    if (primaryKeyword)
-      highlightTerm(el, primaryKeyword, { bg: "rgba(34,197,94,0.25)" });
-    if (lsiKeywords && lsiKeywords.length)
-      lsiKeywords.forEach((kw) =>
-        highlightTerm(el, kw, { bg: "rgba(245,158,11,0.25)" })
-      );
-
-    restoreSelectionSnapshot();
-  }, [highlightEnabled, primaryKeyword, lsiKeywords, highlightTerm]);
+  // No-op highlighter: highlighting has been removed
+  const runHighlights = useCallback(() => {}, []);
 
   /** =========================
    * Autosave + state sync
@@ -183,11 +102,16 @@ const CECanvas = forwardRef(function CECanvas(
   function bubble({ pushHistory = true, notifyParent = true } = {}) {
     const el = editorRef.current;
     const html = el?.innerHTML || "";
-    if (notifyParent) {
+    if (notifyParent && !suppressInputRef.current) {
+      // prevent re-entrant onInput while React updates parent state
+      suppressInputRef.current = true;
       setContent?.(html);
       // mark this as the newest local truth
       lastLocalHtmlRef.current = html;
       lastLocalEditAtRef.current = Date.now();
+      queueMicrotask(() => {
+        suppressInputRef.current = false;
+      });
     }
     if (pushHistory) {
       const last = undoStack.current[undoStack.current.length - 1];
@@ -214,14 +138,26 @@ const CECanvas = forwardRef(function CECanvas(
           ? localStorage.getItem(AUTOSAVE_KEY)
           : null;
       if (saved) {
+        suppressInputRef.current = true;
         el.innerHTML = saved;
         setContent?.(saved);
         lastLocalHtmlRef.current = saved;
+        queueMicrotask(() => {
+          suppressInputRef.current = false;
+        });
       }
     } else if (!seededRef.current) {
       const html = sanitizeToHtml(content);
-      if (el.innerHTML !== html) el.innerHTML = html;
-      lastLocalHtmlRef.current = html;
+      if (el.innerHTML !== html) {
+        suppressInputRef.current = true;
+        el.innerHTML = html;
+        lastLocalHtmlRef.current = html;
+        queueMicrotask(() => {
+          suppressInputRef.current = false;
+        });
+      } else {
+        lastLocalHtmlRef.current = html;
+      }
     }
 
     if (!seededRef.current) {
@@ -254,7 +190,11 @@ const CECanvas = forwardRef(function CECanvas(
     if (justLocallyEdited) return;
 
     // Otherwise, accept external update (e.g., loading a different doc)
+    suppressInputRef.current = true;
     el.innerHTML = htmlFromProp;
+    queueMicrotask(() => {
+      suppressInputRef.current = false;
+    });
     if (seededRef.current) {
       undoStack.current.push(htmlFromProp);
       redoStack.current = [];
@@ -323,10 +263,14 @@ const CECanvas = forwardRef(function CECanvas(
           const cur = undoStack.current.pop();
           redoStack.current.push(cur);
           const prev = undoStack.current[undoStack.current.length - 1] || "";
+          suppressInputRef.current = true;
           el.innerHTML = prev;
           setContent?.(prev);
           lastLocalHtmlRef.current = prev;
           lastLocalEditAtRef.current = Date.now();
+          queueMicrotask(() => {
+            suppressInputRef.current = false;
+          });
         } else {
           document.execCommand("undo", false, null);
         }
@@ -337,10 +281,14 @@ const CECanvas = forwardRef(function CECanvas(
         if (redoStack.current.length > 0) {
           const next = redoStack.current.pop();
           undoStack.current.push(next);
+          suppressInputRef.current = true;
           el.innerHTML = next;
           setContent?.(next);
           lastLocalHtmlRef.current = next;
           lastLocalEditAtRef.current = Date.now();
+          queueMicrotask(() => {
+            suppressInputRef.current = false;
+          });
         } else {
           document.execCommand("redo", false, null);
         }
@@ -421,7 +369,11 @@ const CECanvas = forwardRef(function CECanvas(
         contentEditable
         suppressContentEditableWarning
         className="min-h-[420px] rounded-md border border-[var(--border)] bg-[var(--bg-panel)] px-4 py-4 leading-7 text-[15px] text-[var(--text-primary)] focus:outline-none prose prose-p:my-3 prose-h1:text-2xl prose-h2:text-xl prose-ul:list-disc prose-ul:pl-6 transition-colors"
-        onInput={() => bubble({ pushHistory: true, notifyParent: true })}
+        onInput={() => {
+          if (!suppressInputRef.current) {
+            bubble({ pushHistory: true, notifyParent: true });
+          }
+        }}
         onKeyUp={saveSelectionSnapshot}
         onMouseUp={saveSelectionSnapshot}
       />

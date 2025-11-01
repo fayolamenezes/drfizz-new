@@ -4,6 +4,8 @@ import Image from "next/image";
 import { Activity, ActivitySquare, AlertTriangle, BarChart3, BookOpen, Check, ChevronRight, Clock3, Eye, FileText, Gauge, Goal, HelpCircle, KeyRound, Lightbulb, Link2, Lock, Monitor, Network, PencilLine, RefreshCw, Rocket, Settings, ShieldCheck, Skull, SlidersHorizontal, Smartphone, SquareArrowOutUpRight, ThumbsDown, ThumbsUp, TrendingUp, TrendingDown, Wifi, X } from "lucide-react";
 import { useEffect, useRef, useState, useMemo } from "react";
 import { useSearchParams } from "next/navigation";
+import OpportunitiesSection from "./OpportunitiesSection";
+
 // --- Prefill content templates for the 4 "Top On-Page Content Opportunities" cards ---
 const PREFILL_BY_TITLE = {
   "How to Choose a CRM for SMEs": `Intro: Picking the right CRM for SMEs depends on workflows, budget, and integration needs.
@@ -1408,81 +1410,8 @@ const seoTableProg = Math.max(0, prog);
           </div>
         </section>
 
-<h2 className="text-[16px] font-bold text-[var(--text)] mb-3 ml-1">Top On-Page Content Opportunities</h2>
-<section className="mb-10 grid grid-cols-1 items-start gap-8 lg:grid-cols-[minmax(0,1fr)_1px_minmax(0,1fr)]">
-  {/* BLOG column */}
-  <div className="grid grid-rows-[auto_1fr_auto] gap-3">
-    {/* header */}
-    <div className="flex items-center gap-2">
-      <span className="inline-flex h-6 w-6 items-center justify-center rounded-md border border-[#E7D7FB] bg-[#F5EAFE] text-[#7C3AED]">
-        <BookOpen size={14} />
-      </span>
-      <span className="text-[12px] font-semibold tracking-wide text-[var(--text)]">BLOG</span>
-      <HelpCircle size={14} className="text-[#9AA3B2]" />
-    </div>
+        <OpportunitiesSection onOpenContentEditor={onOpenContentEditor} />
 
-    {/* cards */}
-    <div className="grid grid-cols-1 gap-4 xl:grid-cols-2 items-stretch">
-      {blogCards.slice(0, 2).map((b, i) => (
-        <OpportunityCard
-          key={`blog-${i}`}
-          title={b.title}
-          score={b.score ?? 0}
-          wordCount={b.wordCount ?? 0}
-          keywords={b.keywords ?? 0}
-          status={b.status ?? "Draft"}
-          progress={oppCardsProgress}
-          className="h-full"
-        />
-      ))}
-    </div>
-
-    {/* view all pinned to bottom */}
-    <div className="flex justify-end pt-1 px-4">
-      <button className="inline-flex items-center gap-2 rounded-[12px] border px-3 py-2 text-[12px] font-medium seo-chip">
-        View all opportunity <ChevronRight size={14} />
-      </button>
-    </div>
-  </div>
-
-  {/* vertical divider */}
-  <div className="hidden lg:block w-px self-stretch bg-[#ECEFF5]" />
-
-  {/* PAGES column */}
-  <div className="grid grid-rows-[auto_1fr_auto] gap-3">
-    {/* header */}
-    <div className="flex items-center gap-2">
-      <span className="inline-flex h-6 w-6 items-center justify-center rounded-md border border-[#FFD6E8] bg-[#FFE9F3] text-[#F43F5E]">
-        <FileText size={14} />
-      </span>
-      <span className="text-[12px] font-semibold tracking-wide text-[var(--text)]">PAGES</span>
-      <HelpCircle size={14} className="text-[#9AA3B2]" />
-    </div>
-
-    {/* cards */}
-    <div className="grid grid-cols-1 gap-5 xl:grid-cols-2">
-      {pageCards.slice(0, 2).map((p, i) => (
-        <OpportunityCard
-          key={`page-${i}`}
-          title={p.title}
-          score={p.score ?? 0}
-          wordCount={p.wordCount ?? 0}
-          keywords={p.keywords ?? 0}
-          status={p.status ?? "Draft"}
-          progress={oppCardsProgress}
-          className="h-full"
-        />
-      ))}
-    </div>
-
-    {/* view all pinned to bottom */}
-    <div className="flex justify-end pt-1 px-4">
-      <button className="inline-flex items-center gap-2 rounded-[12px] border px-3 py-2 text-[12px] font-medium seo-chip">
-        View all opportunity <ChevronRight size={14} />
-      </button>
-    </div>
-  </div>
-</section>
 
     
 

@@ -280,7 +280,8 @@ export default function ContentEditor({ data, onBackToDashboard }) {
       setMetrics((m) => ({ ...m, wordTarget: nextWordTarget }));
     }
     // Intentionally exclude `content` to avoid loops; guard updates above.
-  }, [data, pageConfig, title, query, lastEdited, metrics.wordTarget, content]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [data, pageConfig, title, query, lastEdited, metrics.wordTarget]);
 
   return (
     <div className="min-h-screen bg-[var(--bg)] text-[var(--text)] transition-colors duration-300">

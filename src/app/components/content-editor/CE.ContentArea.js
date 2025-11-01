@@ -139,6 +139,8 @@ export default function CEContentArea({
         },
       }));
 
+      // immediate wordCount emit (0) + throttle the rest
+      setMetrics?.((m) => (m.wordCount === 0 ? m : { ...m, wordCount: 0 }));
       emitMetricsThrottled(emptyMetrics);
       return;
     }
@@ -199,7 +201,10 @@ export default function CEContentArea({
       },
     }));
 
-    // Throttle the upstream update so MetricsStrip animations aren't restarted on every keystroke
+    // ---- Key change: emit wordCount immediately (no throttle) ----
+    setMetrics?.((m) => (m?.wordCount === wordCount ? m : { ...m, wordCount }));
+
+    // ---- Throttle the heavy (and animated) fields to avoid jitter ----
     emitMetricsThrottled(next);
   }, [
     content,
@@ -208,6 +213,7 @@ export default function CEContentArea({
     LSI_KEYWORDS,
     metricsInternal.wordTarget,
     emitMetricsThrottled,
+    setMetrics, // ← added to satisfy react-hooks/exhaustive-deps
   ]);
 
   const metrics = metricsProp ?? metricsInternal;

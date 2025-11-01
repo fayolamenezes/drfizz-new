@@ -1,3 +1,4 @@
+// components/content-editor/CE.MetricsStrip.js
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
@@ -10,6 +11,7 @@ function useSpringNumber(target = 0, ms = 700) {
   const raf = useRef();
 
   useEffect(() => {
+    // Always keep hook order stable; do not early-return from component level.
     if (target === prevTarget.current) return;
     prevTarget.current = target;
 
@@ -26,7 +28,8 @@ function useSpringNumber(target = 0, ms = 700) {
     };
     raf.current = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf.current);
-  }, [target]); // eslint-disable-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [target]);
 
   return value;
 }
@@ -65,7 +68,7 @@ function Bar({ pct = 0, tone = "default", className = "" }) {
 
 /** Generic metric card (Plagiarism, Primary Keyword) */
 function MetricCard({ label, valuePct }) {
-  const invert = label === "PLAGIARISM"; // ⬅️ Only plagiarism uses inverse scoring
+  const invert = label === "PLAGIARISM";
   const anim = useSpringNumber(valuePct ?? 0);
   const status = getStatus(valuePct, { invert });
   const tone =
@@ -94,11 +97,24 @@ function MetricCard({ label, valuePct }) {
   );
 }
 
-/** Word count card (left: 400 / 1480, right: 60%) */
+/** Word count card with snap-while-typing behavior (no conditional hooks) */
 function WordcountCard({ count = 0, target = 1200 }) {
   const pct = Math.max(0, Math.min(100, (count / Math.max(1, target)) * 100));
-  const animPct = useSpringNumber(pct);
-  const animCount = useSpringNumber(count);
+
+  // Track "typing cadence"
+  const [lastAt, setLastAt] = useState(0);
+  useEffect(() => {
+    setLastAt(performance.now());
+  }, [count]);
+  const recentlyUpdated = performance.now() - lastAt < 120;
+
+  // Always call hooks; choose value after.
+  const countSpring = useSpringNumber(count, 400);
+  const pctSpring = useSpringNumber(pct, 400);
+
+  const animCount = recentlyUpdated ? count : countSpring;
+  const animPct = recentlyUpdated ? pct : pctSpring;
+
   const tone = pct >= 75 ? "good" : pct >= 40 ? "warn" : "bad";
 
   return (
@@ -119,36 +135,6 @@ function WordcountCard({ count = 0, target = 1200 }) {
         </div>
 
         <Bar pct={animPct} tone={tone} />
-      </div>
-    </div>
-  );
-}
-
-/** LSI keywords card — shows "Coverage: xx%" at left (no upgrade chip) */
-function LsiCoverageCard({ valuePct = 0 }) {
-  const anim = useSpringNumber(valuePct);
-  const status = getStatus(valuePct);
-  const tone =
-    status.label === "Good" ? "good" : status.label === "Moderate" ? "warn" : "bad";
-
-  return (
-    <div className="relative min-w-0 h-[74px] rounded-[12px] border border-[var(--border)] bg-[var(--bg-panel)] px-3 py-2 transition-colors">
-      <div className="flex h-full flex-col justify-end">
-        <div className="mb-1 flex items-center gap-1 text-[11px] font-semibold tracking-wide text-[var(--text-primary)]">
-          <span className="truncate">LSI KEYWORDS</span>
-          <HelpCircle size={13} className="text-[var(--muted)] shrink-0" />
-        </div>
-
-        <div className="mb-1 flex items-center justify-between">
-          <div className="text-[12px] font-semibold text-[var(--text-primary)]">
-            Coverage: <span className="text-[13px] font-bold">{pctText(anim)}</span>
-          </div>
-          <div className={`text-[11px] ${status.color} font-medium`}>
-            {status.label}
-          </div>
-        </div>
-
-        <Bar pct={anim} tone={tone} />
       </div>
     </div>
   );
@@ -207,10 +193,10 @@ export default function CEMetricsStrip({
   metrics,
   seoMode,
   onChangeSeoMode,
-  /** NEW: gate Advanced/Details until a search has been run in SEO Basics */
+  /** Gate Advanced/Details until a search has been run in SEO Basics */
   canAccessAdvanced = true,
 }) {
-  const plagPct = metrics?.plagiarism ?? 0;      // percentage of plagiarized content (lower is better)
+  const plagPct = metrics?.plagiarism ?? 0;
   const pkPct = metrics?.primaryKeyword ?? 0;
   const wc = metrics?.wordCount ?? 0;
   const wcTarget = metrics?.wordTarget ?? 1200;
@@ -218,12 +204,11 @@ export default function CEMetricsStrip({
 
   return (
     <div className="mb-4">
-      {/* Slightly narrower first four; outlined SEO pills on the right */}
       <div className="grid grid-cols-[1.2fr_1.2fr_1.2fr_1.2fr_.8fr_.8fr_.8fr] gap-2.5 items-stretch">
         <MetricCard label="PLAGIARISM" valuePct={plagPct} />
         <MetricCard label="PRIMARY KEYWORD" valuePct={pkPct} />
         <WordcountCard count={wc} target={wcTarget} />
-        <LsiCoverageCard valuePct={lsiPct} />
+        <MetricCard label="LSI KEYWORDS" valuePct={lsiPct} />
 
         <SeoPill
           title="Basic"

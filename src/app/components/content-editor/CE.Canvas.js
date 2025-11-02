@@ -10,11 +10,7 @@ import React, {
 import { FileText, Sparkles, ScrollText, Link2, Shapes } from "lucide-react";
 
 const CECanvas = forwardRef(function CECanvas(
-  {
-    title = "Untitled",
-    content = "",
-    setContent,
-  },
+  { title = "Untitled", content = "", setContent },
   ref
 ) {
   const editorRef = useRef(null);
@@ -27,7 +23,7 @@ const CECanvas = forwardRef(function CECanvas(
   // “source-of-truth” guards
   const lastLocalHtmlRef = useRef(""); // last html we emitted via setContent
   const lastLocalEditAtRef = useRef(0); // timestamp of last local edit
-  const LOCAL_GRACE_MS = 600; // window to ignore stale external props
+  const LOCAL_GRACE_MS = 80; // was 600 → now more responsive
 
   // NEW: re-entrancy guard to prevent onInput → setContent loops
   const suppressInputRef = useRef(false);
@@ -84,7 +80,6 @@ const CECanvas = forwardRef(function CECanvas(
   /** =========================
    * Highlighter core (disabled)
    * ========================= */
-  // No-op highlighter: highlighting has been removed
   const runHighlights = useCallback(() => {}, []);
 
   /** =========================
@@ -103,10 +98,8 @@ const CECanvas = forwardRef(function CECanvas(
     const el = editorRef.current;
     const html = el?.innerHTML || "";
     if (notifyParent && !suppressInputRef.current) {
-      // prevent re-entrant onInput while React updates parent state
       suppressInputRef.current = true;
       setContent?.(html);
-      // mark this as the newest local truth
       lastLocalHtmlRef.current = html;
       lastLocalEditAtRef.current = Date.now();
       queueMicrotask(() => {
@@ -178,18 +171,13 @@ const CECanvas = forwardRef(function CECanvas(
     const htmlFromProp = sanitizeToHtml(content);
     const currentDom = el.innerHTML;
 
-    // If prop HTML equals what we already show, do nothing
     if (htmlFromProp === currentDom) return;
-
-    // If prop HTML equals what we just emitted locally, treat as ack — do nothing
     if (htmlFromProp === lastLocalHtmlRef.current) return;
 
-    // If a local edit just happened, ignore this stale external write
     const justLocallyEdited =
-      Date.now() - lastLocalEditAtRef.current < LOCAL_GRACE_MS;
+      seededRef.current && Date.now() - lastLocalEditAtRef.current < LOCAL_GRACE_MS;
     if (justLocallyEdited) return;
 
-    // Otherwise, accept external update (e.g., loading a different doc)
     suppressInputRef.current = true;
     el.innerHTML = htmlFromProp;
     queueMicrotask(() => {
@@ -213,14 +201,12 @@ const CECanvas = forwardRef(function CECanvas(
     const el = editorRef.current;
     if (!el) return;
     el.focus();
-    // Restore the last user selection for toolbar actions
     restoreSelectionSnapshot();
 
     try {
       document.execCommand("styleWithCSS", false, true);
     } catch {}
 
-    // --- helpers for wrapping current selection
     const sel = window.getSelection?.();
     const hasSel = sel && sel.rangeCount > 0 && !sel.getRangeAt(0).collapsed;
     const wrapSelectionWith = (tag, style = "") => {
@@ -232,7 +218,6 @@ const CECanvas = forwardRef(function CECanvas(
       wrapper.appendChild(frag);
       range.deleteContents();
       range.insertNode(wrapper);
-      // move caret after wrapper
       range.setStartAfter(wrapper);
       range.setEndAfter(wrapper);
       sel.removeAllRanges();
@@ -240,24 +225,18 @@ const CECanvas = forwardRef(function CECanvas(
     };
 
     switch (cmd) {
-      /** ---------- custom commands from CEToolbar ---------- */
       case "saveSelection":
-        // called before color pickers, etc.
         saveSelectionSnapshot();
-        return; // nothing else to do now
-
+        return;
       case "fontSizePx": {
         const px = Number(value) || 16;
         wrapSelectionWith("span", `font-size:${px}px;`);
         break;
       }
-
       case "code": {
-        // simple inline code wrapper
         wrapSelectionWith("code");
         break;
       }
-
       case "undo": {
         if (undoStack.current.length > 1) {
           const cur = undoStack.current.pop();
@@ -276,7 +255,6 @@ const CECanvas = forwardRef(function CECanvas(
         }
         break;
       }
-
       case "redo": {
         if (redoStack.current.length > 0) {
           const next = redoStack.current.pop();
@@ -294,35 +272,13 @@ const CECanvas = forwardRef(function CECanvas(
         }
         break;
       }
-
-      /** ---------- common editing commands ---------- */
-      case "bold":
-      case "italic":
-      case "underline":
-      case "strikeThrough":
-      case "insertUnorderedList":
-      case "insertOrderedList":
-      case "justifyLeft":
-      case "justifyCenter":
-      case "justifyRight":
-      case "justifyFull":
-      case "createLink":
-      case "unlink":
-      case "foreColor":
-      case "hiliteColor":
-        document.execCommand(cmd, false, value);
-        break;
-
       default:
-        // fallback for other supported commands
         document.execCommand(cmd, false, value);
         break;
     }
 
-    // Mark this as a local truth BEFORE parent re-renders
     lastLocalHtmlRef.current = el.innerHTML;
     lastLocalEditAtRef.current = Date.now();
-
     bubble({ pushHistory: true, notifyParent: true });
   }
 
@@ -371,7 +327,7 @@ const CECanvas = forwardRef(function CECanvas(
         className="min-h-[420px] rounded-md border border-[var(--border)] bg-white px-4 py-4 leading-7 text-[15px] text-[var(--text-primary)] focus:outline-none prose prose-p:my-3 prose-h1:text-2xl prose-h2:text-xl prose-ul:list-disc prose-ul:pl-6 transition-colors"
         onInput={() => {
           if (!suppressInputRef.current) {
-            bubble({ pushHistory: true, notifyParent: true });
+            bubble({ pushHistory: false, notifyParent: true });
           }
         }}
         onKeyUp={saveSelectionSnapshot}

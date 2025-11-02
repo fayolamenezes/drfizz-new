@@ -17,6 +17,10 @@ import SeoAdvancedFaqs from "./research-panel/SeoAdvancedFaqs";
 import SeoAdvancedResearch from "./research-panel/SeoAdvancedResearch";
 import SeoDetails from "./research-panel/SeoDetails";
 
+/* ===========================
+   Tabs
+   =========================== */
+
 const TABS = [
   { key: "basics", label: "SEO Basics", icon: Rocket },
   { key: "opt", label: "Optimize", icon: WandSparkles },
@@ -26,7 +30,10 @@ const TABS = [
   // "details" is controlled by the Metrics Strip (seoMode === "details")
 ];
 
-// helpers
+/* ===========================
+   Helpers
+   =========================== */
+
 const norm = (s) =>
   String(s || "")
     .toLowerCase()
@@ -40,6 +47,25 @@ function pickPagesFromConfig(json) {
   return [];
 }
 
+function safeJsonParse(s, fallback = null) {
+  try {
+    return JSON.parse(s);
+  } catch {
+    return fallback;
+  }
+}
+
+function getSavedDomain() {
+  // Step1Slide1 stores: localStorage.setItem("websiteData", JSON.stringify({ site }))
+  const raw = typeof window !== "undefined" ? localStorage.getItem("websiteData") : null;
+  const parsed = safeJsonParse(raw, {});
+  return parsed?.site || "";
+}
+
+/* ===========================
+   Component
+   =========================== */
+
 export default function CEResearchPanel({
   query = "",
   onQueryChange,
@@ -52,6 +78,8 @@ export default function CEResearchPanel({
 }) {
   const [phase, setPhase] = useState("idle"); // idle | searching | results
   const [tab, setTab] = useState("opt"); // opt | links | faqs | research
+
+  // -------- ContentEditor config (legacy/all tabs baseline) --------
   const [cfgLoading, setCfgLoading] = useState(false);
   const [cfgError, setCfgError] = useState(null);
   const [pages, setPages] = useState([]);
@@ -91,9 +119,8 @@ export default function CEResearchPanel({
     return pages[0];
   }, [pages, query]);
 
-  // Map to your JSON shapes
+  // Map to your contenteditor.json shapes
   const basicsData = currentPage?.seoBasics || null;
-  const optimizeData = currentPage?.advanced?.optimize || null;
   const linksExternal = currentPage?.linksTab?.external || [];
   const linksInternal = currentPage?.linksTab?.internal || [];
   const faqs = currentPage?.faqs || {
@@ -106,9 +133,95 @@ export default function CEResearchPanel({
   const outline = currentPage?.research?.outline || [];
   const competitors = currentPage?.research?.competitors || [];
 
+  // -------- Optimize dataset (domain-aware demo dataset) --------
+  const [optLoading, setOptLoading] = useState(false);
+  const [optError, setOptError] = useState(null);
+  const [optDataset, setOptDataset] = useState(null);
+  const [activeDomainKey, setActiveDomainKey] = useState(""); // saved {site}
+  const [optActiveDomain, setOptActiveDomain] = useState(null);
+  const [optActivePage, setOptActivePage] = useState(null);
+
+  // Load optimize dataset from /public/data/optimize-dataset.json
+  useEffect(() => {
+    let mounted = true;
+    (async () => {
+      try {
+        setOptLoading(true);
+        setOptError(null);
+        const res = await fetch("/data/optimize-dataset.json", { cache: "no-store" });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const json = await res.json();
+        if (!mounted) return;
+        setOptDataset(json);
+      } catch (e) {
+        if (!mounted) return;
+        setOptError(String(e));
+      } finally {
+        if (mounted) setOptLoading(false);
+      }
+    })();
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  // Track saved domain (from Step1Slide1) and choose active domain block from dataset
+  useEffect(() => {
+    // Read once on mount and also whenever we return to the Optimize tab
+    const site = getSavedDomain();
+    setActiveDomainKey(site || "");
+  }, [tab]);
+
+  useEffect(() => {
+    if (!optDataset || !activeDomainKey) {
+      setOptActiveDomain(null);
+      return;
+    }
+    const dom = Array.isArray(optDataset?.domains)
+      ? optDataset.domains.find((d) => norm(d.domain) === norm(activeDomainKey))
+      : null;
+    setOptActiveDomain(dom || null);
+  }, [optDataset, activeDomainKey]);
+
+  // Choose a page inside the active domain based on current query (title/url includes q), else first
+  useEffect(() => {
+    if (!optActiveDomain) {
+      setOptActivePage(null);
+      return;
+    }
+    const q = norm(query);
+    const pages = Array.isArray(optActiveDomain.pages) ? optActiveDomain.pages : [];
+    const byTitle = pages.find((p) => norm(p?.title) === q);
+    const byLoose =
+      byTitle ||
+      pages.find(
+        (p) => norm(p?.title).includes(q) || norm(p?.url).includes(q) || norm(p?.id).includes(q)
+      );
+    setOptActivePage(byLoose || pages[0] || null);
+  }, [optActiveDomain, query]);
+
+  // Compute optimizeData to pass into <SeoAdvancedOptimize />
+  // Priority:
+  //  1) If optimize dataset found a page => use its keywords/kpis.
+  //  2) Else fallback to contenteditor.json's advanced.optimize (legacy).
+  const optimizeDataFromDomain = useMemo(() => {
+    if (!optActivePage) return null;
+    // Shape expected by SeoAdvancedOptimize:
+    // { keywords: [...], kpis?: {...} }
+    const { keywords = [], kpis = null } = optActivePage;
+    return { keywords, kpis, _source: "optimize-dataset.json" };
+  }, [optActivePage]);
+
+  const optimizeDataFallback = currentPage?.advanced?.optimize || null;
+
+  const optimizeData = optimizeDataFromDomain || optimizeDataFallback;
+
+  // -------- Access gate (same as before) --------
   const canAccess = !!query?.trim() && (phase === "searching" || phase === "results");
 
-  // BASIC mode
+  /* ===========================
+     BASIC mode
+     =========================== */
   if (seoMode === "basic") {
     return (
       <SeoBasics
@@ -127,7 +240,9 @@ export default function CEResearchPanel({
     );
   }
 
-  // DETAILS view
+  /* ===========================
+     DETAILS view
+     =========================== */
   if (seoMode === "details") {
     if (!canAccess) {
       return (
@@ -154,7 +269,9 @@ export default function CEResearchPanel({
     );
   }
 
-  // ADVANCED mode
+  /* ===========================
+     ADVANCED mode
+     =========================== */
   return (
     <aside className="h-full rounded-r-[18px] border-l border-[var(--border)] bg-white px-5 md:px-6 py-5 flex flex-col gap-3 transition-colors">
       {/* Top navigation tabs */}
@@ -205,20 +322,20 @@ export default function CEResearchPanel({
         </div>
       )}
 
-      {/* Loading/Error states */}
-      {canAccess && cfgLoading && (
+      {/* Loading/Error states for config/optimize dataset */}
+      {canAccess && (cfgLoading || optLoading) && (
         <div className="rounded-xl border border-[var(--border)] bg-white px-3 py-2 text-[12px] text-[var(--muted)]">
           Loading research…
         </div>
       )}
-      {canAccess && cfgError && (
+      {canAccess && (cfgError || optError) && (
         <div className="rounded-xl border border-rose-300 bg-rose-50/70 dark:bg-rose-950/40 px-3 py-2 text-[12px] text-rose-800 dark:text-rose-200">
-          Failed to load data: {cfgError}
+          Failed to load data: {cfgError || optError}
         </div>
       )}
 
       {/* Advanced panels */}
-      {canAccess && !cfgLoading && !cfgError && (
+      {canAccess && !cfgLoading && !optLoading && !(cfgError || optError) && (
         <>
           {tab === "opt" && (
             <SeoAdvancedOptimize
@@ -226,8 +343,10 @@ export default function CEResearchPanel({
               optimizeData={optimizeData}
               currentPage={currentPage}
               basicsData={basicsData}
+              editorContent={editorContent}
             />
           )}
+
           {tab === "links" && (
             <SeoAdvancedLinks
               onPasteToEditor={onPasteToEditor}
@@ -236,6 +355,7 @@ export default function CEResearchPanel({
               currentPage={currentPage}
             />
           )}
+
           {tab === "faqs" && (
             <SeoAdvancedFaqs
               onPasteToEditor={onPasteToEditor}
@@ -243,6 +363,7 @@ export default function CEResearchPanel({
               currentPage={currentPage}
             />
           )}
+
           {tab === "research" && (
             <SeoAdvancedResearch
               editorContent={editorContent}

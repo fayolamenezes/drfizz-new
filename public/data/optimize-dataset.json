@@ -1,0 +1,2625 @@
+{
+  "version": "1.0",
+  "domains": [
+    {
+      "domain": "google.com",
+      "displayName": "Google",
+      "meta": {
+        "industry": "General",
+        "country": "IN",
+        "language": "en"
+      },
+      "updatedAt": "2025-11-02T14:36:10Z",
+      "pages": [
+        {
+          "id": "category-tech-overview",
+          "url": "https://google.com/category/technology",
+          "title": "Technology Category Overview",
+          "pageType": "category",
+          "kpis": {
+            "headings": 2,
+            "links": 5,
+            "images": 3
+          },
+          "keywords": [
+            {
+              "id": "k1",
+              "title": "Content Marketing",
+              "used": 4,
+              "recommended": 3,
+              "sources": 15,
+              "type": "Long Tail",
+              "mine": 2,
+              "avg": 5,
+              "results": 3,
+              "links": [
+                {
+                  "url": "https://google.com/guide/content-marketing-basics",
+                  "title": "Content Marketing: A practical introduction",
+                  "snippet": "This article explains Content Marketing with examples and workflows to help you apply Content Marketing quickly."
+                },
+                {
+                  "url": "https://google.com/playbook/content-marketing-tips",
+                  "title": "Content Marketing tips and best practices",
+                  "snippet": "Use these proven techniques for Content Marketing to improve outcomes and maintain consistency in Content Marketing across pages."
+                },
+                {
+                  "url": "https://google.com/checklist/content-marketing-checklist",
+                  "title": "Content Marketing checklist",
+                  "snippet": "A short checklist to review Content Marketing before publishing; keep Content Marketing readable and aligned with intent."
+                }
+              ]
+            },
+            {
+              "id": "k2",
+              "title": "Schema Markup",
+              "used": 1,
+              "recommended": 3,
+              "sources": 12,
+              "type": "All Topics",
+              "mine": 1,
+              "avg": 4,
+              "results": 5,
+              "links": [
+                {
+                  "url": "https://google.com/guide/schema-markup-basics",
+                  "title": "Schema Markup: A practical introduction",
+                  "snippet": "This article explains Schema Markup with examples and workflows to help you apply Schema Markup quickly."
+                },
+                {
+                  "url": "https://google.com/playbook/schema-markup-tips",
+                  "title": "Schema Markup tips and best practices",
+                  "snippet": "Use these proven techniques for Schema Markup to improve outcomes and maintain consistency in Schema Markup across pages."
+                },
+                {
+                  "url": "https://google.com/checklist/schema-markup-checklist",
+                  "title": "Schema Markup checklist",
+                  "snippet": "A short checklist to review Schema Markup before publishing; keep Schema Markup readable and aligned with intent."
+                }
+              ]
+            },
+            {
+              "id": "k3",
+              "title": "Internal Linking",
+              "used": 2,
+              "recommended": 4,
+              "sources": 9,
+              "type": "Clusters",
+              "mine": 2,
+              "avg": 3,
+              "results": 4,
+              "links": [
+                {
+                  "url": "https://google.com/guide/internal-linking-basics",
+                  "title": "Internal Linking: A practical introduction",
+                  "snippet": "This article explains Internal Linking with examples and workflows to help you apply Internal Linking quickly."
+                },
+                {
+                  "url": "https://google.com/playbook/internal-linking-tips",
+                  "title": "Internal Linking tips and best practices",
+                  "snippet": "Use these proven techniques for Internal Linking to improve outcomes and maintain consistency in Internal Linking across pages."
+                },
+                {
+                  "url": "https://google.com/checklist/internal-linking-checklist",
+                  "title": "Internal Linking checklist",
+                  "snippet": "A short checklist to review Internal Linking before publishing; keep Internal Linking readable and aligned with intent."
+                }
+              ]
+            },
+            {
+              "id": "k4",
+              "title": "Page Speed",
+              "used": 3,
+              "recommended": 3,
+              "sources": 18,
+              "type": "Long Tail",
+              "mine": 3,
+              "avg": 4,
+              "results": 6,
+              "links": [
+                {
+                  "url": "https://google.com/guide/page-speed-basics",
+                  "title": "Page Speed: A practical introduction",
+                  "snippet": "This article explains Page Speed with examples and workflows to help you apply Page Speed quickly."
+                },
+                {
+                  "url": "https://google.com/playbook/page-speed-tips",
+                  "title": "Page Speed tips and best practices",
+                  "snippet": "Use these proven techniques for Page Speed to improve outcomes and maintain consistency in Page Speed across pages."
+                },
+                {
+                  "url": "https://google.com/checklist/page-speed-checklist",
+                  "title": "Page Speed checklist",
+                  "snippet": "A short checklist to review Page Speed before publishing; keep Page Speed readable and aligned with intent."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "blog-seo-basics",
+          "url": "https://google.com/blog/seo-basics",
+          "title": "SEO Basics for Growth",
+          "pageType": "blog",
+          "kpis": {
+            "headings": 2,
+            "links": 5,
+            "images": 3
+          },
+          "keywords": [
+            {
+              "id": "k5",
+              "title": "Title Readability",
+              "used": 3,
+              "recommended": 3,
+              "sources": 10,
+              "type": "Clusters",
+              "mine": 3,
+              "avg": 4,
+              "results": 3,
+              "links": [
+                {
+                  "url": "https://google.com/guide/title-readability-basics",
+                  "title": "Title Readability: A practical introduction",
+                  "snippet": "This article explains Title Readability with examples and workflows to help you apply Title Readability quickly."
+                },
+                {
+                  "url": "https://google.com/playbook/title-readability-tips",
+                  "title": "Title Readability tips and best practices",
+                  "snippet": "Use these proven techniques for Title Readability to improve outcomes and maintain consistency in Title Readability across pages."
+                },
+                {
+                  "url": "https://google.com/checklist/title-readability-checklist",
+                  "title": "Title Readability checklist",
+                  "snippet": "A short checklist to review Title Readability before publishing; keep Title Readability readable and aligned with intent."
+                }
+              ]
+            },
+            {
+              "id": "k6",
+              "title": "Meta Description",
+              "used": 2,
+              "recommended": 4,
+              "sources": 8,
+              "type": "All Topics",
+              "mine": 2,
+              "avg": 3,
+              "results": 4,
+              "links": [
+                {
+                  "url": "https://google.com/guide/meta-description-basics",
+                  "title": "Meta Description: A practical introduction",
+                  "snippet": "This article explains Meta Description with examples and workflows to help you apply Meta Description quickly."
+                },
+                {
+                  "url": "https://google.com/playbook/meta-description-tips",
+                  "title": "Meta Description tips and best practices",
+                  "snippet": "Use these proven techniques for Meta Description to improve outcomes and maintain consistency in Meta Description across pages."
+                },
+                {
+                  "url": "https://google.com/checklist/meta-description-checklist",
+                  "title": "Meta Description checklist",
+                  "snippet": "A short checklist to review Meta Description before publishing; keep Meta Description readable and aligned with intent."
+                }
+              ]
+            },
+            {
+              "id": "k7",
+              "title": "Keyword Clusters",
+              "used": 1,
+              "recommended": 3,
+              "sources": 7,
+              "type": "Long Tail",
+              "mine": 1,
+              "avg": 3,
+              "results": 3,
+              "links": [
+                {
+                  "url": "https://google.com/guide/keyword-clusters-basics",
+                  "title": "Keyword Clusters: A practical introduction",
+                  "snippet": "This article explains Keyword Clusters with examples and workflows to help you apply Keyword Clusters quickly."
+                },
+                {
+                  "url": "https://google.com/playbook/keyword-clusters-tips",
+                  "title": "Keyword Clusters tips and best practices",
+                  "snippet": "Use these proven techniques for Keyword Clusters to improve outcomes and maintain consistency in Keyword Clusters across pages."
+                },
+                {
+                  "url": "https://google.com/checklist/keyword-clusters-checklist",
+                  "title": "Keyword Clusters checklist",
+                  "snippet": "A short checklist to review Keyword Clusters before publishing; keep Keyword Clusters readable and aligned with intent."
+                }
+              ]
+            },
+            {
+              "id": "k8",
+              "title": "Link Readability",
+              "used": 1,
+              "recommended": 3,
+              "sources": 5,
+              "type": "All Topics",
+              "mine": 1,
+              "avg": 2,
+              "results": 2,
+              "links": [
+                {
+                  "url": "https://google.com/guide/link-readability-basics",
+                  "title": "Link Readability: A practical introduction",
+                  "snippet": "This article explains Link Readability with examples and workflows to help you apply Link Readability quickly."
+                },
+                {
+                  "url": "https://google.com/playbook/link-readability-tips",
+                  "title": "Link Readability tips and best practices",
+                  "snippet": "Use these proven techniques for Link Readability to improve outcomes and maintain consistency in Link Readability across pages."
+                },
+                {
+                  "url": "https://google.com/checklist/link-readability-checklist",
+                  "title": "Link Readability checklist",
+                  "snippet": "A short checklist to review Link Readability before publishing; keep Link Readability readable and aligned with intent."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "domain": "amazon.in",
+      "displayName": "Amazon India",
+      "meta": {
+        "industry": "General",
+        "country": "IN",
+        "language": "en"
+      },
+      "updatedAt": "2025-11-02T14:36:10Z",
+      "pages": [
+        {
+          "id": "category-tech-overview",
+          "url": "https://amazon.in/category/technology",
+          "title": "Technology Category Overview",
+          "pageType": "category",
+          "kpis": {
+            "headings": 2,
+            "links": 5,
+            "images": 3
+          },
+          "keywords": [
+            {
+              "id": "k1",
+              "title": "Content Marketing",
+              "used": 4,
+              "recommended": 3,
+              "sources": 15,
+              "type": "Long Tail",
+              "mine": 2,
+              "avg": 5,
+              "results": 3,
+              "links": [
+                {
+                  "url": "https://amazon.in/guide/content-marketing-basics",
+                  "title": "Content Marketing: A practical introduction",
+                  "snippet": "This article explains Content Marketing with examples and workflows to help you apply Content Marketing quickly."
+                },
+                {
+                  "url": "https://amazon.in/playbook/content-marketing-tips",
+                  "title": "Content Marketing tips and best practices",
+                  "snippet": "Use these proven techniques for Content Marketing to improve outcomes and maintain consistency in Content Marketing across pages."
+                },
+                {
+                  "url": "https://amazon.in/checklist/content-marketing-checklist",
+                  "title": "Content Marketing checklist",
+                  "snippet": "A short checklist to review Content Marketing before publishing; keep Content Marketing readable and aligned with intent."
+                }
+              ]
+            },
+            {
+              "id": "k2",
+              "title": "Schema Markup",
+              "used": 1,
+              "recommended": 3,
+              "sources": 12,
+              "type": "All Topics",
+              "mine": 1,
+              "avg": 4,
+              "results": 5,
+              "links": [
+                {
+                  "url": "https://amazon.in/guide/schema-markup-basics",
+                  "title": "Schema Markup: A practical introduction",
+                  "snippet": "This article explains Schema Markup with examples and workflows to help you apply Schema Markup quickly."
+                },
+                {
+                  "url": "https://amazon.in/playbook/schema-markup-tips",
+                  "title": "Schema Markup tips and best practices",
+                  "snippet": "Use these proven techniques for Schema Markup to improve outcomes and maintain consistency in Schema Markup across pages."
+                },
+                {
+                  "url": "https://amazon.in/checklist/schema-markup-checklist",
+                  "title": "Schema Markup checklist",
+                  "snippet": "A short checklist to review Schema Markup before publishing; keep Schema Markup readable and aligned with intent."
+                }
+              ]
+            },
+            {
+              "id": "k3",
+              "title": "Internal Linking",
+              "used": 2,
+              "recommended": 4,
+              "sources": 9,
+              "type": "Clusters",
+              "mine": 2,
+              "avg": 3,
+              "results": 4,
+              "links": [
+                {
+                  "url": "https://amazon.in/guide/internal-linking-basics",
+                  "title": "Internal Linking: A practical introduction",
+                  "snippet": "This article explains Internal Linking with examples and workflows to help you apply Internal Linking quickly."
+                },
+                {
+                  "url": "https://amazon.in/playbook/internal-linking-tips",
+                  "title": "Internal Linking tips and best practices",
+                  "snippet": "Use these proven techniques for Internal Linking to improve outcomes and maintain consistency in Internal Linking across pages."
+                },
+                {
+                  "url": "https://amazon.in/checklist/internal-linking-checklist",
+                  "title": "Internal Linking checklist",
+                  "snippet": "A short checklist to review Internal Linking before publishing; keep Internal Linking readable and aligned with intent."
+                }
+              ]
+            },
+            {
+              "id": "k4",
+              "title": "Page Speed",
+              "used": 3,
+              "recommended": 3,
+              "sources": 18,
+              "type": "Long Tail",
+              "mine": 3,
+              "avg": 4,
+              "results": 6,
+              "links": [
+                {
+                  "url": "https://amazon.in/guide/page-speed-basics",
+                  "title": "Page Speed: A practical introduction",
+                  "snippet": "This article explains Page Speed with examples and workflows to help you apply Page Speed quickly."
+                },
+                {
+                  "url": "https://amazon.in/playbook/page-speed-tips",
+                  "title": "Page Speed tips and best practices",
+                  "snippet": "Use these proven techniques for Page Speed to improve outcomes and maintain consistency in Page Speed across pages."
+                },
+                {
+                  "url": "https://amazon.in/checklist/page-speed-checklist",
+                  "title": "Page Speed checklist",
+                  "snippet": "A short checklist to review Page Speed before publishing; keep Page Speed readable and aligned with intent."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "blog-seo-basics",
+          "url": "https://amazon.in/blog/seo-basics",
+          "title": "SEO Basics for Growth",
+          "pageType": "blog",
+          "kpis": {
+            "headings": 2,
+            "links": 5,
+            "images": 3
+          },
+          "keywords": [
+            {
+              "id": "k5",
+              "title": "Title Readability",
+              "used": 3,
+              "recommended": 3,
+              "sources": 10,
+              "type": "Clusters",
+              "mine": 3,
+              "avg": 4,
+              "results": 3,
+              "links": [
+                {
+                  "url": "https://amazon.in/guide/title-readability-basics",
+                  "title": "Title Readability: A practical introduction",
+                  "snippet": "This article explains Title Readability with examples and workflows to help you apply Title Readability quickly."
+                },
+                {
+                  "url": "https://amazon.in/playbook/title-readability-tips",
+                  "title": "Title Readability tips and best practices",
+                  "snippet": "Use these proven techniques for Title Readability to improve outcomes and maintain consistency in Title Readability across pages."
+                },
+                {
+                  "url": "https://amazon.in/checklist/title-readability-checklist",
+                  "title": "Title Readability checklist",
+                  "snippet": "A short checklist to review Title Readability before publishing; keep Title Readability readable and aligned with intent."
+                }
+              ]
+            },
+            {
+              "id": "k6",
+              "title": "Meta Description",
+              "used": 2,
+              "recommended": 4,
+              "sources": 8,
+              "type": "All Topics",
+              "mine": 2,
+              "avg": 3,
+              "results": 4,
+              "links": [
+                {
+                  "url": "https://amazon.in/guide/meta-description-basics",
+                  "title": "Meta Description: A practical introduction",
+                  "snippet": "This article explains Meta Description with examples and workflows to help you apply Meta Description quickly."
+                },
+                {
+                  "url": "https://amazon.in/playbook/meta-description-tips",
+                  "title": "Meta Description tips and best practices",
+                  "snippet": "Use these proven techniques for Meta Description to improve outcomes and maintain consistency in Meta Description across pages."
+                },
+                {
+                  "url": "https://amazon.in/checklist/meta-description-checklist",
+                  "title": "Meta Description checklist",
+                  "snippet": "A short checklist to review Meta Description before publishing; keep Meta Description readable and aligned with intent."
+                }
+              ]
+            },
+            {
+              "id": "k7",
+              "title": "Keyword Clusters",
+              "used": 1,
+              "recommended": 3,
+              "sources": 7,
+              "type": "Long Tail",
+              "mine": 1,
+              "avg": 3,
+              "results": 3,
+              "links": [
+                {
+                  "url": "https://amazon.in/guide/keyword-clusters-basics",
+                  "title": "Keyword Clusters: A practical introduction",
+                  "snippet": "This article explains Keyword Clusters with examples and workflows to help you apply Keyword Clusters quickly."
+                },
+                {
+                  "url": "https://amazon.in/playbook/keyword-clusters-tips",
+                  "title": "Keyword Clusters tips and best practices",
+                  "snippet": "Use these proven techniques for Keyword Clusters to improve outcomes and maintain consistency in Keyword Clusters across pages."
+                },
+                {
+                  "url": "https://amazon.in/checklist/keyword-clusters-checklist",
+                  "title": "Keyword Clusters checklist",
+                  "snippet": "A short checklist to review Keyword Clusters before publishing; keep Keyword Clusters readable and aligned with intent."
+                }
+              ]
+            },
+            {
+              "id": "k8",
+              "title": "Link Readability",
+              "used": 1,
+              "recommended": 3,
+              "sources": 5,
+              "type": "All Topics",
+              "mine": 1,
+              "avg": 2,
+              "results": 2,
+              "links": [
+                {
+                  "url": "https://amazon.in/guide/link-readability-basics",
+                  "title": "Link Readability: A practical introduction",
+                  "snippet": "This article explains Link Readability with examples and workflows to help you apply Link Readability quickly."
+                },
+                {
+                  "url": "https://amazon.in/playbook/link-readability-tips",
+                  "title": "Link Readability tips and best practices",
+                  "snippet": "Use these proven techniques for Link Readability to improve outcomes and maintain consistency in Link Readability across pages."
+                },
+                {
+                  "url": "https://amazon.in/checklist/link-readability-checklist",
+                  "title": "Link Readability checklist",
+                  "snippet": "A short checklist to review Link Readability before publishing; keep Link Readability readable and aligned with intent."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "domain": "flipkart.com",
+      "displayName": "Flipkart",
+      "meta": {
+        "industry": "General",
+        "country": "IN",
+        "language": "en"
+      },
+      "updatedAt": "2025-11-02T14:36:10Z",
+      "pages": [
+        {
+          "id": "category-tech-overview",
+          "url": "https://flipkart.com/category/technology",
+          "title": "Technology Category Overview",
+          "pageType": "category",
+          "kpis": {
+            "headings": 2,
+            "links": 5,
+            "images": 3
+          },
+          "keywords": [
+            {
+              "id": "k1",
+              "title": "Content Marketing",
+              "used": 4,
+              "recommended": 3,
+              "sources": 15,
+              "type": "Long Tail",
+              "mine": 2,
+              "avg": 5,
+              "results": 3,
+              "links": [
+                {
+                  "url": "https://flipkart.com/guide/content-marketing-basics",
+                  "title": "Content Marketing: A practical introduction",
+                  "snippet": "This article explains Content Marketing with examples and workflows to help you apply Content Marketing quickly."
+                },
+                {
+                  "url": "https://flipkart.com/playbook/content-marketing-tips",
+                  "title": "Content Marketing tips and best practices",
+                  "snippet": "Use these proven techniques for Content Marketing to improve outcomes and maintain consistency in Content Marketing across pages."
+                },
+                {
+                  "url": "https://flipkart.com/checklist/content-marketing-checklist",
+                  "title": "Content Marketing checklist",
+                  "snippet": "A short checklist to review Content Marketing before publishing; keep Content Marketing readable and aligned with intent."
+                }
+              ]
+            },
+            {
+              "id": "k2",
+              "title": "Schema Markup",
+              "used": 1,
+              "recommended": 3,
+              "sources": 12,
+              "type": "All Topics",
+              "mine": 1,
+              "avg": 4,
+              "results": 5,
+              "links": [
+                {
+                  "url": "https://flipkart.com/guide/schema-markup-basics",
+                  "title": "Schema Markup: A practical introduction",
+                  "snippet": "This article explains Schema Markup with examples and workflows to help you apply Schema Markup quickly."
+                },
+                {
+                  "url": "https://flipkart.com/playbook/schema-markup-tips",
+                  "title": "Schema Markup tips and best practices",
+                  "snippet": "Use these proven techniques for Schema Markup to improve outcomes and maintain consistency in Schema Markup across pages."
+                },
+                {
+                  "url": "https://flipkart.com/checklist/schema-markup-checklist",
+                  "title": "Schema Markup checklist",
+                  "snippet": "A short checklist to review Schema Markup before publishing; keep Schema Markup readable and aligned with intent."
+                }
+              ]
+            },
+            {
+              "id": "k3",
+              "title": "Internal Linking",
+              "used": 2,
+              "recommended": 4,
+              "sources": 9,
+              "type": "Clusters",
+              "mine": 2,
+              "avg": 3,
+              "results": 4,
+              "links": [
+                {
+                  "url": "https://flipkart.com/guide/internal-linking-basics",
+                  "title": "Internal Linking: A practical introduction",
+                  "snippet": "This article explains Internal Linking with examples and workflows to help you apply Internal Linking quickly."
+                },
+                {
+                  "url": "https://flipkart.com/playbook/internal-linking-tips",
+                  "title": "Internal Linking tips and best practices",
+                  "snippet": "Use these proven techniques for Internal Linking to improve outcomes and maintain consistency in Internal Linking across pages."
+                },
+                {
+                  "url": "https://flipkart.com/checklist/internal-linking-checklist",
+                  "title": "Internal Linking checklist",
+                  "snippet": "A short checklist to review Internal Linking before publishing; keep Internal Linking readable and aligned with intent."
+                }
+              ]
+            },
+            {
+              "id": "k4",
+              "title": "Page Speed",
+              "used": 3,
+              "recommended": 3,
+              "sources": 18,
+              "type": "Long Tail",
+              "mine": 3,
+              "avg": 4,
+              "results": 6,
+              "links": [
+                {
+                  "url": "https://flipkart.com/guide/page-speed-basics",
+                  "title": "Page Speed: A practical introduction",
+                  "snippet": "This article explains Page Speed with examples and workflows to help you apply Page Speed quickly."
+                },
+                {
+                  "url": "https://flipkart.com/playbook/page-speed-tips",
+                  "title": "Page Speed tips and best practices",
+                  "snippet": "Use these proven techniques for Page Speed to improve outcomes and maintain consistency in Page Speed across pages."
+                },
+                {
+                  "url": "https://flipkart.com/checklist/page-speed-checklist",
+                  "title": "Page Speed checklist",
+                  "snippet": "A short checklist to review Page Speed before publishing; keep Page Speed readable and aligned with intent."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "blog-seo-basics",
+          "url": "https://flipkart.com/blog/seo-basics",
+          "title": "SEO Basics for Growth",
+          "pageType": "blog",
+          "kpis": {
+            "headings": 2,
+            "links": 5,
+            "images": 3
+          },
+          "keywords": [
+            {
+              "id": "k5",
+              "title": "Title Readability",
+              "used": 3,
+              "recommended": 3,
+              "sources": 10,
+              "type": "Clusters",
+              "mine": 3,
+              "avg": 4,
+              "results": 3,
+              "links": [
+                {
+                  "url": "https://flipkart.com/guide/title-readability-basics",
+                  "title": "Title Readability: A practical introduction",
+                  "snippet": "This article explains Title Readability with examples and workflows to help you apply Title Readability quickly."
+                },
+                {
+                  "url": "https://flipkart.com/playbook/title-readability-tips",
+                  "title": "Title Readability tips and best practices",
+                  "snippet": "Use these proven techniques for Title Readability to improve outcomes and maintain consistency in Title Readability across pages."
+                },
+                {
+                  "url": "https://flipkart.com/checklist/title-readability-checklist",
+                  "title": "Title Readability checklist",
+                  "snippet": "A short checklist to review Title Readability before publishing; keep Title Readability readable and aligned with intent."
+                }
+              ]
+            },
+            {
+              "id": "k6",
+              "title": "Meta Description",
+              "used": 2,
+              "recommended": 4,
+              "sources": 8,
+              "type": "All Topics",
+              "mine": 2,
+              "avg": 3,
+              "results": 4,
+              "links": [
+                {
+                  "url": "https://flipkart.com/guide/meta-description-basics",
+                  "title": "Meta Description: A practical introduction",
+                  "snippet": "This article explains Meta Description with examples and workflows to help you apply Meta Description quickly."
+                },
+                {
+                  "url": "https://flipkart.com/playbook/meta-description-tips",
+                  "title": "Meta Description tips and best practices",
+                  "snippet": "Use these proven techniques for Meta Description to improve outcomes and maintain consistency in Meta Description across pages."
+                },
+                {
+                  "url": "https://flipkart.com/checklist/meta-description-checklist",
+                  "title": "Meta Description checklist",
+                  "snippet": "A short checklist to review Meta Description before publishing; keep Meta Description readable and aligned with intent."
+                }
+              ]
+            },
+            {
+              "id": "k7",
+              "title": "Keyword Clusters",
+              "used": 1,
+              "recommended": 3,
+              "sources": 7,
+              "type": "Long Tail",
+              "mine": 1,
+              "avg": 3,
+              "results": 3,
+              "links": [
+                {
+                  "url": "https://flipkart.com/guide/keyword-clusters-basics",
+                  "title": "Keyword Clusters: A practical introduction",
+                  "snippet": "This article explains Keyword Clusters with examples and workflows to help you apply Keyword Clusters quickly."
+                },
+                {
+                  "url": "https://flipkart.com/playbook/keyword-clusters-tips",
+                  "title": "Keyword Clusters tips and best practices",
+                  "snippet": "Use these proven techniques for Keyword Clusters to improve outcomes and maintain consistency in Keyword Clusters across pages."
+                },
+                {
+                  "url": "https://flipkart.com/checklist/keyword-clusters-checklist",
+                  "title": "Keyword Clusters checklist",
+                  "snippet": "A short checklist to review Keyword Clusters before publishing; keep Keyword Clusters readable and aligned with intent."
+                }
+              ]
+            },
+            {
+              "id": "k8",
+              "title": "Link Readability",
+              "used": 1,
+              "recommended": 3,
+              "sources": 5,
+              "type": "All Topics",
+              "mine": 1,
+              "avg": 2,
+              "results": 2,
+              "links": [
+                {
+                  "url": "https://flipkart.com/guide/link-readability-basics",
+                  "title": "Link Readability: A practical introduction",
+                  "snippet": "This article explains Link Readability with examples and workflows to help you apply Link Readability quickly."
+                },
+                {
+                  "url": "https://flipkart.com/playbook/link-readability-tips",
+                  "title": "Link Readability tips and best practices",
+                  "snippet": "Use these proven techniques for Link Readability to improve outcomes and maintain consistency in Link Readability across pages."
+                },
+                {
+                  "url": "https://flipkart.com/checklist/link-readability-checklist",
+                  "title": "Link Readability checklist",
+                  "snippet": "A short checklist to review Link Readability before publishing; keep Link Readability readable and aligned with intent."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "domain": "myntra.com",
+      "displayName": "Myntra",
+      "meta": {
+        "industry": "General",
+        "country": "IN",
+        "language": "en"
+      },
+      "updatedAt": "2025-11-02T14:36:10Z",
+      "pages": [
+        {
+          "id": "category-tech-overview",
+          "url": "https://myntra.com/category/technology",
+          "title": "Technology Category Overview",
+          "pageType": "category",
+          "kpis": {
+            "headings": 2,
+            "links": 5,
+            "images": 3
+          },
+          "keywords": [
+            {
+              "id": "k1",
+              "title": "Content Marketing",
+              "used": 4,
+              "recommended": 3,
+              "sources": 15,
+              "type": "Long Tail",
+              "mine": 2,
+              "avg": 5,
+              "results": 3,
+              "links": [
+                {
+                  "url": "https://myntra.com/guide/content-marketing-basics",
+                  "title": "Content Marketing: A practical introduction",
+                  "snippet": "This article explains Content Marketing with examples and workflows to help you apply Content Marketing quickly."
+                },
+                {
+                  "url": "https://myntra.com/playbook/content-marketing-tips",
+                  "title": "Content Marketing tips and best practices",
+                  "snippet": "Use these proven techniques for Content Marketing to improve outcomes and maintain consistency in Content Marketing across pages."
+                },
+                {
+                  "url": "https://myntra.com/checklist/content-marketing-checklist",
+                  "title": "Content Marketing checklist",
+                  "snippet": "A short checklist to review Content Marketing before publishing; keep Content Marketing readable and aligned with intent."
+                }
+              ]
+            },
+            {
+              "id": "k2",
+              "title": "Schema Markup",
+              "used": 1,
+              "recommended": 3,
+              "sources": 12,
+              "type": "All Topics",
+              "mine": 1,
+              "avg": 4,
+              "results": 5,
+              "links": [
+                {
+                  "url": "https://myntra.com/guide/schema-markup-basics",
+                  "title": "Schema Markup: A practical introduction",
+                  "snippet": "This article explains Schema Markup with examples and workflows to help you apply Schema Markup quickly."
+                },
+                {
+                  "url": "https://myntra.com/playbook/schema-markup-tips",
+                  "title": "Schema Markup tips and best practices",
+                  "snippet": "Use these proven techniques for Schema Markup to improve outcomes and maintain consistency in Schema Markup across pages."
+                },
+                {
+                  "url": "https://myntra.com/checklist/schema-markup-checklist",
+                  "title": "Schema Markup checklist",
+                  "snippet": "A short checklist to review Schema Markup before publishing; keep Schema Markup readable and aligned with intent."
+                }
+              ]
+            },
+            {
+              "id": "k3",
+              "title": "Internal Linking",
+              "used": 2,
+              "recommended": 4,
+              "sources": 9,
+              "type": "Clusters",
+              "mine": 2,
+              "avg": 3,
+              "results": 4,
+              "links": [
+                {
+                  "url": "https://myntra.com/guide/internal-linking-basics",
+                  "title": "Internal Linking: A practical introduction",
+                  "snippet": "This article explains Internal Linking with examples and workflows to help you apply Internal Linking quickly."
+                },
+                {
+                  "url": "https://myntra.com/playbook/internal-linking-tips",
+                  "title": "Internal Linking tips and best practices",
+                  "snippet": "Use these proven techniques for Internal Linking to improve outcomes and maintain consistency in Internal Linking across pages."
+                },
+                {
+                  "url": "https://myntra.com/checklist/internal-linking-checklist",
+                  "title": "Internal Linking checklist",
+                  "snippet": "A short checklist to review Internal Linking before publishing; keep Internal Linking readable and aligned with intent."
+                }
+              ]
+            },
+            {
+              "id": "k4",
+              "title": "Page Speed",
+              "used": 3,
+              "recommended": 3,
+              "sources": 18,
+              "type": "Long Tail",
+              "mine": 3,
+              "avg": 4,
+              "results": 6,
+              "links": [
+                {
+                  "url": "https://myntra.com/guide/page-speed-basics",
+                  "title": "Page Speed: A practical introduction",
+                  "snippet": "This article explains Page Speed with examples and workflows to help you apply Page Speed quickly."
+                },
+                {
+                  "url": "https://myntra.com/playbook/page-speed-tips",
+                  "title": "Page Speed tips and best practices",
+                  "snippet": "Use these proven techniques for Page Speed to improve outcomes and maintain consistency in Page Speed across pages."
+                },
+                {
+                  "url": "https://myntra.com/checklist/page-speed-checklist",
+                  "title": "Page Speed checklist",
+                  "snippet": "A short checklist to review Page Speed before publishing; keep Page Speed readable and aligned with intent."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "blog-seo-basics",
+          "url": "https://myntra.com/blog/seo-basics",
+          "title": "SEO Basics for Growth",
+          "pageType": "blog",
+          "kpis": {
+            "headings": 2,
+            "links": 5,
+            "images": 3
+          },
+          "keywords": [
+            {
+              "id": "k5",
+              "title": "Title Readability",
+              "used": 3,
+              "recommended": 3,
+              "sources": 10,
+              "type": "Clusters",
+              "mine": 3,
+              "avg": 4,
+              "results": 3,
+              "links": [
+                {
+                  "url": "https://myntra.com/guide/title-readability-basics",
+                  "title": "Title Readability: A practical introduction",
+                  "snippet": "This article explains Title Readability with examples and workflows to help you apply Title Readability quickly."
+                },
+                {
+                  "url": "https://myntra.com/playbook/title-readability-tips",
+                  "title": "Title Readability tips and best practices",
+                  "snippet": "Use these proven techniques for Title Readability to improve outcomes and maintain consistency in Title Readability across pages."
+                },
+                {
+                  "url": "https://myntra.com/checklist/title-readability-checklist",
+                  "title": "Title Readability checklist",
+                  "snippet": "A short checklist to review Title Readability before publishing; keep Title Readability readable and aligned with intent."
+                }
+              ]
+            },
+            {
+              "id": "k6",
+              "title": "Meta Description",
+              "used": 2,
+              "recommended": 4,
+              "sources": 8,
+              "type": "All Topics",
+              "mine": 2,
+              "avg": 3,
+              "results": 4,
+              "links": [
+                {
+                  "url": "https://myntra.com/guide/meta-description-basics",
+                  "title": "Meta Description: A practical introduction",
+                  "snippet": "This article explains Meta Description with examples and workflows to help you apply Meta Description quickly."
+                },
+                {
+                  "url": "https://myntra.com/playbook/meta-description-tips",
+                  "title": "Meta Description tips and best practices",
+                  "snippet": "Use these proven techniques for Meta Description to improve outcomes and maintain consistency in Meta Description across pages."
+                },
+                {
+                  "url": "https://myntra.com/checklist/meta-description-checklist",
+                  "title": "Meta Description checklist",
+                  "snippet": "A short checklist to review Meta Description before publishing; keep Meta Description readable and aligned with intent."
+                }
+              ]
+            },
+            {
+              "id": "k7",
+              "title": "Keyword Clusters",
+              "used": 1,
+              "recommended": 3,
+              "sources": 7,
+              "type": "Long Tail",
+              "mine": 1,
+              "avg": 3,
+              "results": 3,
+              "links": [
+                {
+                  "url": "https://myntra.com/guide/keyword-clusters-basics",
+                  "title": "Keyword Clusters: A practical introduction",
+                  "snippet": "This article explains Keyword Clusters with examples and workflows to help you apply Keyword Clusters quickly."
+                },
+                {
+                  "url": "https://myntra.com/playbook/keyword-clusters-tips",
+                  "title": "Keyword Clusters tips and best practices",
+                  "snippet": "Use these proven techniques for Keyword Clusters to improve outcomes and maintain consistency in Keyword Clusters across pages."
+                },
+                {
+                  "url": "https://myntra.com/checklist/keyword-clusters-checklist",
+                  "title": "Keyword Clusters checklist",
+                  "snippet": "A short checklist to review Keyword Clusters before publishing; keep Keyword Clusters readable and aligned with intent."
+                }
+              ]
+            },
+            {
+              "id": "k8",
+              "title": "Link Readability",
+              "used": 1,
+              "recommended": 3,
+              "sources": 5,
+              "type": "All Topics",
+              "mine": 1,
+              "avg": 2,
+              "results": 2,
+              "links": [
+                {
+                  "url": "https://myntra.com/guide/link-readability-basics",
+                  "title": "Link Readability: A practical introduction",
+                  "snippet": "This article explains Link Readability with examples and workflows to help you apply Link Readability quickly."
+                },
+                {
+                  "url": "https://myntra.com/playbook/link-readability-tips",
+                  "title": "Link Readability tips and best practices",
+                  "snippet": "Use these proven techniques for Link Readability to improve outcomes and maintain consistency in Link Readability across pages."
+                },
+                {
+                  "url": "https://myntra.com/checklist/link-readability-checklist",
+                  "title": "Link Readability checklist",
+                  "snippet": "A short checklist to review Link Readability before publishing; keep Link Readability readable and aligned with intent."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "domain": "meesho.com",
+      "displayName": "Meesho",
+      "meta": {
+        "industry": "General",
+        "country": "IN",
+        "language": "en"
+      },
+      "updatedAt": "2025-11-02T14:36:10Z",
+      "pages": [
+        {
+          "id": "category-tech-overview",
+          "url": "https://meesho.com/category/technology",
+          "title": "Technology Category Overview",
+          "pageType": "category",
+          "kpis": {
+            "headings": 2,
+            "links": 5,
+            "images": 3
+          },
+          "keywords": [
+            {
+              "id": "k1",
+              "title": "Content Marketing",
+              "used": 4,
+              "recommended": 3,
+              "sources": 15,
+              "type": "Long Tail",
+              "mine": 2,
+              "avg": 5,
+              "results": 3,
+              "links": [
+                {
+                  "url": "https://meesho.com/guide/content-marketing-basics",
+                  "title": "Content Marketing: A practical introduction",
+                  "snippet": "This article explains Content Marketing with examples and workflows to help you apply Content Marketing quickly."
+                },
+                {
+                  "url": "https://meesho.com/playbook/content-marketing-tips",
+                  "title": "Content Marketing tips and best practices",
+                  "snippet": "Use these proven techniques for Content Marketing to improve outcomes and maintain consistency in Content Marketing across pages."
+                },
+                {
+                  "url": "https://meesho.com/checklist/content-marketing-checklist",
+                  "title": "Content Marketing checklist",
+                  "snippet": "A short checklist to review Content Marketing before publishing; keep Content Marketing readable and aligned with intent."
+                }
+              ]
+            },
+            {
+              "id": "k2",
+              "title": "Schema Markup",
+              "used": 1,
+              "recommended": 3,
+              "sources": 12,
+              "type": "All Topics",
+              "mine": 1,
+              "avg": 4,
+              "results": 5,
+              "links": [
+                {
+                  "url": "https://meesho.com/guide/schema-markup-basics",
+                  "title": "Schema Markup: A practical introduction",
+                  "snippet": "This article explains Schema Markup with examples and workflows to help you apply Schema Markup quickly."
+                },
+                {
+                  "url": "https://meesho.com/playbook/schema-markup-tips",
+                  "title": "Schema Markup tips and best practices",
+                  "snippet": "Use these proven techniques for Schema Markup to improve outcomes and maintain consistency in Schema Markup across pages."
+                },
+                {
+                  "url": "https://meesho.com/checklist/schema-markup-checklist",
+                  "title": "Schema Markup checklist",
+                  "snippet": "A short checklist to review Schema Markup before publishing; keep Schema Markup readable and aligned with intent."
+                }
+              ]
+            },
+            {
+              "id": "k3",
+              "title": "Internal Linking",
+              "used": 2,
+              "recommended": 4,
+              "sources": 9,
+              "type": "Clusters",
+              "mine": 2,
+              "avg": 3,
+              "results": 4,
+              "links": [
+                {
+                  "url": "https://meesho.com/guide/internal-linking-basics",
+                  "title": "Internal Linking: A practical introduction",
+                  "snippet": "This article explains Internal Linking with examples and workflows to help you apply Internal Linking quickly."
+                },
+                {
+                  "url": "https://meesho.com/playbook/internal-linking-tips",
+                  "title": "Internal Linking tips and best practices",
+                  "snippet": "Use these proven techniques for Internal Linking to improve outcomes and maintain consistency in Internal Linking across pages."
+                },
+                {
+                  "url": "https://meesho.com/checklist/internal-linking-checklist",
+                  "title": "Internal Linking checklist",
+                  "snippet": "A short checklist to review Internal Linking before publishing; keep Internal Linking readable and aligned with intent."
+                }
+              ]
+            },
+            {
+              "id": "k4",
+              "title": "Page Speed",
+              "used": 3,
+              "recommended": 3,
+              "sources": 18,
+              "type": "Long Tail",
+              "mine": 3,
+              "avg": 4,
+              "results": 6,
+              "links": [
+                {
+                  "url": "https://meesho.com/guide/page-speed-basics",
+                  "title": "Page Speed: A practical introduction",
+                  "snippet": "This article explains Page Speed with examples and workflows to help you apply Page Speed quickly."
+                },
+                {
+                  "url": "https://meesho.com/playbook/page-speed-tips",
+                  "title": "Page Speed tips and best practices",
+                  "snippet": "Use these proven techniques for Page Speed to improve outcomes and maintain consistency in Page Speed across pages."
+                },
+                {
+                  "url": "https://meesho.com/checklist/page-speed-checklist",
+                  "title": "Page Speed checklist",
+                  "snippet": "A short checklist to review Page Speed before publishing; keep Page Speed readable and aligned with intent."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "blog-seo-basics",
+          "url": "https://meesho.com/blog/seo-basics",
+          "title": "SEO Basics for Growth",
+          "pageType": "blog",
+          "kpis": {
+            "headings": 2,
+            "links": 5,
+            "images": 3
+          },
+          "keywords": [
+            {
+              "id": "k5",
+              "title": "Title Readability",
+              "used": 3,
+              "recommended": 3,
+              "sources": 10,
+              "type": "Clusters",
+              "mine": 3,
+              "avg": 4,
+              "results": 3,
+              "links": [
+                {
+                  "url": "https://meesho.com/guide/title-readability-basics",
+                  "title": "Title Readability: A practical introduction",
+                  "snippet": "This article explains Title Readability with examples and workflows to help you apply Title Readability quickly."
+                },
+                {
+                  "url": "https://meesho.com/playbook/title-readability-tips",
+                  "title": "Title Readability tips and best practices",
+                  "snippet": "Use these proven techniques for Title Readability to improve outcomes and maintain consistency in Title Readability across pages."
+                },
+                {
+                  "url": "https://meesho.com/checklist/title-readability-checklist",
+                  "title": "Title Readability checklist",
+                  "snippet": "A short checklist to review Title Readability before publishing; keep Title Readability readable and aligned with intent."
+                }
+              ]
+            },
+            {
+              "id": "k6",
+              "title": "Meta Description",
+              "used": 2,
+              "recommended": 4,
+              "sources": 8,
+              "type": "All Topics",
+              "mine": 2,
+              "avg": 3,
+              "results": 4,
+              "links": [
+                {
+                  "url": "https://meesho.com/guide/meta-description-basics",
+                  "title": "Meta Description: A practical introduction",
+                  "snippet": "This article explains Meta Description with examples and workflows to help you apply Meta Description quickly."
+                },
+                {
+                  "url": "https://meesho.com/playbook/meta-description-tips",
+                  "title": "Meta Description tips and best practices",
+                  "snippet": "Use these proven techniques for Meta Description to improve outcomes and maintain consistency in Meta Description across pages."
+                },
+                {
+                  "url": "https://meesho.com/checklist/meta-description-checklist",
+                  "title": "Meta Description checklist",
+                  "snippet": "A short checklist to review Meta Description before publishing; keep Meta Description readable and aligned with intent."
+                }
+              ]
+            },
+            {
+              "id": "k7",
+              "title": "Keyword Clusters",
+              "used": 1,
+              "recommended": 3,
+              "sources": 7,
+              "type": "Long Tail",
+              "mine": 1,
+              "avg": 3,
+              "results": 3,
+              "links": [
+                {
+                  "url": "https://meesho.com/guide/keyword-clusters-basics",
+                  "title": "Keyword Clusters: A practical introduction",
+                  "snippet": "This article explains Keyword Clusters with examples and workflows to help you apply Keyword Clusters quickly."
+                },
+                {
+                  "url": "https://meesho.com/playbook/keyword-clusters-tips",
+                  "title": "Keyword Clusters tips and best practices",
+                  "snippet": "Use these proven techniques for Keyword Clusters to improve outcomes and maintain consistency in Keyword Clusters across pages."
+                },
+                {
+                  "url": "https://meesho.com/checklist/keyword-clusters-checklist",
+                  "title": "Keyword Clusters checklist",
+                  "snippet": "A short checklist to review Keyword Clusters before publishing; keep Keyword Clusters readable and aligned with intent."
+                }
+              ]
+            },
+            {
+              "id": "k8",
+              "title": "Link Readability",
+              "used": 1,
+              "recommended": 3,
+              "sources": 5,
+              "type": "All Topics",
+              "mine": 1,
+              "avg": 2,
+              "results": 2,
+              "links": [
+                {
+                  "url": "https://meesho.com/guide/link-readability-basics",
+                  "title": "Link Readability: A practical introduction",
+                  "snippet": "This article explains Link Readability with examples and workflows to help you apply Link Readability quickly."
+                },
+                {
+                  "url": "https://meesho.com/playbook/link-readability-tips",
+                  "title": "Link Readability tips and best practices",
+                  "snippet": "Use these proven techniques for Link Readability to improve outcomes and maintain consistency in Link Readability across pages."
+                },
+                {
+                  "url": "https://meesho.com/checklist/link-readability-checklist",
+                  "title": "Link Readability checklist",
+                  "snippet": "A short checklist to review Link Readability before publishing; keep Link Readability readable and aligned with intent."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "domain": "itzfizz.com",
+      "displayName": "ItzFIZZ",
+      "meta": {
+        "industry": "General",
+        "country": "IN",
+        "language": "en"
+      },
+      "updatedAt": "2025-11-02T14:36:10Z",
+      "pages": [
+        {
+          "id": "category-tech-overview",
+          "url": "https://itzfizz.com/category/technology",
+          "title": "Technology Category Overview",
+          "pageType": "category",
+          "kpis": {
+            "headings": 2,
+            "links": 5,
+            "images": 3
+          },
+          "keywords": [
+            {
+              "id": "k1",
+              "title": "Content Marketing",
+              "used": 4,
+              "recommended": 3,
+              "sources": 15,
+              "type": "Long Tail",
+              "mine": 2,
+              "avg": 5,
+              "results": 3,
+              "links": [
+                {
+                  "url": "https://itzfizz.com/guide/content-marketing-basics",
+                  "title": "Content Marketing: A practical introduction",
+                  "snippet": "This article explains Content Marketing with examples and workflows to help you apply Content Marketing quickly."
+                },
+                {
+                  "url": "https://itzfizz.com/playbook/content-marketing-tips",
+                  "title": "Content Marketing tips and best practices",
+                  "snippet": "Use these proven techniques for Content Marketing to improve outcomes and maintain consistency in Content Marketing across pages."
+                },
+                {
+                  "url": "https://itzfizz.com/checklist/content-marketing-checklist",
+                  "title": "Content Marketing checklist",
+                  "snippet": "A short checklist to review Content Marketing before publishing; keep Content Marketing readable and aligned with intent."
+                }
+              ]
+            },
+            {
+              "id": "k2",
+              "title": "Schema Markup",
+              "used": 1,
+              "recommended": 3,
+              "sources": 12,
+              "type": "All Topics",
+              "mine": 1,
+              "avg": 4,
+              "results": 5,
+              "links": [
+                {
+                  "url": "https://itzfizz.com/guide/schema-markup-basics",
+                  "title": "Schema Markup: A practical introduction",
+                  "snippet": "This article explains Schema Markup with examples and workflows to help you apply Schema Markup quickly."
+                },
+                {
+                  "url": "https://itzfizz.com/playbook/schema-markup-tips",
+                  "title": "Schema Markup tips and best practices",
+                  "snippet": "Use these proven techniques for Schema Markup to improve outcomes and maintain consistency in Schema Markup across pages."
+                },
+                {
+                  "url": "https://itzfizz.com/checklist/schema-markup-checklist",
+                  "title": "Schema Markup checklist",
+                  "snippet": "A short checklist to review Schema Markup before publishing; keep Schema Markup readable and aligned with intent."
+                }
+              ]
+            },
+            {
+              "id": "k3",
+              "title": "Internal Linking",
+              "used": 2,
+              "recommended": 4,
+              "sources": 9,
+              "type": "Clusters",
+              "mine": 2,
+              "avg": 3,
+              "results": 4,
+              "links": [
+                {
+                  "url": "https://itzfizz.com/guide/internal-linking-basics",
+                  "title": "Internal Linking: A practical introduction",
+                  "snippet": "This article explains Internal Linking with examples and workflows to help you apply Internal Linking quickly."
+                },
+                {
+                  "url": "https://itzfizz.com/playbook/internal-linking-tips",
+                  "title": "Internal Linking tips and best practices",
+                  "snippet": "Use these proven techniques for Internal Linking to improve outcomes and maintain consistency in Internal Linking across pages."
+                },
+                {
+                  "url": "https://itzfizz.com/checklist/internal-linking-checklist",
+                  "title": "Internal Linking checklist",
+                  "snippet": "A short checklist to review Internal Linking before publishing; keep Internal Linking readable and aligned with intent."
+                }
+              ]
+            },
+            {
+              "id": "k4",
+              "title": "Page Speed",
+              "used": 3,
+              "recommended": 3,
+              "sources": 18,
+              "type": "Long Tail",
+              "mine": 3,
+              "avg": 4,
+              "results": 6,
+              "links": [
+                {
+                  "url": "https://itzfizz.com/guide/page-speed-basics",
+                  "title": "Page Speed: A practical introduction",
+                  "snippet": "This article explains Page Speed with examples and workflows to help you apply Page Speed quickly."
+                },
+                {
+                  "url": "https://itzfizz.com/playbook/page-speed-tips",
+                  "title": "Page Speed tips and best practices",
+                  "snippet": "Use these proven techniques for Page Speed to improve outcomes and maintain consistency in Page Speed across pages."
+                },
+                {
+                  "url": "https://itzfizz.com/checklist/page-speed-checklist",
+                  "title": "Page Speed checklist",
+                  "snippet": "A short checklist to review Page Speed before publishing; keep Page Speed readable and aligned with intent."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "blog-seo-basics",
+          "url": "https://itzfizz.com/blog/seo-basics",
+          "title": "SEO Basics for Growth",
+          "pageType": "blog",
+          "kpis": {
+            "headings": 2,
+            "links": 5,
+            "images": 3
+          },
+          "keywords": [
+            {
+              "id": "k5",
+              "title": "Title Readability",
+              "used": 3,
+              "recommended": 3,
+              "sources": 10,
+              "type": "Clusters",
+              "mine": 3,
+              "avg": 4,
+              "results": 3,
+              "links": [
+                {
+                  "url": "https://itzfizz.com/guide/title-readability-basics",
+                  "title": "Title Readability: A practical introduction",
+                  "snippet": "This article explains Title Readability with examples and workflows to help you apply Title Readability quickly."
+                },
+                {
+                  "url": "https://itzfizz.com/playbook/title-readability-tips",
+                  "title": "Title Readability tips and best practices",
+                  "snippet": "Use these proven techniques for Title Readability to improve outcomes and maintain consistency in Title Readability across pages."
+                },
+                {
+                  "url": "https://itzfizz.com/checklist/title-readability-checklist",
+                  "title": "Title Readability checklist",
+                  "snippet": "A short checklist to review Title Readability before publishing; keep Title Readability readable and aligned with intent."
+                }
+              ]
+            },
+            {
+              "id": "k6",
+              "title": "Meta Description",
+              "used": 2,
+              "recommended": 4,
+              "sources": 8,
+              "type": "All Topics",
+              "mine": 2,
+              "avg": 3,
+              "results": 4,
+              "links": [
+                {
+                  "url": "https://itzfizz.com/guide/meta-description-basics",
+                  "title": "Meta Description: A practical introduction",
+                  "snippet": "This article explains Meta Description with examples and workflows to help you apply Meta Description quickly."
+                },
+                {
+                  "url": "https://itzfizz.com/playbook/meta-description-tips",
+                  "title": "Meta Description tips and best practices",
+                  "snippet": "Use these proven techniques for Meta Description to improve outcomes and maintain consistency in Meta Description across pages."
+                },
+                {
+                  "url": "https://itzfizz.com/checklist/meta-description-checklist",
+                  "title": "Meta Description checklist",
+                  "snippet": "A short checklist to review Meta Description before publishing; keep Meta Description readable and aligned with intent."
+                }
+              ]
+            },
+            {
+              "id": "k7",
+              "title": "Keyword Clusters",
+              "used": 1,
+              "recommended": 3,
+              "sources": 7,
+              "type": "Long Tail",
+              "mine": 1,
+              "avg": 3,
+              "results": 3,
+              "links": [
+                {
+                  "url": "https://itzfizz.com/guide/keyword-clusters-basics",
+                  "title": "Keyword Clusters: A practical introduction",
+                  "snippet": "This article explains Keyword Clusters with examples and workflows to help you apply Keyword Clusters quickly."
+                },
+                {
+                  "url": "https://itzfizz.com/playbook/keyword-clusters-tips",
+                  "title": "Keyword Clusters tips and best practices",
+                  "snippet": "Use these proven techniques for Keyword Clusters to improve outcomes and maintain consistency in Keyword Clusters across pages."
+                },
+                {
+                  "url": "https://itzfizz.com/checklist/keyword-clusters-checklist",
+                  "title": "Keyword Clusters checklist",
+                  "snippet": "A short checklist to review Keyword Clusters before publishing; keep Keyword Clusters readable and aligned with intent."
+                }
+              ]
+            },
+            {
+              "id": "k8",
+              "title": "Link Readability",
+              "used": 1,
+              "recommended": 3,
+              "sources": 5,
+              "type": "All Topics",
+              "mine": 1,
+              "avg": 2,
+              "results": 2,
+              "links": [
+                {
+                  "url": "https://itzfizz.com/guide/link-readability-basics",
+                  "title": "Link Readability: A practical introduction",
+                  "snippet": "This article explains Link Readability with examples and workflows to help you apply Link Readability quickly."
+                },
+                {
+                  "url": "https://itzfizz.com/playbook/link-readability-tips",
+                  "title": "Link Readability tips and best practices",
+                  "snippet": "Use these proven techniques for Link Readability to improve outcomes and maintain consistency in Link Readability across pages."
+                },
+                {
+                  "url": "https://itzfizz.com/checklist/link-readability-checklist",
+                  "title": "Link Readability checklist",
+                  "snippet": "A short checklist to review Link Readability before publishing; keep Link Readability readable and aligned with intent."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "domain": "loyora.com",
+      "displayName": "Loyora",
+      "meta": {
+        "industry": "General",
+        "country": "IN",
+        "language": "en"
+      },
+      "updatedAt": "2025-11-02T14:36:10Z",
+      "pages": [
+        {
+          "id": "category-tech-overview",
+          "url": "https://loyora.com/category/technology",
+          "title": "Technology Category Overview",
+          "pageType": "category",
+          "kpis": {
+            "headings": 2,
+            "links": 5,
+            "images": 3
+          },
+          "keywords": [
+            {
+              "id": "k1",
+              "title": "Content Marketing",
+              "used": 4,
+              "recommended": 3,
+              "sources": 15,
+              "type": "Long Tail",
+              "mine": 2,
+              "avg": 5,
+              "results": 3,
+              "links": [
+                {
+                  "url": "https://loyora.com/guide/content-marketing-basics",
+                  "title": "Content Marketing: A practical introduction",
+                  "snippet": "This article explains Content Marketing with examples and workflows to help you apply Content Marketing quickly."
+                },
+                {
+                  "url": "https://loyora.com/playbook/content-marketing-tips",
+                  "title": "Content Marketing tips and best practices",
+                  "snippet": "Use these proven techniques for Content Marketing to improve outcomes and maintain consistency in Content Marketing across pages."
+                },
+                {
+                  "url": "https://loyora.com/checklist/content-marketing-checklist",
+                  "title": "Content Marketing checklist",
+                  "snippet": "A short checklist to review Content Marketing before publishing; keep Content Marketing readable and aligned with intent."
+                }
+              ]
+            },
+            {
+              "id": "k2",
+              "title": "Schema Markup",
+              "used": 1,
+              "recommended": 3,
+              "sources": 12,
+              "type": "All Topics",
+              "mine": 1,
+              "avg": 4,
+              "results": 5,
+              "links": [
+                {
+                  "url": "https://loyora.com/guide/schema-markup-basics",
+                  "title": "Schema Markup: A practical introduction",
+                  "snippet": "This article explains Schema Markup with examples and workflows to help you apply Schema Markup quickly."
+                },
+                {
+                  "url": "https://loyora.com/playbook/schema-markup-tips",
+                  "title": "Schema Markup tips and best practices",
+                  "snippet": "Use these proven techniques for Schema Markup to improve outcomes and maintain consistency in Schema Markup across pages."
+                },
+                {
+                  "url": "https://loyora.com/checklist/schema-markup-checklist",
+                  "title": "Schema Markup checklist",
+                  "snippet": "A short checklist to review Schema Markup before publishing; keep Schema Markup readable and aligned with intent."
+                }
+              ]
+            },
+            {
+              "id": "k3",
+              "title": "Internal Linking",
+              "used": 2,
+              "recommended": 4,
+              "sources": 9,
+              "type": "Clusters",
+              "mine": 2,
+              "avg": 3,
+              "results": 4,
+              "links": [
+                {
+                  "url": "https://loyora.com/guide/internal-linking-basics",
+                  "title": "Internal Linking: A practical introduction",
+                  "snippet": "This article explains Internal Linking with examples and workflows to help you apply Internal Linking quickly."
+                },
+                {
+                  "url": "https://loyora.com/playbook/internal-linking-tips",
+                  "title": "Internal Linking tips and best practices",
+                  "snippet": "Use these proven techniques for Internal Linking to improve outcomes and maintain consistency in Internal Linking across pages."
+                },
+                {
+                  "url": "https://loyora.com/checklist/internal-linking-checklist",
+                  "title": "Internal Linking checklist",
+                  "snippet": "A short checklist to review Internal Linking before publishing; keep Internal Linking readable and aligned with intent."
+                }
+              ]
+            },
+            {
+              "id": "k4",
+              "title": "Page Speed",
+              "used": 3,
+              "recommended": 3,
+              "sources": 18,
+              "type": "Long Tail",
+              "mine": 3,
+              "avg": 4,
+              "results": 6,
+              "links": [
+                {
+                  "url": "https://loyora.com/guide/page-speed-basics",
+                  "title": "Page Speed: A practical introduction",
+                  "snippet": "This article explains Page Speed with examples and workflows to help you apply Page Speed quickly."
+                },
+                {
+                  "url": "https://loyora.com/playbook/page-speed-tips",
+                  "title": "Page Speed tips and best practices",
+                  "snippet": "Use these proven techniques for Page Speed to improve outcomes and maintain consistency in Page Speed across pages."
+                },
+                {
+                  "url": "https://loyora.com/checklist/page-speed-checklist",
+                  "title": "Page Speed checklist",
+                  "snippet": "A short checklist to review Page Speed before publishing; keep Page Speed readable and aligned with intent."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "blog-seo-basics",
+          "url": "https://loyora.com/blog/seo-basics",
+          "title": "SEO Basics for Growth",
+          "pageType": "blog",
+          "kpis": {
+            "headings": 2,
+            "links": 5,
+            "images": 3
+          },
+          "keywords": [
+            {
+              "id": "k5",
+              "title": "Title Readability",
+              "used": 3,
+              "recommended": 3,
+              "sources": 10,
+              "type": "Clusters",
+              "mine": 3,
+              "avg": 4,
+              "results": 3,
+              "links": [
+                {
+                  "url": "https://loyora.com/guide/title-readability-basics",
+                  "title": "Title Readability: A practical introduction",
+                  "snippet": "This article explains Title Readability with examples and workflows to help you apply Title Readability quickly."
+                },
+                {
+                  "url": "https://loyora.com/playbook/title-readability-tips",
+                  "title": "Title Readability tips and best practices",
+                  "snippet": "Use these proven techniques for Title Readability to improve outcomes and maintain consistency in Title Readability across pages."
+                },
+                {
+                  "url": "https://loyora.com/checklist/title-readability-checklist",
+                  "title": "Title Readability checklist",
+                  "snippet": "A short checklist to review Title Readability before publishing; keep Title Readability readable and aligned with intent."
+                }
+              ]
+            },
+            {
+              "id": "k6",
+              "title": "Meta Description",
+              "used": 2,
+              "recommended": 4,
+              "sources": 8,
+              "type": "All Topics",
+              "mine": 2,
+              "avg": 3,
+              "results": 4,
+              "links": [
+                {
+                  "url": "https://loyora.com/guide/meta-description-basics",
+                  "title": "Meta Description: A practical introduction",
+                  "snippet": "This article explains Meta Description with examples and workflows to help you apply Meta Description quickly."
+                },
+                {
+                  "url": "https://loyora.com/playbook/meta-description-tips",
+                  "title": "Meta Description tips and best practices",
+                  "snippet": "Use these proven techniques for Meta Description to improve outcomes and maintain consistency in Meta Description across pages."
+                },
+                {
+                  "url": "https://loyora.com/checklist/meta-description-checklist",
+                  "title": "Meta Description checklist",
+                  "snippet": "A short checklist to review Meta Description before publishing; keep Meta Description readable and aligned with intent."
+                }
+              ]
+            },
+            {
+              "id": "k7",
+              "title": "Keyword Clusters",
+              "used": 1,
+              "recommended": 3,
+              "sources": 7,
+              "type": "Long Tail",
+              "mine": 1,
+              "avg": 3,
+              "results": 3,
+              "links": [
+                {
+                  "url": "https://loyora.com/guide/keyword-clusters-basics",
+                  "title": "Keyword Clusters: A practical introduction",
+                  "snippet": "This article explains Keyword Clusters with examples and workflows to help you apply Keyword Clusters quickly."
+                },
+                {
+                  "url": "https://loyora.com/playbook/keyword-clusters-tips",
+                  "title": "Keyword Clusters tips and best practices",
+                  "snippet": "Use these proven techniques for Keyword Clusters to improve outcomes and maintain consistency in Keyword Clusters across pages."
+                },
+                {
+                  "url": "https://loyora.com/checklist/keyword-clusters-checklist",
+                  "title": "Keyword Clusters checklist",
+                  "snippet": "A short checklist to review Keyword Clusters before publishing; keep Keyword Clusters readable and aligned with intent."
+                }
+              ]
+            },
+            {
+              "id": "k8",
+              "title": "Link Readability",
+              "used": 1,
+              "recommended": 3,
+              "sources": 5,
+              "type": "All Topics",
+              "mine": 1,
+              "avg": 2,
+              "results": 2,
+              "links": [
+                {
+                  "url": "https://loyora.com/guide/link-readability-basics",
+                  "title": "Link Readability: A practical introduction",
+                  "snippet": "This article explains Link Readability with examples and workflows to help you apply Link Readability quickly."
+                },
+                {
+                  "url": "https://loyora.com/playbook/link-readability-tips",
+                  "title": "Link Readability tips and best practices",
+                  "snippet": "Use these proven techniques for Link Readability to improve outcomes and maintain consistency in Link Readability across pages."
+                },
+                {
+                  "url": "https://loyora.com/checklist/link-readability-checklist",
+                  "title": "Link Readability checklist",
+                  "snippet": "A short checklist to review Link Readability before publishing; keep Link Readability readable and aligned with intent."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "domain": "waterstonindia.com",
+      "displayName": "Waterston India",
+      "meta": {
+        "industry": "General",
+        "country": "IN",
+        "language": "en"
+      },
+      "updatedAt": "2025-11-02T14:36:10Z",
+      "pages": [
+        {
+          "id": "category-tech-overview",
+          "url": "https://waterstonindia.com/category/technology",
+          "title": "Technology Category Overview",
+          "pageType": "category",
+          "kpis": {
+            "headings": 2,
+            "links": 5,
+            "images": 3
+          },
+          "keywords": [
+            {
+              "id": "k1",
+              "title": "Content Marketing",
+              "used": 4,
+              "recommended": 3,
+              "sources": 15,
+              "type": "Long Tail",
+              "mine": 2,
+              "avg": 5,
+              "results": 3,
+              "links": [
+                {
+                  "url": "https://waterstonindia.com/guide/content-marketing-basics",
+                  "title": "Content Marketing: A practical introduction",
+                  "snippet": "This article explains Content Marketing with examples and workflows to help you apply Content Marketing quickly."
+                },
+                {
+                  "url": "https://waterstonindia.com/playbook/content-marketing-tips",
+                  "title": "Content Marketing tips and best practices",
+                  "snippet": "Use these proven techniques for Content Marketing to improve outcomes and maintain consistency in Content Marketing across pages."
+                },
+                {
+                  "url": "https://waterstonindia.com/checklist/content-marketing-checklist",
+                  "title": "Content Marketing checklist",
+                  "snippet": "A short checklist to review Content Marketing before publishing; keep Content Marketing readable and aligned with intent."
+                }
+              ]
+            },
+            {
+              "id": "k2",
+              "title": "Schema Markup",
+              "used": 1,
+              "recommended": 3,
+              "sources": 12,
+              "type": "All Topics",
+              "mine": 1,
+              "avg": 4,
+              "results": 5,
+              "links": [
+                {
+                  "url": "https://waterstonindia.com/guide/schema-markup-basics",
+                  "title": "Schema Markup: A practical introduction",
+                  "snippet": "This article explains Schema Markup with examples and workflows to help you apply Schema Markup quickly."
+                },
+                {
+                  "url": "https://waterstonindia.com/playbook/schema-markup-tips",
+                  "title": "Schema Markup tips and best practices",
+                  "snippet": "Use these proven techniques for Schema Markup to improve outcomes and maintain consistency in Schema Markup across pages."
+                },
+                {
+                  "url": "https://waterstonindia.com/checklist/schema-markup-checklist",
+                  "title": "Schema Markup checklist",
+                  "snippet": "A short checklist to review Schema Markup before publishing; keep Schema Markup readable and aligned with intent."
+                }
+              ]
+            },
+            {
+              "id": "k3",
+              "title": "Internal Linking",
+              "used": 2,
+              "recommended": 4,
+              "sources": 9,
+              "type": "Clusters",
+              "mine": 2,
+              "avg": 3,
+              "results": 4,
+              "links": [
+                {
+                  "url": "https://waterstonindia.com/guide/internal-linking-basics",
+                  "title": "Internal Linking: A practical introduction",
+                  "snippet": "This article explains Internal Linking with examples and workflows to help you apply Internal Linking quickly."
+                },
+                {
+                  "url": "https://waterstonindia.com/playbook/internal-linking-tips",
+                  "title": "Internal Linking tips and best practices",
+                  "snippet": "Use these proven techniques for Internal Linking to improve outcomes and maintain consistency in Internal Linking across pages."
+                },
+                {
+                  "url": "https://waterstonindia.com/checklist/internal-linking-checklist",
+                  "title": "Internal Linking checklist",
+                  "snippet": "A short checklist to review Internal Linking before publishing; keep Internal Linking readable and aligned with intent."
+                }
+              ]
+            },
+            {
+              "id": "k4",
+              "title": "Page Speed",
+              "used": 3,
+              "recommended": 3,
+              "sources": 18,
+              "type": "Long Tail",
+              "mine": 3,
+              "avg": 4,
+              "results": 6,
+              "links": [
+                {
+                  "url": "https://waterstonindia.com/guide/page-speed-basics",
+                  "title": "Page Speed: A practical introduction",
+                  "snippet": "This article explains Page Speed with examples and workflows to help you apply Page Speed quickly."
+                },
+                {
+                  "url": "https://waterstonindia.com/playbook/page-speed-tips",
+                  "title": "Page Speed tips and best practices",
+                  "snippet": "Use these proven techniques for Page Speed to improve outcomes and maintain consistency in Page Speed across pages."
+                },
+                {
+                  "url": "https://waterstonindia.com/checklist/page-speed-checklist",
+                  "title": "Page Speed checklist",
+                  "snippet": "A short checklist to review Page Speed before publishing; keep Page Speed readable and aligned with intent."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "blog-seo-basics",
+          "url": "https://waterstonindia.com/blog/seo-basics",
+          "title": "SEO Basics for Growth",
+          "pageType": "blog",
+          "kpis": {
+            "headings": 2,
+            "links": 5,
+            "images": 3
+          },
+          "keywords": [
+            {
+              "id": "k5",
+              "title": "Title Readability",
+              "used": 3,
+              "recommended": 3,
+              "sources": 10,
+              "type": "Clusters",
+              "mine": 3,
+              "avg": 4,
+              "results": 3,
+              "links": [
+                {
+                  "url": "https://waterstonindia.com/guide/title-readability-basics",
+                  "title": "Title Readability: A practical introduction",
+                  "snippet": "This article explains Title Readability with examples and workflows to help you apply Title Readability quickly."
+                },
+                {
+                  "url": "https://waterstonindia.com/playbook/title-readability-tips",
+                  "title": "Title Readability tips and best practices",
+                  "snippet": "Use these proven techniques for Title Readability to improve outcomes and maintain consistency in Title Readability across pages."
+                },
+                {
+                  "url": "https://waterstonindia.com/checklist/title-readability-checklist",
+                  "title": "Title Readability checklist",
+                  "snippet": "A short checklist to review Title Readability before publishing; keep Title Readability readable and aligned with intent."
+                }
+              ]
+            },
+            {
+              "id": "k6",
+              "title": "Meta Description",
+              "used": 2,
+              "recommended": 4,
+              "sources": 8,
+              "type": "All Topics",
+              "mine": 2,
+              "avg": 3,
+              "results": 4,
+              "links": [
+                {
+                  "url": "https://waterstonindia.com/guide/meta-description-basics",
+                  "title": "Meta Description: A practical introduction",
+                  "snippet": "This article explains Meta Description with examples and workflows to help you apply Meta Description quickly."
+                },
+                {
+                  "url": "https://waterstonindia.com/playbook/meta-description-tips",
+                  "title": "Meta Description tips and best practices",
+                  "snippet": "Use these proven techniques for Meta Description to improve outcomes and maintain consistency in Meta Description across pages."
+                },
+                {
+                  "url": "https://waterstonindia.com/checklist/meta-description-checklist",
+                  "title": "Meta Description checklist",
+                  "snippet": "A short checklist to review Meta Description before publishing; keep Meta Description readable and aligned with intent."
+                }
+              ]
+            },
+            {
+              "id": "k7",
+              "title": "Keyword Clusters",
+              "used": 1,
+              "recommended": 3,
+              "sources": 7,
+              "type": "Long Tail",
+              "mine": 1,
+              "avg": 3,
+              "results": 3,
+              "links": [
+                {
+                  "url": "https://waterstonindia.com/guide/keyword-clusters-basics",
+                  "title": "Keyword Clusters: A practical introduction",
+                  "snippet": "This article explains Keyword Clusters with examples and workflows to help you apply Keyword Clusters quickly."
+                },
+                {
+                  "url": "https://waterstonindia.com/playbook/keyword-clusters-tips",
+                  "title": "Keyword Clusters tips and best practices",
+                  "snippet": "Use these proven techniques for Keyword Clusters to improve outcomes and maintain consistency in Keyword Clusters across pages."
+                },
+                {
+                  "url": "https://waterstonindia.com/checklist/keyword-clusters-checklist",
+                  "title": "Keyword Clusters checklist",
+                  "snippet": "A short checklist to review Keyword Clusters before publishing; keep Keyword Clusters readable and aligned with intent."
+                }
+              ]
+            },
+            {
+              "id": "k8",
+              "title": "Link Readability",
+              "used": 1,
+              "recommended": 3,
+              "sources": 5,
+              "type": "All Topics",
+              "mine": 1,
+              "avg": 2,
+              "results": 2,
+              "links": [
+                {
+                  "url": "https://waterstonindia.com/guide/link-readability-basics",
+                  "title": "Link Readability: A practical introduction",
+                  "snippet": "This article explains Link Readability with examples and workflows to help you apply Link Readability quickly."
+                },
+                {
+                  "url": "https://waterstonindia.com/playbook/link-readability-tips",
+                  "title": "Link Readability tips and best practices",
+                  "snippet": "Use these proven techniques for Link Readability to improve outcomes and maintain consistency in Link Readability across pages."
+                },
+                {
+                  "url": "https://waterstonindia.com/checklist/link-readability-checklist",
+                  "title": "Link Readability checklist",
+                  "snippet": "A short checklist to review Link Readability before publishing; keep Link Readability readable and aligned with intent."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "domain": "paakashala.com",
+      "displayName": "Paakashala",
+      "meta": {
+        "industry": "General",
+        "country": "IN",
+        "language": "en"
+      },
+      "updatedAt": "2025-11-02T14:36:10Z",
+      "pages": [
+        {
+          "id": "category-tech-overview",
+          "url": "https://paakashala.com/category/technology",
+          "title": "Technology Category Overview",
+          "pageType": "category",
+          "kpis": {
+            "headings": 2,
+            "links": 5,
+            "images": 3
+          },
+          "keywords": [
+            {
+              "id": "k1",
+              "title": "Content Marketing",
+              "used": 4,
+              "recommended": 3,
+              "sources": 15,
+              "type": "Long Tail",
+              "mine": 2,
+              "avg": 5,
+              "results": 3,
+              "links": [
+                {
+                  "url": "https://paakashala.com/guide/content-marketing-basics",
+                  "title": "Content Marketing: A practical introduction",
+                  "snippet": "This article explains Content Marketing with examples and workflows to help you apply Content Marketing quickly."
+                },
+                {
+                  "url": "https://paakashala.com/playbook/content-marketing-tips",
+                  "title": "Content Marketing tips and best practices",
+                  "snippet": "Use these proven techniques for Content Marketing to improve outcomes and maintain consistency in Content Marketing across pages."
+                },
+                {
+                  "url": "https://paakashala.com/checklist/content-marketing-checklist",
+                  "title": "Content Marketing checklist",
+                  "snippet": "A short checklist to review Content Marketing before publishing; keep Content Marketing readable and aligned with intent."
+                }
+              ]
+            },
+            {
+              "id": "k2",
+              "title": "Schema Markup",
+              "used": 1,
+              "recommended": 3,
+              "sources": 12,
+              "type": "All Topics",
+              "mine": 1,
+              "avg": 4,
+              "results": 5,
+              "links": [
+                {
+                  "url": "https://paakashala.com/guide/schema-markup-basics",
+                  "title": "Schema Markup: A practical introduction",
+                  "snippet": "This article explains Schema Markup with examples and workflows to help you apply Schema Markup quickly."
+                },
+                {
+                  "url": "https://paakashala.com/playbook/schema-markup-tips",
+                  "title": "Schema Markup tips and best practices",
+                  "snippet": "Use these proven techniques for Schema Markup to improve outcomes and maintain consistency in Schema Markup across pages."
+                },
+                {
+                  "url": "https://paakashala.com/checklist/schema-markup-checklist",
+                  "title": "Schema Markup checklist",
+                  "snippet": "A short checklist to review Schema Markup before publishing; keep Schema Markup readable and aligned with intent."
+                }
+              ]
+            },
+            {
+              "id": "k3",
+              "title": "Internal Linking",
+              "used": 2,
+              "recommended": 4,
+              "sources": 9,
+              "type": "Clusters",
+              "mine": 2,
+              "avg": 3,
+              "results": 4,
+              "links": [
+                {
+                  "url": "https://paakashala.com/guide/internal-linking-basics",
+                  "title": "Internal Linking: A practical introduction",
+                  "snippet": "This article explains Internal Linking with examples and workflows to help you apply Internal Linking quickly."
+                },
+                {
+                  "url": "https://paakashala.com/playbook/internal-linking-tips",
+                  "title": "Internal Linking tips and best practices",
+                  "snippet": "Use these proven techniques for Internal Linking to improve outcomes and maintain consistency in Internal Linking across pages."
+                },
+                {
+                  "url": "https://paakashala.com/checklist/internal-linking-checklist",
+                  "title": "Internal Linking checklist",
+                  "snippet": "A short checklist to review Internal Linking before publishing; keep Internal Linking readable and aligned with intent."
+                }
+              ]
+            },
+            {
+              "id": "k4",
+              "title": "Page Speed",
+              "used": 3,
+              "recommended": 3,
+              "sources": 18,
+              "type": "Long Tail",
+              "mine": 3,
+              "avg": 4,
+              "results": 6,
+              "links": [
+                {
+                  "url": "https://paakashala.com/guide/page-speed-basics",
+                  "title": "Page Speed: A practical introduction",
+                  "snippet": "This article explains Page Speed with examples and workflows to help you apply Page Speed quickly."
+                },
+                {
+                  "url": "https://paakashala.com/playbook/page-speed-tips",
+                  "title": "Page Speed tips and best practices",
+                  "snippet": "Use these proven techniques for Page Speed to improve outcomes and maintain consistency in Page Speed across pages."
+                },
+                {
+                  "url": "https://paakashala.com/checklist/page-speed-checklist",
+                  "title": "Page Speed checklist",
+                  "snippet": "A short checklist to review Page Speed before publishing; keep Page Speed readable and aligned with intent."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "blog-seo-basics",
+          "url": "https://paakashala.com/blog/seo-basics",
+          "title": "SEO Basics for Growth",
+          "pageType": "blog",
+          "kpis": {
+            "headings": 2,
+            "links": 5,
+            "images": 3
+          },
+          "keywords": [
+            {
+              "id": "k5",
+              "title": "Title Readability",
+              "used": 3,
+              "recommended": 3,
+              "sources": 10,
+              "type": "Clusters",
+              "mine": 3,
+              "avg": 4,
+              "results": 3,
+              "links": [
+                {
+                  "url": "https://paakashala.com/guide/title-readability-basics",
+                  "title": "Title Readability: A practical introduction",
+                  "snippet": "This article explains Title Readability with examples and workflows to help you apply Title Readability quickly."
+                },
+                {
+                  "url": "https://paakashala.com/playbook/title-readability-tips",
+                  "title": "Title Readability tips and best practices",
+                  "snippet": "Use these proven techniques for Title Readability to improve outcomes and maintain consistency in Title Readability across pages."
+                },
+                {
+                  "url": "https://paakashala.com/checklist/title-readability-checklist",
+                  "title": "Title Readability checklist",
+                  "snippet": "A short checklist to review Title Readability before publishing; keep Title Readability readable and aligned with intent."
+                }
+              ]
+            },
+            {
+              "id": "k6",
+              "title": "Meta Description",
+              "used": 2,
+              "recommended": 4,
+              "sources": 8,
+              "type": "All Topics",
+              "mine": 2,
+              "avg": 3,
+              "results": 4,
+              "links": [
+                {
+                  "url": "https://paakashala.com/guide/meta-description-basics",
+                  "title": "Meta Description: A practical introduction",
+                  "snippet": "This article explains Meta Description with examples and workflows to help you apply Meta Description quickly."
+                },
+                {
+                  "url": "https://paakashala.com/playbook/meta-description-tips",
+                  "title": "Meta Description tips and best practices",
+                  "snippet": "Use these proven techniques for Meta Description to improve outcomes and maintain consistency in Meta Description across pages."
+                },
+                {
+                  "url": "https://paakashala.com/checklist/meta-description-checklist",
+                  "title": "Meta Description checklist",
+                  "snippet": "A short checklist to review Meta Description before publishing; keep Meta Description readable and aligned with intent."
+                }
+              ]
+            },
+            {
+              "id": "k7",
+              "title": "Keyword Clusters",
+              "used": 1,
+              "recommended": 3,
+              "sources": 7,
+              "type": "Long Tail",
+              "mine": 1,
+              "avg": 3,
+              "results": 3,
+              "links": [
+                {
+                  "url": "https://paakashala.com/guide/keyword-clusters-basics",
+                  "title": "Keyword Clusters: A practical introduction",
+                  "snippet": "This article explains Keyword Clusters with examples and workflows to help you apply Keyword Clusters quickly."
+                },
+                {
+                  "url": "https://paakashala.com/playbook/keyword-clusters-tips",
+                  "title": "Keyword Clusters tips and best practices",
+                  "snippet": "Use these proven techniques for Keyword Clusters to improve outcomes and maintain consistency in Keyword Clusters across pages."
+                },
+                {
+                  "url": "https://paakashala.com/checklist/keyword-clusters-checklist",
+                  "title": "Keyword Clusters checklist",
+                  "snippet": "A short checklist to review Keyword Clusters before publishing; keep Keyword Clusters readable and aligned with intent."
+                }
+              ]
+            },
+            {
+              "id": "k8",
+              "title": "Link Readability",
+              "used": 1,
+              "recommended": 3,
+              "sources": 5,
+              "type": "All Topics",
+              "mine": 1,
+              "avg": 2,
+              "results": 2,
+              "links": [
+                {
+                  "url": "https://paakashala.com/guide/link-readability-basics",
+                  "title": "Link Readability: A practical introduction",
+                  "snippet": "This article explains Link Readability with examples and workflows to help you apply Link Readability quickly."
+                },
+                {
+                  "url": "https://paakashala.com/playbook/link-readability-tips",
+                  "title": "Link Readability tips and best practices",
+                  "snippet": "Use these proven techniques for Link Readability to improve outcomes and maintain consistency in Link Readability across pages."
+                },
+                {
+                  "url": "https://paakashala.com/checklist/link-readability-checklist",
+                  "title": "Link Readability checklist",
+                  "snippet": "A short checklist to review Link Readability before publishing; keep Link Readability readable and aligned with intent."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "domain": "bigbasket.com",
+      "displayName": "BigBasket",
+      "meta": {
+        "industry": "General",
+        "country": "IN",
+        "language": "en"
+      },
+      "updatedAt": "2025-11-02T14:36:10Z",
+      "pages": [
+        {
+          "id": "category-tech-overview",
+          "url": "https://bigbasket.com/category/technology",
+          "title": "Technology Category Overview",
+          "pageType": "category",
+          "kpis": {
+            "headings": 2,
+            "links": 5,
+            "images": 3
+          },
+          "keywords": [
+            {
+              "id": "k1",
+              "title": "Content Marketing",
+              "used": 4,
+              "recommended": 3,
+              "sources": 15,
+              "type": "Long Tail",
+              "mine": 2,
+              "avg": 5,
+              "results": 3,
+              "links": [
+                {
+                  "url": "https://bigbasket.com/guide/content-marketing-basics",
+                  "title": "Content Marketing: A practical introduction",
+                  "snippet": "This article explains Content Marketing with examples and workflows to help you apply Content Marketing quickly."
+                },
+                {
+                  "url": "https://bigbasket.com/playbook/content-marketing-tips",
+                  "title": "Content Marketing tips and best practices",
+                  "snippet": "Use these proven techniques for Content Marketing to improve outcomes and maintain consistency in Content Marketing across pages."
+                },
+                {
+                  "url": "https://bigbasket.com/checklist/content-marketing-checklist",
+                  "title": "Content Marketing checklist",
+                  "snippet": "A short checklist to review Content Marketing before publishing; keep Content Marketing readable and aligned with intent."
+                }
+              ]
+            },
+            {
+              "id": "k2",
+              "title": "Schema Markup",
+              "used": 1,
+              "recommended": 3,
+              "sources": 12,
+              "type": "All Topics",
+              "mine": 1,
+              "avg": 4,
+              "results": 5,
+              "links": [
+                {
+                  "url": "https://bigbasket.com/guide/schema-markup-basics",
+                  "title": "Schema Markup: A practical introduction",
+                  "snippet": "This article explains Schema Markup with examples and workflows to help you apply Schema Markup quickly."
+                },
+                {
+                  "url": "https://bigbasket.com/playbook/schema-markup-tips",
+                  "title": "Schema Markup tips and best practices",
+                  "snippet": "Use these proven techniques for Schema Markup to improve outcomes and maintain consistency in Schema Markup across pages."
+                },
+                {
+                  "url": "https://bigbasket.com/checklist/schema-markup-checklist",
+                  "title": "Schema Markup checklist",
+                  "snippet": "A short checklist to review Schema Markup before publishing; keep Schema Markup readable and aligned with intent."
+                }
+              ]
+            },
+            {
+              "id": "k3",
+              "title": "Internal Linking",
+              "used": 2,
+              "recommended": 4,
+              "sources": 9,
+              "type": "Clusters",
+              "mine": 2,
+              "avg": 3,
+              "results": 4,
+              "links": [
+                {
+                  "url": "https://bigbasket.com/guide/internal-linking-basics",
+                  "title": "Internal Linking: A practical introduction",
+                  "snippet": "This article explains Internal Linking with examples and workflows to help you apply Internal Linking quickly."
+                },
+                {
+                  "url": "https://bigbasket.com/playbook/internal-linking-tips",
+                  "title": "Internal Linking tips and best practices",
+                  "snippet": "Use these proven techniques for Internal Linking to improve outcomes and maintain consistency in Internal Linking across pages."
+                },
+                {
+                  "url": "https://bigbasket.com/checklist/internal-linking-checklist",
+                  "title": "Internal Linking checklist",
+                  "snippet": "A short checklist to review Internal Linking before publishing; keep Internal Linking readable and aligned with intent."
+                }
+              ]
+            },
+            {
+              "id": "k4",
+              "title": "Page Speed",
+              "used": 3,
+              "recommended": 3,
+              "sources": 18,
+              "type": "Long Tail",
+              "mine": 3,
+              "avg": 4,
+              "results": 6,
+              "links": [
+                {
+                  "url": "https://bigbasket.com/guide/page-speed-basics",
+                  "title": "Page Speed: A practical introduction",
+                  "snippet": "This article explains Page Speed with examples and workflows to help you apply Page Speed quickly."
+                },
+                {
+                  "url": "https://bigbasket.com/playbook/page-speed-tips",
+                  "title": "Page Speed tips and best practices",
+                  "snippet": "Use these proven techniques for Page Speed to improve outcomes and maintain consistency in Page Speed across pages."
+                },
+                {
+                  "url": "https://bigbasket.com/checklist/page-speed-checklist",
+                  "title": "Page Speed checklist",
+                  "snippet": "A short checklist to review Page Speed before publishing; keep Page Speed readable and aligned with intent."
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "id": "blog-seo-basics",
+          "url": "https://bigbasket.com/blog/seo-basics",
+          "title": "SEO Basics for Growth",
+          "pageType": "blog",
+          "kpis": {
+            "headings": 2,
+            "links": 5,
+            "images": 3
+          },
+          "keywords": [
+            {
+              "id": "k5",
+              "title": "Title Readability",
+              "used": 3,
+              "recommended": 3,
+              "sources": 10,
+              "type": "Clusters",
+              "mine": 3,
+              "avg": 4,
+              "results": 3,
+              "links": [
+                {
+                  "url": "https://bigbasket.com/guide/title-readability-basics",
+                  "title": "Title Readability: A practical introduction",
+                  "snippet": "This article explains Title Readability with examples and workflows to help you apply Title Readability quickly."
+                },
+                {
+                  "url": "https://bigbasket.com/playbook/title-readability-tips",
+                  "title": "Title Readability tips and best practices",
+                  "snippet": "Use these proven techniques for Title Readability to improve outcomes and maintain consistency in Title Readability across pages."
+                },
+                {
+                  "url": "https://bigbasket.com/checklist/title-readability-checklist",
+                  "title": "Title Readability checklist",
+                  "snippet": "A short checklist to review Title Readability before publishing; keep Title Readability readable and aligned with intent."
+                }
+              ]
+            },
+            {
+              "id": "k6",
+              "title": "Meta Description",
+              "used": 2,
+              "recommended": 4,
+              "sources": 8,
+              "type": "All Topics",
+              "mine": 2,
+              "avg": 3,
+              "results": 4,
+              "links": [
+                {
+                  "url": "https://bigbasket.com/guide/meta-description-basics",
+                  "title": "Meta Description: A practical introduction",
+                  "snippet": "This article explains Meta Description with examples and workflows to help you apply Meta Description quickly."
+                },
+                {
+                  "url": "https://bigbasket.com/playbook/meta-description-tips",
+                  "title": "Meta Description tips and best practices",
+                  "snippet": "Use these proven techniques for Meta Description to improve outcomes and maintain consistency in Meta Description across pages."
+                },
+                {
+                  "url": "https://bigbasket.com/checklist/meta-description-checklist",
+                  "title": "Meta Description checklist",
+                  "snippet": "A short checklist to review Meta Description before publishing; keep Meta Description readable and aligned with intent."
+                }
+              ]
+            },
+            {
+              "id": "k7",
+              "title": "Keyword Clusters",
+              "used": 1,
+              "recommended": 3,
+              "sources": 7,
+              "type": "Long Tail",
+              "mine": 1,
+              "avg": 3,
+              "results": 3,
+              "links": [
+                {
+                  "url": "https://bigbasket.com/guide/keyword-clusters-basics",
+                  "title": "Keyword Clusters: A practical introduction",
+                  "snippet": "This article explains Keyword Clusters with examples and workflows to help you apply Keyword Clusters quickly."
+                },
+                {
+                  "url": "https://bigbasket.com/playbook/keyword-clusters-tips",
+                  "title": "Keyword Clusters tips and best practices",
+                  "snippet": "Use these proven techniques for Keyword Clusters to improve outcomes and maintain consistency in Keyword Clusters across pages."
+                },
+                {
+                  "url": "https://bigbasket.com/checklist/keyword-clusters-checklist",
+                  "title": "Keyword Clusters checklist",
+                  "snippet": "A short checklist to review Keyword Clusters before publishing; keep Keyword Clusters readable and aligned with intent."
+                }
+              ]
+            },
+            {
+              "id": "k8",
+              "title": "Link Readability",
+              "used": 1,
+              "recommended": 3,
+              "sources": 5,
+              "type": "All Topics",
+              "mine": 1,
+              "avg": 2,
+              "results": 2,
+              "links": [
+                {
+                  "url": "https://bigbasket.com/guide/link-readability-basics",
+                  "title": "Link Readability: A practical introduction",
+                  "snippet": "This article explains Link Readability with examples and workflows to help you apply Link Readability quickly."
+                },
+                {
+                  "url": "https://bigbasket.com/playbook/link-readability-tips",
+                  "title": "Link Readability tips and best practices",
+                  "snippet": "Use these proven techniques for Link Readability to improve outcomes and maintain consistency in Link Readability across pages."
+                },
+                {
+                  "url": "https://bigbasket.com/checklist/link-readability-checklist",
+                  "title": "Link Readability checklist",
+                  "snippet": "A short checklist to review Link Readability before publishing; keep Link Readability readable and aligned with intent."
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

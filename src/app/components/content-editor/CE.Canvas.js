@@ -31,7 +31,7 @@ const CECanvas = forwardRef(function CECanvas(
   const lastLocalEditAtRef = useRef(0); // timestamp of last local edit
   const LOCAL_GRACE_MS = 80; // was 600 → now more responsive
 
-  // NEW: re-entrancy guard to prevent onInput → setContent loops
+  // re-entrancy guard to prevent onInput → setContent loops
   const suppressInputRef = useRef(false);
 
   const AUTOSAVE_MS = 800;
@@ -62,9 +62,9 @@ const CECanvas = forwardRef(function CECanvas(
   }, [content]);
 
   /** =========================
-   * Selection helpers
+   * Selection helpers (memoized)
    * ========================= */
-  function saveSelectionSnapshot() {
+  const saveSelectionSnapshot = useCallback(() => {
     const sel = window.getSelection?.();
     if (!sel || sel.rangeCount === 0) return;
     const container = editorRef.current;
@@ -72,16 +72,27 @@ const CECanvas = forwardRef(function CECanvas(
     if (container && anchor && container.contains(anchor)) {
       savedRangeRef.current = sel.getRangeAt(0).cloneRange();
     }
-  }
+  }, []); // editorRef is stable
 
-  function restoreSelectionSnapshot() {
+  const restoreSelectionSnapshot = useCallback(() => {
     const r = savedRangeRef.current;
     if (!r) return;
     const sel = window.getSelection?.();
     if (!sel) return;
     sel.removeAllRanges();
     sel.addRange(r);
-  }
+  }, []);
+
+  const setCaretToEnd = useCallback((el) => {
+    if (!el) return;
+    const range = document.createRange();
+    range.selectNodeContents(el);
+    range.collapse(false);
+    const sel = window.getSelection?.();
+    sel?.removeAllRanges();
+    sel?.addRange(range);
+    saveSelectionSnapshot();
+  }, [saveSelectionSnapshot]);
 
   /** =========================
    * Highlighter core
@@ -101,7 +112,7 @@ const CECanvas = forwardRef(function CECanvas(
     const rules = highlightRulesRef.current;
     if (!Array.isArray(rules) || rules.length === 0) return;
 
-    // Prepare regexes (mirrors Optimize's tokenization/word-boundaries)
+    // Prepare regexes
     const prepared = rules
       .filter((r) => r?.phrase)
       .map((r) => {
@@ -288,17 +299,24 @@ const CECanvas = forwardRef(function CECanvas(
       seededRef.current && Date.now() - lastLocalEditAtRef.current < LOCAL_GRACE_MS;
     if (justLocallyEdited) return;
 
+    // Adopt external html (e.g., pasted headings from right panel)
     suppressInputRef.current = true;
     el.innerHTML = htmlFromProp;
     queueMicrotask(() => {
       suppressInputRef.current = false;
     });
+
+    // Push to history so undo works, and move caret to end
     if (seededRef.current) {
       undoStack.current.push(htmlFromProp);
       redoStack.current = [];
     }
+    setCaretToEnd(el);
+    // Scroll to end for visibility after append
+    el.lastElementChild?.scrollIntoView({ block: "end" });
+
     requestAnimationFrame(runHighlights);
-  }, [content, runHighlights]);
+  }, [content, runHighlights, setCaretToEnd]);
 
   useImperativeHandle(ref, () => ({
     exec: (cmd, value) => execCommand(cmd, value),
@@ -338,15 +356,18 @@ const CECanvas = forwardRef(function CECanvas(
       case "saveSelection":
         saveSelectionSnapshot();
         return;
+
       case "fontSizePx": {
         const px = Number(value) || 16;
         wrapSelectionWith("span", `font-size:${px}px;`);
         break;
       }
+
       case "code": {
         wrapSelectionWith("code");
         break;
       }
+
       case "undo": {
         if (undoStack.current.length > 1) {
           const cur = undoStack.current.pop();
@@ -360,11 +381,13 @@ const CECanvas = forwardRef(function CECanvas(
           queueMicrotask(() => {
             suppressInputRef.current = false;
           });
+          setCaretToEnd(el);
         } else {
           document.execCommand("undo", false, null);
         }
         break;
       }
+
       case "redo": {
         if (redoStack.current.length > 0) {
           const next = redoStack.current.pop();
@@ -377,12 +400,17 @@ const CECanvas = forwardRef(function CECanvas(
           queueMicrotask(() => {
             suppressInputRef.current = false;
           });
+          setCaretToEnd(el);
         } else {
           document.execCommand("redo", false, null);
         }
         break;
       }
+
       default:
+        // Let the browser handle: bold, italic, underline, strikeThrough,
+        // justifyLeft/Center/Right, insertUnorderedList, createLink,
+        // formatBlock (h1/h2/h3/p), hiliteColor, foreColor, insertImage, etc.
         document.execCommand(cmd, false, value);
         break;
     }

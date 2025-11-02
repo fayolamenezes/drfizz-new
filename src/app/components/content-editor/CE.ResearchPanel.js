@@ -130,8 +130,54 @@ export default function CEResearchPanel({
     reddit: [],
   };
   const detailsData = currentPage?.details || null;
-  const outline = currentPage?.research?.outline || [];
-  const competitors = currentPage?.research?.competitors || [];
+
+  /** -------------------------------
+   *  Research data (robust mapper)
+   *  -------------------------------
+   *  Supports both:
+   *   currentPage.research = {
+   *     outline: [ {level, title}, ... ],
+   *     competitors: [ {...}, ... ] OR { domains: [ {...}, ... ] },
+   *     heatmaps: {
+   *       headingsFrequency: [], termHeat: [], serpFeatureCoverage: [], headingSerpMatrix: []
+   *     }
+   *   }
+   *  and older shapes (heatmapsTab / competitorsTab).
+   */
+  const researchBlock = currentPage?.research || currentPage || {};
+  const outline =
+    Array.isArray(researchBlock?.outline)
+      ? researchBlock.outline
+      : Array.isArray(researchBlock?.headings)
+      ? researchBlock.headings
+      : [];
+
+  const competitors =
+    Array.isArray(researchBlock?.competitors)
+      ? researchBlock.competitors
+      : Array.isArray(researchBlock?.competitorsTab?.domains)
+      ? researchBlock.competitorsTab.domains
+      : Array.isArray(researchBlock?.research?.competitors)
+      ? researchBlock.research.competitors
+      : Array.isArray(researchBlock?.research?.competitors?.domains)
+      ? researchBlock.research.competitors.domains
+      : Array.isArray(researchBlock?.competitors?.domains)
+      ? researchBlock.competitors.domains
+      : [];
+
+  const defaultHeatmaps = {
+    headingsFrequency: [],
+    termHeat: [],
+    serpFeatureCoverage: [],
+    headingSerpMatrix: [],
+  };
+
+  const heatmaps =
+    researchBlock?.heatmaps ||
+    researchBlock?.heatmapsTab ||
+    researchBlock?.research?.heatmaps ||
+    researchBlock?.research?.heatmapsTab ||
+    defaultHeatmaps;
 
   // -------- Optimize dataset (domain-aware demo dataset) --------
   const [optLoading, setOptLoading] = useState(false);
@@ -190,14 +236,14 @@ export default function CEResearchPanel({
       return;
     }
     const q = norm(query);
-    const pages = Array.isArray(optActiveDomain.pages) ? optActiveDomain.pages : [];
-    const byTitle = pages.find((p) => norm(p?.title) === q);
+    const domPages = Array.isArray(optActiveDomain.pages) ? optActiveDomain.pages : [];
+    const byTitle = domPages.find((p) => norm(p?.title) === q);
     const byLoose =
       byTitle ||
-      pages.find(
+      domPages.find(
         (p) => norm(p?.title).includes(q) || norm(p?.url).includes(q) || norm(p?.id).includes(q)
       );
-    setOptActivePage(byLoose || pages[0] || null);
+    setOptActivePage(byLoose || domPages[0] || null);
   }, [optActiveDomain, query]);
 
   // Compute optimizeData to pass into <SeoAdvancedOptimize />
@@ -206,14 +252,11 @@ export default function CEResearchPanel({
   //  2) Else fallback to contenteditor.json's advanced.optimize (legacy).
   const optimizeDataFromDomain = useMemo(() => {
     if (!optActivePage) return null;
-    // Shape expected by SeoAdvancedOptimize:
-    // { keywords: [...], kpis?: {...} }
     const { keywords = [], kpis = null } = optActivePage;
     return { keywords, kpis, _source: "optimize-dataset.json" };
   }, [optActivePage]);
 
   const optimizeDataFallback = currentPage?.advanced?.optimize || null;
-
   const optimizeData = optimizeDataFromDomain || optimizeDataFallback;
 
   // -------- Access gate (same as before) --------
@@ -368,8 +411,10 @@ export default function CEResearchPanel({
             <SeoAdvancedResearch
               editorContent={editorContent}
               onPasteToEditor={onPasteToEditor}
+              // 🔽 ensure Research tab has ALL data
               outline={outline}
               competitors={competitors}
+              heatmaps={heatmaps}
               currentPage={currentPage}
               basicsData={basicsData}
               optimizeData={optimizeData}

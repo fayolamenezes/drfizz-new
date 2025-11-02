@@ -44,6 +44,38 @@ function normalizePlain(htmlLike) {
     .toLowerCase();
 }
 
+/** Safe HTML text */
+function escapeHtml(s) {
+  return String(s || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+}
+
+/** Keep this in sync with the toolbar's H1/H2/H3 auto sizing */
+const HEADING_SIZES = {
+  h1: 28,
+  h2: 22,
+  h3: 18,
+};
+
+/** Build a heading block from {level,title} or a plain string */
+function toHeadingHtml(input) {
+  // Allow plain string (fallback to H2 styling)
+  if (typeof input === "string") {
+    const s = HEADING_SIZES.h2;
+    return `<h2><span style="font-size:${s}px;font-weight:700">${escapeHtml(input)}</span></h2>`;
+  }
+
+  const levelRaw = String(input?.level || "H2").toLowerCase();
+  const level = /^(h1|h2|h3)$/.test(levelRaw) ? levelRaw : "h2";
+  const s = HEADING_SIZES[level] ?? HEADING_SIZES.h2;
+  const title = escapeHtml(input?.title || "");
+
+  // Match toolbar behavior: heading block + inline font size + bold
+  return `<${level}><span style="font-size:${s}px;font-weight:700">${title}</span></${level}>`;
+}
+
 export default function CEContentArea({
   title = "Untitled",
   activeTab,
@@ -261,6 +293,29 @@ export default function CEContentArea({
   const metrics = metricsProp ?? metricsInternal;
   const effectiveSeoMode = seoModeProp ?? seoMode;
 
+  /** =========================
+   * Paste-to-editor hook
+   * ========================= */
+  const handlePasteHeadingToEditor = useCallback(
+    (heading, destination = "editor") => {
+      if (destination !== "editor") return; // Tab2 is managed by the right panel itself
+
+      // Support bulk arrays or single item
+      const items = Array.isArray(heading) ? heading : [heading];
+
+      const blocks = items
+        .map((item) => toHeadingHtml(item))
+        .join("");
+
+      // Add a soft separator before appended content for readability
+      const separator = localContent ? "<p><br/></p>" : "";
+
+      const nextHtml = (localContent || "") + separator + blocks;
+      handleSetContent(nextHtml);
+    },
+    [localContent, handleSetContent]
+  );
+
   return (
     <div className="grid grid-cols-[2fr_1fr] items-stretch rounded-[18px] overflow-hidden border border-[var(--border)] bg-white transition-colors">
       {/* LEFT AREA */}
@@ -291,6 +346,8 @@ export default function CEContentArea({
           seoMode={effectiveSeoMode}
           metrics={metrics}
           editorContent={localContent}
+          /* Allow panel to paste headings into canvas */
+          onPasteToEditor={handlePasteHeadingToEditor}
         />
       </div>
     </div>

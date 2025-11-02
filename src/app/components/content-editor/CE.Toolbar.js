@@ -155,6 +155,24 @@ export default function CEToolbar({ activeTab, onTabChange, lastEdited, editorRe
     }, 0);
   };
 
+  // --- Added: map heading → inline size (px). Adjust if you want different sizes.
+  const HEADING_SIZES = {
+    h1: 28,
+    h2: 22,
+    h3: 18,
+  };
+
+  // --- Added: apply heading + size + bold in one go, keeping UX identical.
+  const applyHeadingBlock = (block) => {
+    exec("saveSelection");
+    exec("formatBlock", block);
+    if (HEADING_SIZES[block]) {
+      exec("fontSizePx", HEADING_SIZES[block]); // inline font-size for consistency across environments
+      exec("bold"); // ensure bold appearance on headings
+    }
+    setHeadOpen(false);
+  };
+
   return (
     <div className="w-full bg-white border border-[var(--border)] border-b-0 border-r-0 rounded-tl-[12px] transition-colors">
       {/* Tabs Row */}
@@ -202,7 +220,15 @@ export default function CEToolbar({ activeTab, onTabChange, lastEdited, editorRe
                   key={it.block}
                   className="w-full text-left px-3 py-1.5 text-[13px] hover:bg-gray-100"
                   onMouseDown={noFocus}
-                  onClick={() => { exec("formatBlock", it.block); setHeadOpen(false); }}
+                  onClick={() => {
+                    if (it.block === "p") {
+                      // Keep paragraph behavior unchanged
+                      exec("formatBlock", "p");
+                      setHeadOpen(false);
+                    } else {
+                      applyHeadingBlock(it.block);
+                    }
+                  }}
                 >
                   {it.label}
                 </button>

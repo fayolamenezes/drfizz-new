@@ -24,7 +24,7 @@
           "keywords": [
             {
               "id": "k1",
-              "title": "Content Marketing",
+              "title": "core web vitals",
               "used": 4,
               "recommended": 3,
               "sources": 15,
@@ -52,7 +52,7 @@
             },
             {
               "id": "k2",
-              "title": "Schema Markup",
+              "title": "helpful content system",
               "used": 1,
               "recommended": 3,
               "sources": 12,
@@ -80,7 +80,7 @@
             },
             {
               "id": "k3",
-              "title": "Internal Linking",
+              "title": "rich results",
               "used": 2,
               "recommended": 4,
               "sources": 9,
@@ -108,7 +108,7 @@
             },
             {
               "id": "k4",
-              "title": "Page Speed",
+              "title": "crawl budget",
               "used": 3,
               "recommended": 3,
               "sources": 18,
@@ -149,7 +149,7 @@
           "keywords": [
             {
               "id": "k5",
-              "title": "Title Readability",
+              "title": "core web vitals",
               "used": 3,
               "recommended": 3,
               "sources": 10,
@@ -177,7 +177,7 @@
             },
             {
               "id": "k6",
-              "title": "Meta Description",
+              "title": "helpful content system",
               "used": 2,
               "recommended": 4,
               "sources": 8,
@@ -205,7 +205,7 @@
             },
             {
               "id": "k7",
-              "title": "Keyword Clusters",
+              "title": "rich results",
               "used": 1,
               "recommended": 3,
               "sources": 7,
@@ -233,7 +233,7 @@
             },
             {
               "id": "k8",
-              "title": "Link Readability",
+              "title": "crawl budget",
               "used": 1,
               "recommended": 3,
               "sources": 5,
@@ -286,7 +286,7 @@
           "keywords": [
             {
               "id": "k1",
-              "title": "Content Marketing",
+              "title": "a+ content",
               "used": 4,
               "recommended": 3,
               "sources": 15,
@@ -314,7 +314,7 @@
             },
             {
               "id": "k2",
-              "title": "Schema Markup",
+              "title": "search terms",
               "used": 1,
               "recommended": 3,
               "sources": 12,
@@ -342,7 +342,7 @@
             },
             {
               "id": "k3",
-              "title": "Internal Linking",
+              "title": "buy box",
               "used": 2,
               "recommended": 4,
               "sources": 9,
@@ -370,7 +370,7 @@
             },
             {
               "id": "k4",
-              "title": "Page Speed",
+              "title": "prime eligibility",
               "used": 3,
               "recommended": 3,
               "sources": 18,
@@ -411,7 +411,7 @@
           "keywords": [
             {
               "id": "k5",
-              "title": "Title Readability",
+              "title": "a+ content",
               "used": 3,
               "recommended": 3,
               "sources": 10,
@@ -439,7 +439,7 @@
             },
             {
               "id": "k6",
-              "title": "Meta Description",
+              "title": "search terms",
               "used": 2,
               "recommended": 4,
               "sources": 8,
@@ -467,7 +467,7 @@
             },
             {
               "id": "k7",
-              "title": "Keyword Clusters",
+              "title": "buy box",
               "used": 1,
               "recommended": 3,
               "sources": 7,
@@ -495,7 +495,7 @@
             },
             {
               "id": "k8",
-              "title": "Link Readability",
+              "title": "prime eligibility",
               "used": 1,
               "recommended": 3,
               "sources": 5,
@@ -548,7 +548,7 @@
           "keywords": [
             {
               "id": "k1",
-              "title": "Content Marketing",
+              "title": "big billion days",
               "used": 4,
               "recommended": 3,
               "sources": 15,
@@ -576,7 +576,7 @@
             },
             {
               "id": "k2",
-              "title": "Schema Markup",
+              "title": "assured badge",
               "used": 1,
               "recommended": 3,
               "sources": 12,
@@ -604,7 +604,7 @@
             },
             {
               "id": "k3",
-              "title": "Internal Linking",
+              "title": "delivery promise",
               "used": 2,
               "recommended": 4,
               "sources": 9,
@@ -632,7 +632,7 @@
             },
             {
               "id": "k4",
-              "title": "Page Speed",
+              "title": "q&a schema",
               "used": 3,
               "recommended": 3,
               "sources": 18,
@@ -673,7 +673,7 @@
           "keywords": [
             {
               "id": "k5",
-              "title": "Title Readability",
+              "title": "big billion days",
               "used": 3,
               "recommended": 3,
               "sources": 10,
@@ -701,7 +701,7 @@
             },
             {
               "id": "k6",
-              "title": "Meta Description",
+              "title": "assured badge",
               "used": 2,
               "recommended": 4,
               "sources": 8,
@@ -729,7 +729,7 @@
             },
             {
               "id": "k7",
-              "title": "Keyword Clusters",
+              "title": "delivery promise",
               "used": 1,
               "recommended": 3,
               "sources": 7,
@@ -757,7 +757,7 @@
             },
             {
               "id": "k8",
-              "title": "Link Readability",
+              "title": "q&a schema",
               "used": 1,
               "recommended": 3,
               "sources": 5,
@@ -810,7 +810,7 @@
           "keywords": [
             {
               "id": "k1",
-              "title": "Content Marketing",
+              "title": "lookbook",
               "used": 4,
               "recommended": 3,
               "sources": 15,
@@ -838,7 +838,7 @@
             },
             {
               "id": "k2",
-              "title": "Schema Markup",
+              "title": "size guide schema",
               "used": 1,
               "recommended": 3,
               "sources": 12,
@@ -866,7 +866,7 @@
             },
             {
               "id": "k3",
-              "title": "Internal Linking",
+              "title": "fabric care",
               "used": 2,
               "recommended": 4,
               "sources": 9,
@@ -894,7 +894,7 @@
             },
             {
               "id": "k4",
-              "title": "Page Speed",
+              "title": "trend collections",
               "used": 3,
               "recommended": 3,
               "sources": 18,
@@ -935,7 +935,7 @@
           "keywords": [
             {
               "id": "k5",
-              "title": "Title Readability",
+              "title": "lookbook",
               "used": 3,
               "recommended": 3,
               "sources": 10,
@@ -963,7 +963,7 @@
             },
             {
               "id": "k6",
-              "title": "Meta Description",
+              "title": "size guide schema",
               "used": 2,
               "recommended": 4,
               "sources": 8,
@@ -991,7 +991,7 @@
             },
             {
               "id": "k7",
-              "title": "Keyword Clusters",
+              "title": "fabric care",
               "used": 1,
               "recommended": 3,
               "sources": 7,
@@ -1019,7 +1019,7 @@
             },
             {
               "id": "k8",
-              "title": "Link Readability",
+              "title": "trend collections",
               "used": 1,
               "recommended": 3,
               "sources": 5,
@@ -1072,7 +1072,7 @@
           "keywords": [
             {
               "id": "k1",
-              "title": "Content Marketing",
+              "title": "reseller margin",
               "used": 4,
               "recommended": 3,
               "sources": 15,
@@ -1100,7 +1100,7 @@
             },
             {
               "id": "k2",
-              "title": "Schema Markup",
+              "title": "whatsapp share",
               "used": 1,
               "recommended": 3,
               "sources": 12,
@@ -1128,7 +1128,7 @@
             },
             {
               "id": "k3",
-              "title": "Internal Linking",
+              "title": "low price guarantee",
               "used": 2,
               "recommended": 4,
               "sources": 9,
@@ -1156,7 +1156,7 @@
             },
             {
               "id": "k4",
-              "title": "Page Speed",
+              "title": "cod messaging",
               "used": 3,
               "recommended": 3,
               "sources": 18,
@@ -1197,7 +1197,7 @@
           "keywords": [
             {
               "id": "k5",
-              "title": "Title Readability",
+              "title": "reseller margin",
               "used": 3,
               "recommended": 3,
               "sources": 10,
@@ -1225,7 +1225,7 @@
             },
             {
               "id": "k6",
-              "title": "Meta Description",
+              "title": "whatsapp share",
               "used": 2,
               "recommended": 4,
               "sources": 8,
@@ -1253,7 +1253,7 @@
             },
             {
               "id": "k7",
-              "title": "Keyword Clusters",
+              "title": "low price guarantee",
               "used": 1,
               "recommended": 3,
               "sources": 7,
@@ -1281,7 +1281,7 @@
             },
             {
               "id": "k8",
-              "title": "Link Readability",
+              "title": "cod messaging",
               "used": 1,
               "recommended": 3,
               "sources": 5,
@@ -1334,7 +1334,7 @@
           "keywords": [
             {
               "id": "k1",
-              "title": "Content Marketing",
+              "title": "digital marketing",
               "used": 4,
               "recommended": 3,
               "sources": 15,
@@ -1362,7 +1362,7 @@
             },
             {
               "id": "k2",
-              "title": "Schema Markup",
+              "title": "seo services",
               "used": 1,
               "recommended": 3,
               "sources": 12,
@@ -1390,7 +1390,7 @@
             },
             {
               "id": "k3",
-              "title": "Internal Linking",
+              "title": "ppc management",
               "used": 2,
               "recommended": 4,
               "sources": 9,
@@ -1418,7 +1418,7 @@
             },
             {
               "id": "k4",
-              "title": "Page Speed",
+              "title": "social media marketing",
               "used": 3,
               "recommended": 3,
               "sources": 18,
@@ -1459,7 +1459,7 @@
           "keywords": [
             {
               "id": "k5",
-              "title": "Title Readability",
+              "title": "digital marketing",
               "used": 3,
               "recommended": 3,
               "sources": 10,
@@ -1487,7 +1487,7 @@
             },
             {
               "id": "k6",
-              "title": "Meta Description",
+              "title": "seo services",
               "used": 2,
               "recommended": 4,
               "sources": 8,
@@ -1515,7 +1515,7 @@
             },
             {
               "id": "k7",
-              "title": "Keyword Clusters",
+              "title": "ppc management",
               "used": 1,
               "recommended": 3,
               "sources": 7,
@@ -1543,7 +1543,7 @@
             },
             {
               "id": "k8",
-              "title": "Link Readability",
+              "title": "social media marketing",
               "used": 1,
               "recommended": 3,
               "sources": 5,
@@ -1596,7 +1596,7 @@
           "keywords": [
             {
               "id": "k1",
-              "title": "Content Marketing",
+              "title": "interior design",
               "used": 4,
               "recommended": 3,
               "sources": 15,
@@ -1624,7 +1624,7 @@
             },
             {
               "id": "k2",
-              "title": "Schema Markup",
+              "title": "modular kitchen",
               "used": 1,
               "recommended": 3,
               "sources": 12,
@@ -1652,7 +1652,7 @@
             },
             {
               "id": "k3",
-              "title": "Internal Linking",
+              "title": "wardrobe design",
               "used": 2,
               "recommended": 4,
               "sources": 9,
@@ -1680,7 +1680,7 @@
             },
             {
               "id": "k4",
-              "title": "Page Speed",
+              "title": "furniture lookbook",
               "used": 3,
               "recommended": 3,
               "sources": 18,
@@ -1721,7 +1721,7 @@
           "keywords": [
             {
               "id": "k5",
-              "title": "Title Readability",
+              "title": "interior design",
               "used": 3,
               "recommended": 3,
               "sources": 10,
@@ -1749,7 +1749,7 @@
             },
             {
               "id": "k6",
-              "title": "Meta Description",
+              "title": "modular kitchen",
               "used": 2,
               "recommended": 4,
               "sources": 8,
@@ -1777,7 +1777,7 @@
             },
             {
               "id": "k7",
-              "title": "Keyword Clusters",
+              "title": "wardrobe design",
               "used": 1,
               "recommended": 3,
               "sources": 7,
@@ -1805,7 +1805,7 @@
             },
             {
               "id": "k8",
-              "title": "Link Readability",
+              "title": "furniture lookbook",
               "used": 1,
               "recommended": 3,
               "sources": 5,
@@ -1858,7 +1858,7 @@
           "keywords": [
             {
               "id": "k1",
-              "title": "Content Marketing",
+              "title": "erp implementation",
               "used": 4,
               "recommended": 3,
               "sources": 15,
@@ -1886,7 +1886,7 @@
             },
             {
               "id": "k2",
-              "title": "Schema Markup",
+              "title": "risk and compliance",
               "used": 1,
               "recommended": 3,
               "sources": 12,
@@ -1914,7 +1914,7 @@
             },
             {
               "id": "k3",
-              "title": "Internal Linking",
+              "title": "finance transformation",
               "used": 2,
               "recommended": 4,
               "sources": 9,
@@ -1942,7 +1942,7 @@
             },
             {
               "id": "k4",
-              "title": "Page Speed",
+              "title": "process re-engineering",
               "used": 3,
               "recommended": 3,
               "sources": 18,
@@ -1983,7 +1983,7 @@
           "keywords": [
             {
               "id": "k5",
-              "title": "Title Readability",
+              "title": "erp implementation",
               "used": 3,
               "recommended": 3,
               "sources": 10,
@@ -2011,7 +2011,7 @@
             },
             {
               "id": "k6",
-              "title": "Meta Description",
+              "title": "risk and compliance",
               "used": 2,
               "recommended": 4,
               "sources": 8,
@@ -2039,7 +2039,7 @@
             },
             {
               "id": "k7",
-              "title": "Keyword Clusters",
+              "title": "finance transformation",
               "used": 1,
               "recommended": 3,
               "sources": 7,
@@ -2067,7 +2067,7 @@
             },
             {
               "id": "k8",
-              "title": "Link Readability",
+              "title": "process re-engineering",
               "used": 1,
               "recommended": 3,
               "sources": 5,

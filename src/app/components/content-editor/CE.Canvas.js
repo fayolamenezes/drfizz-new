@@ -330,7 +330,7 @@ const CECanvas = forwardRef(function CECanvas(
 
   return (
     <section
-      className="rounded-b-[12px] border border-t-0 border-[var(--border)] bg-[var(--bg-panel)] px-6 md:px-8 py-6 transition-colors"
+      className="rounded-b-[12px] border border-t-0 border-[var(--border)] bg-white px-6 md:px-8 py-6 transition-colors"
       aria-label="Editor canvas"
     >
       <h2 className="text-[26px] md:text-[28px] font-bold text-[var(--text-primary)] mb-4 transition-colors">
@@ -368,7 +368,7 @@ const CECanvas = forwardRef(function CECanvas(
         ref={editorRef}
         contentEditable
         suppressContentEditableWarning
-        className="min-h-[420px] rounded-md border border-[var(--border)] bg-[var(--bg-panel)] px-4 py-4 leading-7 text-[15px] text-[var(--text-primary)] focus:outline-none prose prose-p:my-3 prose-h1:text-2xl prose-h2:text-xl prose-ul:list-disc prose-ul:pl-6 transition-colors"
+        className="min-h-[420px] rounded-md border border-[var(--border)] bg-white px-4 py-4 leading-7 text-[15px] text-[var(--text-primary)] focus:outline-none prose prose-p:my-3 prose-h1:text-2xl prose-h2:text-xl prose-ul:list-disc prose-ul:pl-6 transition-colors"
         onInput={() => {
           if (!suppressInputRef.current) {
             bubble({ pushHistory: true, notifyParent: true });

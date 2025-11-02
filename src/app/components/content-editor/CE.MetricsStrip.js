@@ -75,7 +75,7 @@ function MetricCard({ label, valuePct }) {
     status.label === "Good" ? "good" : status.label === "Moderate" ? "warn" : "bad";
 
   return (
-    <div className="relative min-w-0 h-[74px] rounded-[12px] border border-[var(--border)] bg-[var(--bg-panel)] px-3 py-2 transition-colors">
+    <div className="relative min-w-0 h-[74px] rounded-[12px] border border-[var(--border)] bg-white px-3 py-2 transition-colors">
       <div className="flex h-full flex-col justify-end">
         <div className="mb-1 flex items-center gap-1 text-[11px] font-semibold tracking-wide text-[var(--text-primary)]">
           <span className="truncate">{label}</span>
@@ -118,7 +118,7 @@ function WordcountCard({ count = 0, target = 1200 }) {
   const tone = pct >= 75 ? "good" : pct >= 40 ? "warn" : "bad";
 
   return (
-    <div className="min-w-0 h-[74px] rounded-[12px] border border-[var(--border)] bg-[var(--bg-panel)] px-3 py-2 transition-colors">
+    <div className="min-w-0 h-[74px] rounded-[12px] border border-[var(--border)] bg-white px-3 py-2 transition-colors">
       <div className="flex h-full flex-col justify-end">
         <div className="mb-1 flex items-center gap-1 text-[11px] font-semibold tracking-wide text-[var(--text-primary)]">
           <span className="truncate">WORD COUNT</span>
@@ -147,9 +147,9 @@ function SeoPill({ active, title, Icon, onClick, disabled }) {
   const activeCls =
     "border-[1.5px] border-orange-600 bg-orange-50";
   const inactiveCls =
-    "border-[var(--border)] bg-[var(--bg-panel)] hover:bg-[var(--input)]";
+    "border-[var(--border)] bg-white hover:bg-gray-50";
   const disabledCls =
-    "opacity-50 cursor-not-allowed hover:bg-[var(--bg-panel)]";
+    "opacity-50 cursor-not-allowed hover:bg-white";
 
   return (
     <button

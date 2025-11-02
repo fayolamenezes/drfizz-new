@@ -1,25 +1,35 @@
 "use client";
 
 import React, { useMemo, useState } from "react";
-import Image from "next/image";
-import { ArrowUpRight, ArrowDownRight, ChevronRight, X, Search as SearchIcon } from "lucide-react";
+import { ArrowUpRight, ArrowDownRight, ChevronRight, X, Search as SearchIcon, Copy as CopyIcon } from "lucide-react";
 
-function IconHintButton({ onClick, label = "Paste to editor", size = 12, className = "" }) {
+function IconHintButton({ onClick, label = "Paste to editor", size = 18, className = "" }) {
   return (
-    <div className={`relative group ${className}`}>
+    <div
+      className={[
+        "relative",
+        // Hidden by default; shown when the parent row (with class 'group') is hovered/focused
+        "opacity-0 pointer-events-none transition-opacity duration-150",
+        "group-hover:opacity-100 group-hover:pointer-events-auto group-focus-within:opacity-100",
+        className,
+      ].join(" ")}
+    >
       <button
         type="button"
-        onClick={onClick}
+        onClick={(e) => {
+          e.stopPropagation();
+          onClick?.(e);
+        }}
         aria-label={label}
-        className="grid place-items-center h-8 w-8 rounded-md border border-gray-200 bg-white text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none
-                   dark:border-[var(--border)] dark:bg-[var(--bg-panel)] dark:text-[var(--text-primary)] dark:hover:bg-[var(--bg-hover)]"
+        // No background, no border — just the wireframe icon
+        className="p-0 m-0 inline-flex items-center justify-center leading-none align-middle focus:outline-none h-8 w-8"
       >
-        <Image src="/assets/copy.svg" width={size} height={size} alt="Paste" className="opacity-80" />
+        <CopyIcon size={size} strokeWidth={1.25} className="text-gray-500 opacity-90 hover:text-gray-600 transition-colors" />
       </button>
       <span
-        className="pointer-events-none absolute -top-7 right-0 rounded-md border border-gray-200 bg-white px-2 py-0.5 text-[10px] font-medium text-gray-700 shadow-sm opacity-0 transition-opacity duration-100 whitespace-nowrap
+        className="pointer-events-none absolute -top-7 right-0 rounded-md border border-[var(--border)] bg-white px-2 py-0.5 text-[10px] font-medium text-gray-700 shadow-sm opacity-0 transition-opacity duration-75 whitespace-nowrap
                    group-hover:opacity-100 group-focus-within:opacity-100
-                   dark:border-[var(--border)] dark:bg-[var(--bg-panel)] dark:text-[var(--text-primary)]"
+                   dark:bg-[var(--bg-panel)] dark:text-[var(--text-primary)]"
       >
         {label}
       </span>
@@ -109,7 +119,7 @@ function ScoreCard({ title, badge, progress, source, tone = "green", onOpen, onP
             onOpen?.();
           }
         }}
-        className="w-full px-3.5 py-3 flex items-start gap-3 cursor-pointer select-none focus:outline-none
+        className="group w-full px-3.5 py-3 flex items-start gap-3 cursor-pointer select-none focus:outline-none
                    hover:bg-gray-50 dark:hover:bg-[var(--bg-hover)]"
       >
         <span className={`text-[10px] px-2 py-0.5 border rounded-full font-semibold ${toneMap[tone]}`}>{badge}</span>
@@ -214,10 +224,10 @@ export default function SeoAdvancedOptimize({ onPasteToEditor }) {
 
   const cards = useMemo(
     () => [
-      { title: "Content Marketing", badge: "4/3", progress: 92, source: 15, tone: "green", status: "Good",      tail: "Short tail" },
-      { title: "Strategies",        badge: "2/4", progress: 58, source: 5,  tone: "amber", status: "Needs Fix", tail: "Long tail" },
-      { title: "Link Readability",  badge: "1/3", progress: 35, source: 15, tone: "gray",  status: "Needs Fix", tail: "Exact"     },
-      { title: "Title Readability", badge: "3/3", progress: 90, source: 15, tone: "green", status: "Good",      tail: "Short tail" },
+      { title: "Content Marketing",  badge: "4/3", progress: 92, source: 15, tone: "green", status: "Good",      tail: "Short tail" },
+      { title: "Strategies",         badge: "2/4", progress: 58, source: 5,  tone: "amber", status: "Needs Fix", tail: "Long tail" },
+      { title: "Link Readability",   badge: "1/3", progress: 35, source: 15, tone: "gray",  status: "Needs Fix", tail: "Exact"     },
+      { title: "Title Readability",  badge: "3/3", progress: 90, source: 15, tone: "green", status: "Good",      tail: "Short tail" },
     ],
     []
   );

@@ -106,7 +106,7 @@ export default function CENavbar({
               onBlur={commitTitle}
               onKeyDown={handleKeyDown}
               className={[
-                "inline block whitespace-normal break-words px-1",
+                "inline-block whitespace-normal break-words px-1",
                 editing ? "outline-none ring-2 ring-orange-300 bg-white" : "outline-none",
               ].join(" ")}
               style={{ cursor: editing ? "text" : "default" }}
@@ -147,7 +147,7 @@ export default function CENavbar({
           </button>
 
           <button className="inline-flex items-center gap-2 rounded-full px-5 py-2 text-[13px] font-semibold text-white shadow-sm bg-[image:var(--infoHighlight-gradient)] hover:opacity-90 transition">
-            <span>Chat with Ai</span>
+            <span>Chat with AI</span>
             <Sparkles size={16} />
           </button>
         </div>

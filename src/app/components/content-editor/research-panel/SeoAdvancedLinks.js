@@ -2,9 +2,9 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import { ChevronRight, Search as SearchIcon, X } from "lucide-react";
+import { ChevronRight, Search as SearchIcon, X, Copy as CopyIcon } from "lucide-react";
 
-function IconHintButton({ onClick, label = "Paste to editor", size = 12, className = "" }) {
+function IconHintButton({ onClick, label = "Paste to editor", size = 18, className = "" }) {
   // NOTE: Use a non-button interactive element to avoid nesting <button> inside <button>
   const onKeyDown = (e) => {
     if (e.key === "Enter" || e.key === " ") {
@@ -14,17 +14,29 @@ function IconHintButton({ onClick, label = "Paste to editor", size = 12, classNa
   };
 
   return (
-    <div className={`relative group ${className}`}>
+    <div
+      className={[
+        "relative",
+        // hidden by default; shown when the parent row (with class 'group') is hovered
+        "opacity-0 pointer-events-none transition-opacity duration-150",
+        "group-hover:opacity-100 group-hover:pointer-events-auto",
+        className,
+      ].join(" ")}
+    >
       <div
         role="button"
         tabIndex={0}
         onClick={onClick}
         onKeyDown={onKeyDown}
         aria-label={label}
-        className="grid place-items-center h-8 w-8 rounded-md border border-[var(--border)] bg-white/90 text-gray-700 shadow-sm hover:bg-gray-50 cursor-pointer focus:outline-none focus:ring-2 focus:ring-amber-400/60
-                   dark:bg-[var(--bg-panel)] dark:text-[var(--text-primary)] dark:hover:bg-[var(--bg-hover)]"
+        /* Approved style: no background, no border — just the wireframe icon */
+        className="p-0 m-0 inline-flex items-center justify-center leading-none align-middle focus:outline-none h-8 w-8"
       >
-        <Image src="/assets/copy.svg" width={size} height={size} alt="Paste" className="opacity-80" />
+        <CopyIcon
+          size={size}
+          strokeWidth={1.25}
+          className="text-gray-500 opacity-90 hover:text-gray-600 transition-colors"
+        />
       </div>
       <span
         className="pointer-events-none absolute -top-7 right-0 rounded-md border border-[var(--border)] bg-white px-2 py-0.5 text-[10px] font-medium text-gray-700 shadow-sm opacity-0 transition-opacity duration-75 whitespace-nowrap
@@ -57,7 +69,7 @@ function LinkRow({ rankScore, domain, sources, onPaste }) {
     <div className="rounded-2xl border border-[var(--border)] bg-white shadow-sm dark:bg-[var(--bg-panel)]">
       <button
         type="button"
-        className="w-full px-4 py-3 flex items-center justify-between gap-3 text-left rounded-2xl
+        className="group w-full px-4 py-3 flex items-center justify-between gap-3 text-left rounded-2xl
                    hover:bg-gray-50 dark:hover:bg-[var(--bg-hover)]"
       >
         <div className="flex min-w-0 items-center gap-3">

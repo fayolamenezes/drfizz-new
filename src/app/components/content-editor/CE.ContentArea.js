@@ -220,9 +220,9 @@ export default function CEContentArea({
   const effectiveSeoMode = seoModeProp ?? seoMode;
 
   return (
-    <div className="grid grid-cols-[2fr_1fr] items-stretch rounded-[18px] overflow-hidden border border-[var(--border)] bg-[var(--bg-panel)] transition-colors">
+    <div className="grid grid-cols-[2fr_1fr] items-stretch rounded-[18px] overflow-hidden border border-[var(--border)] bg-white transition-colors">
       {/* LEFT AREA */}
-      <div className="min-w-0 border-r border-[var(--border)] bg-[var(--bg-panel)]">
+      <div className="min-w-0 border-r border-[var(--border)] bg-white">
         <CEToolbar
           activeTab={activeTab}
           onTabChange={onTabChange}
@@ -230,7 +230,7 @@ export default function CEContentArea({
           editorRef={editorRef}
         />
 
-        <div className="bg-[var(--bg-panel)]">
+        <div className="bg-white">
           <CECanvas
             ref={editorRef}
             title={title}
@@ -241,7 +241,7 @@ export default function CEContentArea({
       </div>
 
       {/* RIGHT PANEL */}
-      <div className="min-w-[320px] border-l border-[var(--border)] bg-[var(--bg-panel)]">
+      <div className="min-w-[320px] border-l border-[var(--border)] bg-white">
         <CEResearchPanel
           query={query}
           onQueryChange={onQueryChange}

@@ -91,16 +91,11 @@ export default function CEResearchPanel({
     return pages[0];
   }, [pages, query]);
 
-  // Map to your JSON shapes:
-  // - Basics: page.seoBasics
-  // - Optimize: page.advanced.optimize
-  // - Links: page.linksTab.external (internal not present in your JSON; we pass [])
-  // - FAQs: page.faqs.{serp, peopleAlsoAsk, quora, reddit}
-  // - Details: page.details (passed only to SeoDetails)
+  // Map to your JSON shapes
   const basicsData = currentPage?.seoBasics || null;
   const optimizeData = currentPage?.advanced?.optimize || null;
   const linksExternal = currentPage?.linksTab?.external || [];
-  const linksInternal = currentPage?.linksTab?.internal || []; // usually not present; safe default
+  const linksInternal = currentPage?.linksTab?.internal || [];
   const faqs = currentPage?.faqs || {
     serp: [],
     peopleAlsoAsk: [],
@@ -108,15 +103,12 @@ export default function CEResearchPanel({
     reddit: [],
   };
   const detailsData = currentPage?.details || null;
-
-  // Optional extra fields for the "Research" tab if you add them later
   const outline = currentPage?.research?.outline || [];
   const competitors = currentPage?.research?.competitors || [];
 
-  // Gate: only after a non-empty query AND Basics has started (searching/results)
   const canAccess = !!query?.trim() && (phase === "searching" || phase === "results");
 
-  // BASIC mode (SEO Basics)
+  // BASIC mode
   if (seoMode === "basic") {
     return (
       <SeoBasics
@@ -135,11 +127,11 @@ export default function CEResearchPanel({
     );
   }
 
-  // DETAILS view (from Metrics Strip) — guard until search started
+  // DETAILS view
   if (seoMode === "details") {
     if (!canAccess) {
       return (
-        <aside className="h-full rounded-r-[18px] border-l border-[var(--border)] bg-[var(--bg-panel)] px-6 py-5 flex items-center justify-center transition-colors">
+        <aside className="h-full rounded-r-[18px] border-l border-[var(--border)] bg-white px-6 py-5 flex items-center justify-center transition-colors">
           <div className="text-center">
             <div className="text-[13px] font-semibold text-[var(--text-primary)]">
               Details locked
@@ -162,9 +154,9 @@ export default function CEResearchPanel({
     );
   }
 
-  // ADVANCED mode: Optimize / Links / FAQ’s / Research tabs — disabled until canAccess
+  // ADVANCED mode
   return (
-    <aside className="h-full rounded-r-[18px] border-l border-[var(--border)] bg-[var(--bg-panel)] px-5 md:px-6 py-5 flex flex-col gap-3 transition-colors">
+    <aside className="h-full rounded-r-[18px] border-l border-[var(--border)] bg-white px-5 md:px-6 py-5 flex flex-col gap-3 transition-colors">
       {/* Top navigation tabs */}
       <div className="flex items-center justify-between gap-1 w-full flex-nowrap">
         {TABS.slice(1).map(({ key, label, icon: Icon }) => {
@@ -179,8 +171,8 @@ export default function CEResearchPanel({
               className={`flex items-center justify-center gap-1 rounded-lg border flex-auto px-2.5 py-1.5 text-[12px] font-medium transition-all
                 ${
                   isActive
-                    ? "bg-[var(--bg-panel)] border-amber-400 text-amber-600 shadow-sm"
-                    : "bg-[var(--bg-panel)] border-[var(--border)] text-[var(--text-primary)] hover:bg-[var(--bg-hover)]"
+                    ? "bg-white border-amber-400 text-amber-600 shadow-sm"
+                    : "bg-white border-[var(--border)] text-[var(--text-primary)] hover:bg-gray-50"
                 }
                 ${disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}
               `}
@@ -213,9 +205,9 @@ export default function CEResearchPanel({
         </div>
       )}
 
-      {/* Loading/Error states for JSON fetch (advanced view) */}
+      {/* Loading/Error states */}
       {canAccess && cfgLoading && (
-        <div className="rounded-xl border border-[var(--border)] bg-[var(--bg-panel)] px-3 py-2 text-[12px] text-[var(--muted)]">
+        <div className="rounded-xl border border-[var(--border)] bg-white px-3 py-2 text-[12px] text-[var(--muted)]">
           Loading research…
         </div>
       )}
@@ -225,43 +217,36 @@ export default function CEResearchPanel({
         </div>
       )}
 
-      {/* Advanced panels (only visible when unlocked) */}
+      {/* Advanced panels */}
       {canAccess && !cfgLoading && !cfgError && (
         <>
           {tab === "opt" && (
             <SeoAdvancedOptimize
               onPasteToEditor={onPasteToEditor}
-              // mapped from JSON: advanced.optimize
               optimizeData={optimizeData}
               currentPage={currentPage}
               basicsData={basicsData}
             />
           )}
-
           {tab === "links" && (
             <SeoAdvancedLinks
               onPasteToEditor={onPasteToEditor}
-              // mapped from JSON: linksTab.external (internal may be empty)
               linksExternal={linksExternal}
               linksInternal={linksInternal}
               currentPage={currentPage}
             />
           )}
-
           {tab === "faqs" && (
             <SeoAdvancedFaqs
               onPasteToEditor={onPasteToEditor}
-              // mapped from JSON: faqs.{serp, peopleAlsoAsk, quora, reddit}
               faqs={faqs}
               currentPage={currentPage}
             />
           )}
-
           {tab === "research" && (
             <SeoAdvancedResearch
               editorContent={editorContent}
               onPasteToEditor={onPasteToEditor}
-              // optional extras if you later add `research` in JSON
               outline={outline}
               competitors={competitors}
               currentPage={currentPage}

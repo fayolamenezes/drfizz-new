@@ -1,15 +1,14 @@
 "use client";
 
 import React, { useEffect, useMemo, useState } from "react";
-import Image from "next/image";
-import { Sparkles, Plus, MoreHorizontal } from "lucide-react";
+import { Sparkles, Plus, MoreHorizontal, Copy as CopyIcon } from "lucide-react";
 
 /* ===============================
    UI atoms (theme-aware)
 ================================ */
 function Chip({ children }) {
   return (
-    <span className="inline-flex items-center gap-1 rounded-full border border-[var(--border)] bg-[var(--bg-panel)] px-2 py-0.5 text-[11px] text-[var(--text-primary)] transition-colors">
+    <span className="inline-flex items-center gap-1 rounded-full border border-[var(--border)] bg-white px-2 py-0.5 text-[11px] text-[var(--text-primary)] transition-colors">
       {children}
     </span>
   );
@@ -37,25 +36,31 @@ function RowIconButton({ children, title }) {
     <button
       type="button"
       title={title}
-      className="grid h-7 w-7 place-items-center rounded-md border border-[var(--border)] bg-[var(--bg-panel)] text-[var(--text-primary)] hover:bg-[var(--bg-hover)] transition-colors"
+      className="grid h-7 w-7 place-items-center rounded-md border border-[var(--border)] bg-white text-[var(--text-primary)] hover:bg-gray-50 transition-colors"
     >
       {children}
     </button>
   );
 }
 
-function IconHintButton({ onClick, label = "Paste to editor", size = 12, className = "" }) {
+/* Updated: hover-only, slim wireframe Copy icon */
+function IconHintButton({ onClick, label = "Paste to editor", size = 18, className = "" }) {
   return (
-    <div className={`relative group ${className}`}>
+    <div
+      className={`relative opacity-0 pointer-events-none transition-opacity duration-150 group-hover:opacity-100 group-hover:pointer-events-auto ${className}`}
+    >
       <button
         type="button"
-        onClick={onClick}
+        onClick={(e) => {
+          e.stopPropagation();
+          onClick?.(e);
+        }}
         aria-label={label}
-        className="grid place-items-center h-8 w-8 rounded-md border border-[var(--border)] bg-white/90 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none
-                   dark:bg-[var(--bg-panel)] dark:text-[var(--text-primary)] dark:hover:bg-[var(--bg-hover)]"
+        className="p-0 m-0 inline-flex items-center justify-center leading-none align-middle focus:outline-none h-8 w-8"
       >
-        <Image src="/assets/copy.svg" width={size} height={size} alt="Paste" className="opacity-80" />
+        <CopyIcon size={size} strokeWidth={1.5} className="text-gray-500 hover:text-gray-600 transition-colors" />
       </button>
+
       <span
         className="pointer-events-none absolute -top-7 right-0 rounded-md border border-[var(--border)] bg-white px-2 py-0.5 text-[10px] font-medium text-gray-700 shadow-sm opacity-0 transition-opacity duration-75 whitespace-nowrap
                    group-hover:opacity-100 group-focus-within:opacity-100
@@ -77,8 +82,8 @@ function OutlineRow({ level = "H2", title, onPaste, onAddInstruction }) {
     "pl-10"; // H3
 
   return (
-    <div className="rounded-xl border border-[var(--border)] bg-[var(--bg-panel)] hover:bg-[var(--bg-hover)] transition-colors">
-      <div className={`flex items-center justify-between gap-3 px-3 py-2.5 ${indent}`}>
+    <div className="rounded-xl border border-[var(--border)] bg-white hover:bg-gray-50 transition-colors">
+      <div className={`group flex items-center justify-between gap-3 px-3 py-2.5 ${indent}`}>
         <div className="flex min-w-0 items-center gap-3">
           <HBadge level={level} />
           <div className="min-w-0">
@@ -111,7 +116,7 @@ function OutlineRow({ level = "H2", title, onPaste, onAddInstruction }) {
 ================================ */
 function Stat({ label, value, sub }) {
   return (
-    <div className="rounded-xl border border-[var(--border)] bg-[var(--bg-panel)] p-3">
+    <div className="rounded-xl border border-[var(--border)] bg-white p-3">
       <div className="text-[10px] uppercase tracking-wide text-[var(--muted)]">{label}</div>
       <div className="mt-1 text-[18px] font-semibold text-[var(--text-primary)]">{value}</div>
       {sub ? <div className="text-[11px] text-[var(--muted)]">{sub}</div> : null}
@@ -123,7 +128,7 @@ function SimpleTable({ columns = [], rows = [] }) {
   return (
     <div className="overflow-x-auto rounded-xl border border-[var(--border)]">
       <table className="min-w-full text-left text-[12px]">
-        <thead className="bg-[var(--bg-panel)] text-[var(--muted)]">
+        <thead className="bg-white text-[var(--muted)]">
           <tr>
             {columns.map((c) => (
               <th key={c.key} className="px-3 py-2 font-semibold">{c.label}</th>
@@ -134,7 +139,7 @@ function SimpleTable({ columns = [], rows = [] }) {
           {rows.length === 0 ? (
             <tr><td className="px-3 py-3 text-[var(--muted)]" colSpan={columns.length}>No data.</td></tr>
           ) : rows.map((r, idx) => (
-            <tr key={idx} className="hover:bg-[var(--bg-hover)]">
+            <tr key={idx} className="hover:bg-gray-50">
               {columns.map((c) => (
                 <td key={c.key} className="px-3 py-2">
                   {typeof c.render === "function" ? c.render(r[c.key], r) : r[c.key]}
@@ -151,7 +156,7 @@ function SimpleTable({ columns = [], rows = [] }) {
 // Sticky section label used inside scrollable Heatmaps pane
 function SectionLabel({ children }) {
   return (
-    <div className="sticky top-0 z-10 bg-[var(--bg-panel)]/90 backdrop-blur px-1 py-1 border-b border-[var(--border)] text-[12px] font-semibold text-[var(--text-primary)]">
+    <div className="sticky top-0 z-10 bg-white/90 backdrop-blur px-1 py-1 border-b border-[var(--border)] text-[12px] font-semibold text-[var(--text-primary)]">
       {children}
     </div>
   );
@@ -204,7 +209,7 @@ function extractHeadingsFromHTML(html) {
 function pageHost(p) {
   return toHost(
     p?.domain ||
-      p?.details?.meta?.domain || // some files store it here
+      p?.details?.meta?.domain ||
       p?.meta?.domain ||
       ""
   );
@@ -232,7 +237,6 @@ export default function SeoAdvancedResearch({
     (async () => {
       try {
         setLoading(true);
-        // Update this path if you use the enriched filename.
         const res = await fetch("/data/contenteditor.json", {
           cache: "no-store",
           signal: ctrl.signal,
@@ -374,7 +378,7 @@ export default function SeoAdvancedResearch({
      Render
   ================================ */
   return (
-    <div className="mt-1 rounded-2xl border border-[var(--border)] bg-[var(--bg-panel)] p-3 transition-colors">
+    <div className="mt-1 rounded-2xl border border-[var(--border)] bg-white p-3 transition-colors">
       <div className="flex items-center justify-between gap-3">
         {/* Tabs */}
         <div className="flex items-center gap-6 border-b border-[var(--border)] px-1 transition-colors">
@@ -415,7 +419,7 @@ export default function SeoAdvancedResearch({
           <Chip>{outlineCount} Headings</Chip>
           <button
             type="button"
-            className="inline-flex items-center gap-1 rounded-md border border-[var(--border)] bg-[var(--bg-panel)] px-2.5 py-1.5 text-[12px] font-medium text-[var(--text-primary)] hover:bg-[var(--bg-hover)] transition-colors"
+            className="inline-flex items-center gap-1 rounded-md border border-[var(--border)] bg-white px-2.5 py-1.5 text-[12px] font-medium text-[var(--text-primary)] hover:bg-gray-50 transition-colors"
             onClick={() => {}}
           >
             <Sparkles size={14} /> All Headings

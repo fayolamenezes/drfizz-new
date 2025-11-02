@@ -1,28 +1,36 @@
+// components/content-editor/CE.ResearchPanel.js
 "use client";
 
 import React, { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
-import { ChevronRight, Search as SearchIcon, RefreshCw } from "lucide-react";
+import { ChevronRight, Search as SearchIcon, RefreshCw, Copy as CopyIcon } from "lucide-react";
 
 /* ===============================
    Small Helpers
 ================================ */
-function IconHintButton({ onClick, label = "Paste to editor", size = 12, className = "" }) {
+function IconHintButton({ onClick, label = "Paste to editor", size = 18, className = "" }) {
   return (
-    <div className={`relative group ${className}`}>
+    <div
+      className={`relative opacity-0 pointer-events-none transition-opacity duration-150 group-hover:opacity-100 group-hover:pointer-events-auto ${className}`}
+    >
       <button
         type="button"
         onClick={(e) => {
-          // Prevent bubbling into the row's click target
           e.stopPropagation();
           onClick?.(e);
         }}
         aria-label={label}
-        className="grid place-items-center h-8 w-8 rounded-md border border-[var(--border)] bg-white/90 text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none
-                   dark:bg-[var(--bg-panel)] dark:text-[var(--text-primary)] dark:hover:bg-[var(--bg-hover)]"
+        className="p-0 m-0 inline-flex items-center justify-center leading-none align-middle focus:outline-none h-8 w-8"
       >
-        <Image src="/assets/copy.svg" alt="Paste" width={size} height={size} className="opacity-80" />
+        {/* Slightly smaller, thinner, lighter grey wireframe icon */}
+        <CopyIcon
+          size={size}
+          strokeWidth={1.5}
+          className="text-gray-500 hover:text-gray-600 transition-colors"
+        />
       </button>
+
+      {/* Hint bubble (unchanged) */}
       <span
         className="pointer-events-none absolute -top-7 right-0 rounded-md border border-[var(--border)] bg-white px-2 py-0.5 text-[10px] font-medium text-gray-700 shadow-sm opacity-0 transition-opacity duration-75 whitespace-nowrap
                    group-hover:opacity-100 group-focus-within:opacity-100
@@ -34,9 +42,10 @@ function IconHintButton({ onClick, label = "Paste to editor", size = 12, classNa
   );
 }
 
+
 function BrandDot({ label }) {
   return (
-    <span className="grid h-7 w-7 shrink-0 place-items-center rounded-md border border-[var(--border)] bg-[var(--bg-panel)] text-[10px] font-semibold text-[var(--text-primary)] transition-colors">
+    <span className="grid h-7 w-7 shrink-0 place-items-center rounded-md border border-[var(--border)] bg-white text-[10px] font-semibold text-[var(--text-primary)] transition-colors">
       {(label || "?").slice(0, 1).toUpperCase()}
     </span>
   );
@@ -50,7 +59,7 @@ function EmptyState({ title = "No results", subtitle = "Try a different filter o
       {onRetry && (
         <button
           onClick={onRetry}
-          className="mt-2 inline-flex items-center gap-2 rounded-md border border-[var(--border)] bg-[var(--bg-panel)] px-2.5 py-1.5 text-[12px] hover:bg-[var(--bg-hover)]"
+          className="mt-2 inline-flex items-center gap-2 rounded-md border border-[var(--border)] bg-white px-2.5 py-1.5 text-[12px] hover:bg-gray-50"
         >
           <RefreshCw size={14} /> Reload
         </button>
@@ -72,12 +81,12 @@ function FAQRow({ iconLabel, title, source, onPaste, subtitle }) {
   };
 
   return (
-    <div className="rounded-xl border border-[var(--border)] bg-[var(--bg-panel)] transition-colors">
+    <div className="rounded-xl border border-[var(--border)] bg-white transition-colors">
       <div
         role="button"
         tabIndex={0}
         onKeyDown={onKeyDown}
-        className="w-full px-3 py-2 flex items-center justify-between gap-3 text-left hover:bg-[var(--bg-hover)] transition-colors focus:outline-none focus:ring-2 focus:ring-amber-300 rounded-xl"
+        className="group w-full px-3 py-2 flex items-center justify-between gap-3 text-left hover:bg-gray-50 transition-colors focus:outline-none focus:ring-2 focus:ring-amber-300 rounded-xl"
       >
         <div className="flex min-w-0 items-center gap-3">
           <BrandDot label={iconLabel} />
@@ -269,7 +278,7 @@ export default function SeoAdvancedFaqs({
      Render
   ================================= */
   return (
-    <div className="mt-1 rounded-2xl border border-[var(--border)] bg-[var(--bg-panel)] p-3 transition-colors">
+    <div className="mt-1 rounded-2xl border border-[var(--border)] bg-white p-3 transition-colors">
       {/* Tabs */}
       <div className="flex items-center gap-3 border-b border-[var(--border)] px-1 transition-colors">
         {["serp", "pa", "quora", "reddit"].map((k) => (
@@ -290,7 +299,7 @@ export default function SeoAdvancedFaqs({
       {/* Search/filter */}
       <div className="relative mt-3">
         <input
-          className="w-full h-8 rounded-lg border border-[var(--border)] bg-[var(--bg-panel)] px-8 text-[12px] text-[var(--text-primary)] placeholder-[var(--muted)] outline-none focus:border-amber-400 transition-colors"
+          className="w-full h-8 rounded-lg border border-[var(--border)] bg-white px-8 text-[12px] text-[var(--text-primary)] placeholder-[var(--muted)] outline-none focus:border-amber-400 transition-colors"
           placeholder="Filter by keywords"
           value={kwFilter}
           onChange={(e) => setKwFilter(e.target.value)}

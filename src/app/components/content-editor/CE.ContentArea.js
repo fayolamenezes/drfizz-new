@@ -1,6 +1,12 @@
 "use client";
 
-import React, { useEffect, useMemo, useRef, useState, useCallback } from "react";
+import React, {
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  useCallback,
+} from "react";
 import CEToolbar from "./CE.Toolbar";
 import CECanvas from "./CE.Canvas";
 import CEResearchPanel from "./CE.ResearchPanel";
@@ -49,12 +55,59 @@ export default function CEContentArea({
   seoMode: seoModeProp,
   metrics: metricsProp,
   setMetrics,
+  /** NOTE: may come from JSON initially */
   content,
+  /** Optional: parent setter (we still keep our own local state to prevent snapbacks) */
   setContent,
   primaryKeyword,
   lsiKeywords,
 }) {
   const editorRef = useRef(null);
+
+  /** ---------------------------------------------
+   *  LOCAL CONTENT STATE (prevents JSON snapbacks)
+   *  ---------------------------------------------
+   * We treat `content` prop as an initial value (or external override),
+   * but we keep our own local state as the single source of truth we pass
+   * to Canvas + right panel. If a parent provides setContent, we forward
+   * changes to it too — but we never let a stale prop overwrite local edits.
+   */
+  const [localContent, setLocalContent] = useState(() => content || "");
+  const lastLocalEditAtRef = useRef(0);
+  const LOCAL_GRACE_MS = 300; // small window where external prop won't clobber local typing
+
+  // One-time initialize from prop on mount (in case it’s async-loaded)
+  const didInitRef = useRef(false);
+  useEffect(() => {
+    if (!didInitRef.current) {
+      didInitRef.current = true;
+      if (typeof content === "string" && content !== localContent) {
+        setLocalContent(content);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // If the parent later changes `content` (e.g. load new doc),
+  // adopt it unless we just typed locally.
+  useEffect(() => {
+    if (typeof content !== "string") return;
+    const justEdited = Date.now() - lastLocalEditAtRef.current < LOCAL_GRACE_MS;
+    if (!justEdited && content !== localContent) {
+      setLocalContent(content);
+    }
+  }, [content, localContent]);
+
+  // When the editor changes, update our local state + forward upstream
+  const handleSetContent = useCallback(
+    (html) => {
+      if (html === localContent) return;
+      lastLocalEditAtRef.current = Date.now();
+      setLocalContent(html);
+      setContent?.(html);
+    },
+    [localContent, setContent]
+  );
 
   // ----- Keyword setup -----
   const PRIMARY_KEYWORD = useMemo(
@@ -109,10 +162,11 @@ export default function CEContentArea({
 
   // ----- Recompute metrics (debounced) -----
   useEffect(() => {
-    if (content == null) return;
+    const html = localContent;
+    if (html == null) return;
 
     const timer = setTimeout(() => {
-      const plain = normalizePlain(content);
+      const plain = normalizePlain(html);
 
       if (!plain) {
         const emptyMetrics = {
@@ -131,7 +185,6 @@ export default function CEContentArea({
             lsiKeywords: { label: "Needs Review", color: "text-red-600" },
           },
         }));
-        setMetrics?.((m) => (m.wordCount === 0 ? m : { ...m, wordCount: 0 }));
         emitMetricsThrottled(emptyMetrics);
         return;
       }
@@ -192,21 +245,17 @@ export default function CEContentArea({
         },
       }));
 
-      setMetrics?.((m) =>
-        m?.wordCount === wordCount ? m : { ...m, wordCount }
-      );
       emitMetricsThrottled(next);
     }, 40);
 
     return () => clearTimeout(timer);
   }, [
-    content,
+    localContent,
     query,
     PRIMARY_KEYWORD,
     LSI_KEYWORDS,
     metricsInternal.wordTarget,
     emitMetricsThrottled,
-    setMetrics,
   ]);
 
   const metrics = metricsProp ?? metricsInternal;
@@ -224,7 +273,12 @@ export default function CEContentArea({
         />
 
         <div className="bg-white">
-          <CECanvas ref={editorRef} title={title} content={content} setContent={setContent} />
+          <CECanvas
+            ref={editorRef}
+            title={title}
+            content={localContent}
+            setContent={handleSetContent}
+          />
         </div>
       </div>
 
@@ -236,7 +290,7 @@ export default function CEContentArea({
           onStart={onStart}
           seoMode={effectiveSeoMode}
           metrics={metrics}
-          editorContent={content}
+          editorContent={localContent}
         />
       </div>
     </div>

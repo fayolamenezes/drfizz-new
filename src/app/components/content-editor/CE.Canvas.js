@@ -1,3 +1,4 @@
+// components/content-editor/CE.Canvas.js
 "use client";
 
 import React, {
@@ -9,6 +10,8 @@ import React, {
 } from "react";
 import { FileText, Sparkles, ScrollText, Link2, Shapes } from "lucide-react";
 
+const HL_ATTR = "data-ce-hl"; // marker attribute for our highlights
+
 const CECanvas = forwardRef(function CECanvas(
   { title = "Untitled", content = "", setContent },
   ref
@@ -19,6 +22,9 @@ const CECanvas = forwardRef(function CECanvas(
   const redoStack = useRef([]);
   const seededRef = useRef(false);
   const autosaveTimer = useRef(null);
+
+  // highlight rules sent from Optimize: [{ phrase, status, className }]
+  const highlightRulesRef = useRef([]);
 
   // “source-of-truth” guards
   const lastLocalHtmlRef = useRef(""); // last html we emitted via setContent
@@ -78,9 +84,113 @@ const CECanvas = forwardRef(function CECanvas(
   }
 
   /** =========================
-   * Highlighter core (disabled)
+   * Highlighter core
    * ========================= */
-  const runHighlights = useCallback(() => {}, []);
+  const runHighlights = useCallback(() => {
+    const root = editorRef.current;
+    if (!root) return;
+
+    // 1) Remove previous highlights safely
+    const oldMarks = root.querySelectorAll(`[${HL_ATTR}]`);
+    oldMarks.forEach((el) => {
+      const parent = el.parentNode;
+      while (el.firstChild) parent.insertBefore(el.firstChild, el);
+      parent.removeChild(el);
+    });
+
+    const rules = highlightRulesRef.current;
+    if (!Array.isArray(rules) || rules.length === 0) return;
+
+    // Prepare regexes (mirrors Optimize's tokenization/word-boundaries)
+    const prepared = rules
+      .filter((r) => r?.phrase)
+      .map((r) => {
+        const esc = (s) => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+        const tokens = String(r.phrase)
+          .toLowerCase()
+          .trim()
+          .split(/\s+/)
+          .filter(Boolean)
+          .map(esc);
+        if (tokens.length === 0) return null;
+        const rx = new RegExp(`\\b${tokens.join("[\\s\\-–—]+")}\\b`, "gi");
+        return { ...r, rx };
+      })
+      .filter(Boolean);
+
+    // 2) Walk text nodes and wrap matches
+    const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        const v = node.nodeValue || "";
+        if (!v.trim()) return NodeFilter.FILTER_REJECT;
+        const p = node.parentElement;
+        if (!p) return NodeFilter.FILTER_REJECT;
+        if (p.closest(`[${HL_ATTR}]`)) return NodeFilter.FILTER_REJECT; // don't re-highlight inside marks
+        if (p.closest("code, pre")) return NodeFilter.FILTER_REJECT; // skip code/pre
+        return NodeFilter.FILTER_ACCEPT;
+      },
+    });
+
+    const textNodes = [];
+    while (walker.nextNode()) textNodes.push(walker.currentNode);
+
+    for (const textNode of textNodes) {
+      let text = textNode.nodeValue;
+      let currentNode = textNode;
+
+      for (const rule of prepared) {
+        rule.rx.lastIndex = 0;
+        let match;
+        const pieces = [];
+        let lastIdx = 0;
+
+        while ((match = rule.rx.exec(text))) {
+          const [full] = match;
+          const start = match.index;
+          const end = start + full.length;
+
+          if (start > lastIdx) {
+            pieces.push(document.createTextNode(text.slice(lastIdx, start)));
+          }
+
+          const mark = document.createElement("mark");
+          mark.setAttribute(HL_ATTR, "1");
+          mark.setAttribute("data-status", rule.status || "");
+          mark.className = `${rule.className} ${HL_ATTR} inline-block`;
+          mark.textContent = text.slice(start, end);
+          pieces.push(mark);
+
+          lastIdx = end;
+        }
+
+        if (pieces.length) {
+          if (lastIdx < text.length) {
+            pieces.push(document.createTextNode(text.slice(lastIdx)));
+          }
+          const frag = document.createDocumentFragment();
+          pieces.forEach((n) => frag.appendChild(n));
+          const parent = currentNode.parentNode;
+          parent.insertBefore(frag, currentNode);
+          parent.removeChild(currentNode);
+
+          // Set up for next rule against the last text node (remaining tail)
+          const lastText = pieces.filter((n) => n.nodeType === Node.TEXT_NODE).pop();
+          currentNode = lastText || parent;
+          text = lastText ? lastText.nodeValue : "";
+        }
+      }
+    }
+  }, []);
+
+  // Receive highlight rules from Optimize
+  useEffect(() => {
+    function onRules(e) {
+      highlightRulesRef.current = Array.isArray(e.detail) ? e.detail : [];
+      requestAnimationFrame(runHighlights);
+    }
+    window.addEventListener("ce:highlightRules", onRules);
+    return () => window.removeEventListener("ce:highlightRules", onRules);
+  }, [runHighlights]);
 
   /** =========================
    * Autosave + state sync

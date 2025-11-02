@@ -51,6 +51,18 @@ const STATUS_STYLES = {
   All: { dot: "bg-neutral-400" },
 };
 
+// ✅ highlight styles to mirror progress/badge colors in the Canvas
+const HIGHLIGHT_CLASS_MAP = {
+  Completed:
+    "bg-emerald-200/60 text-emerald-900 ring-1 ring-emerald-400/40 rounded-[2px] px-0.5",
+  "In Progress":
+    "bg-amber-200/60 text-amber-900 ring-1 ring-amber-400/40 rounded-[2px] px-0.5",
+  Overuse:
+    "bg-rose-200/60 text-rose-900 ring-1 ring-rose-400/40 rounded-[2px] px-0.5",
+  "Topic Gap":
+    "bg-gray-200/60 text-gray-900 ring-1 ring-gray-400/40 rounded-[2px] px-0.5",
+};
+
 function progressPct(used, rec) {
   if (!rec) return 0;
   const pct = Math.round((Math.min(used, rec) / rec) * 100);
@@ -104,7 +116,9 @@ function buildPhraseRegex(phrase) {
     .trim()
     .split(/\s+/)
     .filter(Boolean)
-    .map((t) => (t === "&" || t === "and" || t === "&amp;") ? "(?:&|&amp;|and)" : esc(t));
+    .map((t) =>
+      t === "&" || t === "and" || t === "&amp;" ? "(?:&|&amp;|and)" : esc(t)
+    );
   if (!tokens.length) return null;
   const joiner = "[\\s\\-–—]+"; // allow spaces/dashes between tokens
   return new RegExp(`\\b${tokens.join(joiner)}\\b`, "gi");
@@ -256,12 +270,23 @@ function KeywordRow({ item, onOpen, onPaste }) {
   const s = STATUS_STYLES[status];
   const pct = progressPct(item.used, item.recommended);
 
+  // Keyboard support for the row (Enter/Space to open)
+  function handleKeyDown(e) {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      onOpen?.();
+    }
+  }
+
   return (
     <div className="rounded-2xl border border-gray-200 bg-white px-3 py-2 dark:border-[var(--border)] dark:bg-[var(--bg-panel)]">
-      <button
-        type="button"
+      <div
+        role="button"
+        tabIndex={0}
         onClick={onOpen}
-        className="group w-full flex items-start gap-3 text-left"
+        onKeyDown={handleKeyDown}
+        className="group w-full flex items-start gap-3 text-left outline-none"
+        aria-label={`Open keyword ${item.title}`}
       >
         <span
           className={`shrink-0 text-[11px] px-2 py-1 border rounded-lg font-semibold ${s.badge}`}
@@ -282,6 +307,7 @@ function KeywordRow({ item, onOpen, onPaste }) {
               <ChevronRight
                 className="text-gray-400 group-hover:text-gray-500"
                 size={18}
+                aria-hidden
               />
             </div>
           </div>
@@ -292,7 +318,7 @@ function KeywordRow({ item, onOpen, onPaste }) {
             />
           </div>
         </div>
-      </button>
+      </div>
     </div>
   );
 }
@@ -372,6 +398,7 @@ function SourceResult({ url, title, snippet, phrase }) {
             className={`text-gray-400 dark:text-[var(--muted)] transition-transform ${
               open ? "rotate-90" : ""
             }`}
+            aria-hidden
           />
         </div>
       </button>
@@ -403,7 +430,7 @@ export default function SeoAdvancedOptimize({
   ];
 
   /* ===========================
-     Base dataset (from props) 
+     Base dataset (from props)
      =========================== */
   const keywords = useMemo(() => {
     // Expect optimizeData?.keywords:
@@ -411,7 +438,7 @@ export default function SeoAdvancedOptimize({
     if (Array.isArray(optimizeData?.keywords) && optimizeData.keywords.length) {
       return optimizeData.keywords.slice(0, 999);
     }
-    // Fallback (4 rows like your screenshot)
+    // Fallback demo rows
     return [
       {
         id: "k1",
@@ -426,8 +453,7 @@ export default function SeoAdvancedOptimize({
         links: [
           {
             url: "https://www.greenleafinsights.com",
-            title:
-              "How to start a blog in 10 steps: a beginner’s guide",
+            title: "How to start a blog in 10 steps: a beginner’s guide",
             snippet:
               "How to start a blog in 10 steps. This content marketing checklist covers planning, writing, and promotion for beginners.",
           },
@@ -547,6 +573,26 @@ export default function SeoAdvancedOptimize({
       };
     });
   }, [keywords, liveCounts]);
+
+  // ✅ Broadcast highlight rules to Canvas whenever live counts change
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (!Array.isArray(liveKeywords)) return;
+
+    const rules = liveKeywords
+      .filter((k) => (k.used ?? 0) > 0) // only highlight phrases that exist in canvas
+      .map((k) => {
+        const status = deriveStatus(k.used, k.recommended);
+        return {
+          phrase: String(k.title || ""),
+          status,
+          className:
+            HIGHLIGHT_CLASS_MAP[status] || HIGHLIGHT_CLASS_MAP["Topic Gap"],
+        };
+      });
+
+    window.dispatchEvent(new CustomEvent("ce:highlightRules", { detail: rules }));
+  }, [liveKeywords]);
 
   // Keep drawer "selected" row in sync when counts change
   const [drawerOpen, setDrawerOpen] = useState(false);

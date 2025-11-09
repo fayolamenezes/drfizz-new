@@ -266,17 +266,16 @@ export default function StepSlide5({ onNext, onBack, onCompetitorSubmit }) {
     isLoading,                               // after suggestions finish loading
   ]);
 
-  /* ---------------- Reusable chip renderer ---------------- */
+  /* ---------------- Reusable chip renderer (uses global .keyword-chip) ---------------- */
   const Chip = ({ label, isSelected, onClick, disabled }) => (
     <button
       onClick={onClick}
       disabled={disabled}
       type="button"
-      className={`group inline-flex items-center gap-1 px-3 sm:px-4 py-2 rounded-xl border text-[12px] sm:text-[13px] md:text-[14px] font-medium transition-all duration-200 ${
-        isSelected
-          ? "bg-white text-[var(--text)] border-[#d45427]"
-          : "bg-[#F7F7F7] text-gray-500 border-[var(--border)] hover:bg-[#EDEDED]"
-      } ${disabled ? "opacity-60 cursor-not-allowed" : ""}`}
+      aria-pressed={isSelected}
+      className={`keyword-chip group inline-flex items-center gap-1 ${isSelected ? "active" : ""} ${
+        disabled ? "opacity-60 cursor-not-allowed" : ""
+      }`}
     >
       <span>{label}</span>
 
@@ -288,10 +287,12 @@ export default function StepSlide5({ onNext, onBack, onCompetitorSubmit }) {
               <Check
                 size={16}
                 className="absolute opacity-100 group-hover:opacity-0 transition-opacity duration-150"
+                style={{ color: "#d45427" }}
               />
               <X
                 size={16}
                 className="absolute opacity-0 group-hover:opacity-100 transition-opacity duration-150"
+                style={{ color: "#d45427" }}
               />
             </span>
           )}

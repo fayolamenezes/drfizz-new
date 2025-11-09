@@ -66,15 +66,6 @@ html.dark {
   --bg-panel: #1f2121;
 }
 
-
-/* Used by inline theme in app (optional) */
-@theme inline {
-  --color-background: var(--app-bg);
-  --color-foreground: var(--text);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
 /* ---------- Base ---------- */
 html, body, #__next {
   height: 100%;
@@ -254,4 +245,46 @@ html.dark .fixthis-badge {
 }
 html.dark .fixthis-title {
   color: #111827 !important;            /* dark mode: dark text */
+}
+
+/* === Keyword Chip Light/Dark Fix (globals.css) === */
+:root {
+  /* Light mode */
+  --chip-bg: #f7f7f7;         /* light grey */
+  --chip-hover-bg: #ededed;   /* slightly darker grey */
+  --chip-text: #555;
+  --chip-border: #d0d0d0;
+  --chip-active-bg: #ffffff;  /* white when active */
+  --chip-active-text: #222;
+}
+
+.dark {
+  /* Dark mode */
+  --chip-bg: #202020; /* mid grey for inactive */
+  --chip-hover-bg: #2e2e2e;   /* darker hover */
+  --chip-text: #cccccc;
+  --chip-border: #444;
+  --chip-active-bg: #000000;  /* black when active */
+  --chip-active-text: #ffffff;
+}
+
+.keyword-chip {
+  background-color: var(--chip-bg);
+  color: var(--chip-text);
+  border: 1px solid var(--chip-border);
+  border-radius: 12px;
+  padding: 8px 14px;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.keyword-chip:hover {
+  background-color: var(--chip-hover-bg);
+}
+
+.keyword-chip.active {
+  background-color: var(--chip-active-bg);
+  color: var(--chip-active-text);
+  border-color: #d45427;
 }

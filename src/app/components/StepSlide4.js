@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
-import { ArrowRight, ArrowLeft, ChevronDown, Plus, X, Check } from "lucide-react";
+import { ArrowRight, ArrowLeft, Plus, X, Check } from "lucide-react";
 
 export default function StepSlide4({ onNext, onBack, onKeywordSubmit }) {
   /* ---------------- State ---------------- */
@@ -111,28 +111,28 @@ export default function StepSlide4({ onNext, onBack, onKeywordSubmit }) {
         const rows = await res.json();
         const host = normalizeHost(target);
         const variants = host ? [host, `www.${host}`] : [];
-        const match = rows.find((r) => {
-          const d1 = normalizeHost(r?.Domain);
-          const d2 = normalizeHost(r?.["Domain/Website"]);
-          return (d1 && variants.includes(d1)) || (d2 && variants.includes(d2));
-        });
-
-        const kws = extractKeywords(match || {});
-        const final =
-          (kws.length
-            ? kws
-            : [
-                "Keyword 1",
-                "Keyword 2",
-                "Keyword 3",
-                "Keyword 4",
-                "Keyword 5",
-                "Keyword 6",
-                "Keyword 7",
-                "Keyword 8",
-              ]).concat("More");
-
-        if (isMounted) setSuggestedKeywords(final);
+        theMatch: {
+          const match = rows.find((r) => {
+            const d1 = normalizeHost(r?.Domain);
+            const d2 = normalizeHost(r?.["Domain/Website"]);
+            return (d1 && variants.includes(d1)) || (d2 && variants.includes(d2));
+          });
+          const kws = extractKeywords(match || {});
+          const final =
+            (kws.length
+              ? kws
+              : [
+                  "Keyword 1",
+                  "Keyword 2",
+                  "Keyword 3",
+                  "Keyword 4",
+                  "Keyword 5",
+                  "Keyword 6",
+                  "Keyword 7",
+                  "Keyword 8",
+                ]).concat("More");
+          if (isMounted) setSuggestedKeywords(final);
+        }
       } catch (err) {
         if (isMounted) {
           setLoadError(err?.message || "Failed to load keywords");
@@ -240,17 +240,11 @@ export default function StepSlide4({ onNext, onBack, onKeywordSubmit }) {
   /* ---------------- Auto-scroll to bottom (align with StepSlide2/3 behavior) ---------------- */
   useEffect(() => {
     if (tailRef.current) {
-      // wait a frame so the new DOM (summary/chips) has rendered before scrolling
       requestAnimationFrame(() => {
         tailRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
       });
     }
-  }, [
-    showSummary,                // scroll when the summary appears
-    selectedKeywords.length,    // scroll as user adds/removes keywords
-    showInlineMoreInput,        // scroll when inline input opens/closes
-    isLoadingKeywords,          // optional: scroll after suggestions finish loading
-  ]);
+  }, [showSummary, selectedKeywords.length, showInlineMoreInput, isLoadingKeywords]);
 
   /* ---------------- UI ---------------- */
   return (
@@ -307,8 +301,7 @@ export default function StepSlide4({ onNext, onBack, onKeywordSubmit }) {
                   {isLoadingKeywords && suggestedKeywords.length === 0 &&
                     Array.from({ length: 8 }).map((_, i) => (
                       <span key={`skel-${i}`} className="chip-skel" />
-                    ))
-                  }
+                    ))}
 
                   {/* Real chips */}
                   {!isLoadingKeywords &&
@@ -332,7 +325,7 @@ export default function StepSlide4({ onNext, onBack, onKeywordSubmit }) {
                               onClick={handleAddCustom}
                               disabled={!customKeyword.trim()}
                               type="button"
-                              className="px-3 sm:px-4 py-2 bg-[image:var(--infoHighlight-gradient)] text-white rounded-xl hover:bg-gray-900 disabled:opacity-70 disabled:cursor-not-allowed transition-colors duration-200"
+                              className="px-3 sm:px-4 py-2 bg-[image:var(--infoHighlight-gradient)] text-white rounded-xl hover:opacity-90 disabled:opacity-70 disabled:cursor-not-allowed transition-opacity duration-200"
                               aria-label="Add custom keyword"
                             >
                               <Plus size={16} />
@@ -342,32 +335,32 @@ export default function StepSlide4({ onNext, onBack, onKeywordSubmit }) {
                       }
 
                       // Single-chip behavior: toggle select; show ✓; on hover over selected, swap to X
+                      const selected = isSelected;
                       return (
                         <button
                           key={keyword}
-                          onClick={() => handleKeywordToggle(keyword)}
                           type="button"
-                          className={`group px-3 sm:px-4 py-2 rounded-xl border text-[12px] sm:text-[13px] md:text-[14px] font-medium transition-all duration-200 inline-flex items-center gap-1 ${
-                            isSelected
-                              ? "bg-white text-[var(--text)] border-[#d45427]"
-                              : "bg-[#F7F7F7] text-gray-500 border-[var(--border)] hover:bg-[#EDEDED]"
-                          }`}
+                          aria-pressed={selected}
+                          onClick={() => handleKeywordToggle(keyword)}
+                          className={`keyword-chip group inline-flex items-center gap-1 ${selected ? "active" : ""}`}
                         >
                           <span>{keyword}</span>
 
                           {/* Icon logic */}
                           {keyword !== "More" && (
                             <>
-                              {!isSelected && <Plus size={16} className="ml-1" />}
-                              {isSelected && (
+                              {!selected && <Plus size={16} className="ml-1" />}
+                              {selected && (
                                 <span className="relative ml-1 inline-flex w-4 h-4 items-center justify-center">
                                   <Check
                                     size={16}
                                     className="absolute opacity-100 group-hover:opacity-0 transition-opacity duration-150"
+                                    style={{ color: "#d45427" }}
                                   />
                                   <X
                                     size={16}
                                     className="absolute opacity-0 group-hover:opacity-100 transition-opacity duration-150"
+                                    style={{ color: "#d45427" }}
                                   />
                                 </span>
                               )}
@@ -379,10 +372,10 @@ export default function StepSlide4({ onNext, onBack, onKeywordSubmit }) {
                 </div>
               </div>
 
-              {/* System message / CTA (after at least one selection) — updated copy */}
+              {/* System message / CTA (after at least one selection) */}
               {showSummary && (
                 <div className="max-w-[640px] text-left self-start mt-5 sm:mt-6">
-                  <h3 className="text-[15px] sm:text-[16px] md:text-[18px] font-bold text-[var(--text)] mb-2.5 sm:mb-3">
+                  <h3 className="text-[15px] sm:text-[16px] md:text-[18px] font-bold text=[var(--text)] mb-2.5 sm:mb-3">
                     Here’s your site report — take a quick look on
                     <br />
                     the Info Tab.

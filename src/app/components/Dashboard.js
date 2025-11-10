@@ -5,6 +5,7 @@ import { Activity, ActivitySquare, AlertTriangle, BarChart3, BookOpen, Check, Ch
 import { useEffect, useRef, useState, useMemo } from "react";
 import { useSearchParams } from "next/navigation";
 import OpportunitiesSection from "./OpportunitiesSection";
+import NewOnPageSEOTable from "./NewOnPageSEOTable";
 
 // --- Prefill content templates for the 4 "Top On-Page Content Opportunities" cards ---
 const PREFILL_BY_TITLE = {
@@ -1413,94 +1414,8 @@ const seoTableProg = Math.max(0, prog);
         <OpportunitiesSection onOpenContentEditor={onOpenContentEditor} />
 
 {/* New on page SEO opportunity (table) */}
-<h2 className="text-[16px] font-bold text-[var(--text)] mb-2 ml-1">New on page SEO opportunity</h2>
-<p className="ml-1 mb-4 text-[12px] text-[var(--muted)]">
-  *While it’s highly recommended to follow the AI’s suggested plan for optimal results,
-  feel free to generate content based on your personal choice.
-</p>
+<NewOnPageSEOTable rows={seoRowsFromData} progress={seoTableProg} />
 
-<div className="overflow-hidden rounded-[16px] border border-[var(--border)] bg-[var(--input)] shadow-sm">
-  <div className="hidden md:grid grid-cols-[2.1fr_1.4fr_1.2fr_1.5fr_1.3fr_1fr_1fr_1.8fr] items-center px-4 py-3 text-[12px] font-semibold text-[var(--muted)] bg-[var(--input)] text-center">
-    <div className="text-left">Keywords</div>
-    <div>Type <span className="opacity-50">↑↓</span></div>
-    <div>Search Volume</div>
-    <div>SEO Difficulty</div>
-    <div>Suggested topic</div>
-    <div>Blog</div>
-    <div>Page</div>
-    <div>Preference</div>
-  </div>
-
-  <ul className="divide-y divide-[#ECEFF5]">
-    {(seoRowsFromData ?? [
-      { keyword: "How to fix slow Wi-Fi", type: "Informational", volume: 7032, difficulty: 98 },
-      { keyword: "How to fix slow Wi-Fi", type: "Informational", volume: 7032, difficulty: 88 },
-      { keyword: "How to fix slow Wi-Fi", type: "Transactional", volume: 7032, difficulty: 98 },
-      { keyword: "How to fix slow Wi-Fi", type: "Informational", volume: 7032, difficulty: 28 },
-      { keyword: "How to fix slow Wi-Fi", type: "Transactional", volume: 7032, difficulty: 28 },
-      { keyword: "How to fix slow Wi-Fi", type: "Transactional", volume: 7032, difficulty: 68 },
-      { keyword: "How to fix slow Wi-Fi", type: "Informational", volume: 7032, difficulty: 48 },
-    ]).map((row, i) => (
-      <li
-        key={i}
-        className="grid grid-cols-1 md:grid-cols-[2.1fr_1.4fr_1.2fr_1.5fr_1.3fr_1fr_1fr_1.8fr] items-center gap-3 px-4 py-3 text-[13px] hover:bg-[var(--input)] text-center"
-      >
-        <div className="flex items-center gap-2 text-[var(--text)] justify-start">
-          <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-[var(--input)] text-[var(--muted)]">
-            <Wifi size={14} />
-          </span>
-          <span className="truncate">{row.keyword}</span>
-        </div>
-
-        <div>
-          <span className="inline-flex items-center gap-1 rounded-md border border-[var(--border)] px-2 py-0.5 text-[11px] seo-badge-light">
-            {row.type === "Informational" ? <FileText size={12} /> : <Link2 size={12} />}
-            {row.type}
-          </span>
-        </div>
-
-        <div className="tabular-nums text-[var(--text)]">
-          {Number(row.volume).toLocaleString()}
-        </div>
-
-        <div className="flex items-center gap-2 text-[var(--text)] justify-start">
-          <span className="tabular-nums">{row.difficulty}%</span>
-          <DifficultyBar value={row.difficulty} progress={seoTableProg} />
-        </div>
-
-        <div className="text-[var(--text)] truncate text-center">
-          {row.suggested ?? "—"}
-        </div>
-
-        <div className="flex justify-center">
-          <button className="inline-flex items-center justify-center rounded-full border border-[var(--border)] bg-[var(--input)] px-4 py-1.5 text-[12px] font-semibold text-[#3178C6]">
-            Generate
-          </button>
-        </div>
-
-        <div className="flex justify-center">
-          <button className="inline-flex items-center justify-center rounded-full border border-[var(--border)] bg-[var(--input)] px-4 py-1.5 text-[12px] font-semibold text-[#3178C6]">
-            Generate
-          </button>
-        </div>
-
-        <div className="flex items-center justify-center gap-3 text-[var(--muted)]">
-          <span className="inline-flex items-center gap-1 rounded-md border border-[var(--border)] px-2 py-0.5 text-[11px] seo-badge-light">
-            {row.preference ?? "—"}
-          </span>
-          {/* replaced plain icons with interactive LikeDislike */}
-          <LikeDislike />
-        </div>
-      </li>
-    ))}
-  </ul>
-
-  <div className="flex justify-end border-t border-[var(--border)] bg-[var(--input)] px-4 py-3">
-    <button className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--input)] px-3 py-1.5 text-[12px] text-[var(--muted)] hover:bg-[var(--input)]">
-      View all page issue <ChevronRight size={14} />
-    </button>
-  </div>
-</div>
 
       </div>
     </main>

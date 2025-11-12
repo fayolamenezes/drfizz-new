@@ -129,9 +129,8 @@ function mapRowToSchema(row) {
 }
 
 /* ============================================================
-   Start Modal (exact UX kept)
+   Start Modal (desktop unchanged; mobile = screenshot-exact)
 ============================================================ */
-
 function StartModal({
   open,
   onClose,
@@ -159,21 +158,49 @@ function StartModal({
   const [hover, setHover] = useState(STYLES[0].id);
 
   if (!open) return null;
+
   return (
     <div className="fixed inset-0 z-[100] grid place-items-center bg-black/40">
-      <div className="relative grid w-[980px] grid-cols-2 overflow-hidden rounded-2xl bg-white shadow-2xl">
+      {/* Shell: mobile = 1 col with internal scroll, desktop(md+) = 2 cols */}
+      <div
+        className="
+          relative grid overflow-hidden rounded-2xl bg-white shadow-2xl
+          w-[min(980px,100vw-32px)]
+          grid-cols-1 md:grid-cols-2
+          h-[92vh] md:h-auto
+          min-h-0
+        "
+      >
         {/* Close */}
         <button
           onClick={onClose}
-          className="absolute right-4 top-4 inline-flex h-9 w-9 items-center justify-center rounded-full border border-gray-200 text-gray-600 hover:bg-gray-50"
+          className="absolute right-4 top-4 z-20 inline-flex h-9 w-9 items-center justify-center rounded-full border border-gray-200 text-gray-700 hover:bg-gray-50"
           aria-label="Close"
         >
           <X size={16} />
         </button>
 
-        {/* Left side (banner) */}
+        {/* Mobile banner (below md) */}
+        <div className="md:hidden relative">
+          <div
+            aria-hidden
+            className="pointer-events-none absolute -top-28 -right-16 h-72 w-72 rounded-full"
+            style={{
+              background:
+                "radial-gradient(160px 160px at 65% 40%, #F8B06B 0%, #F39C4F 45%, rgba(248,176,107,0.2) 70%, rgba(255,255,255,0) 72%)",
+            }}
+          />
+          <div className="pt-12 pb-3 px-6 text-center">
+            <div className="text-[34px] font-extrabold leading-[1.05] tracking-tight text-[#0F172A]">
+              CREATE,<br />OPTIMIZE &<br />PUBLISH
+            </div>
+            <div className="mt-2 text-[13px] text-[#9CA3AF]">No tab-hopping required.</div>
+          </div>
+        </div>
+
+        {/* Desktop left banner (md+) */}
         <div
-          className="relative flex min-h-[520px] flex-col justify-end p-10"
+          className="relative hidden min-h-[520px] flex-col justify-end p-10 md:flex"
           style={{
             background:
               "radial-gradient(520px 220px at -8% 70%, #FAD7A5 0%, transparent 65%), #FFF9F2",
@@ -187,58 +214,87 @@ function StartModal({
           </div>
         </div>
 
-        {/* Right side (list) */}
-        <div className="flex flex-col bg-[#FAFAFA] p-6">
-          <div className="text-xl font-semibold text-[#0F172A]">Blogs</div>
-          <div className="mt-1 text-[12px] text-[#6B7280]">Select any 1 to create with that style</div>
+        {/* Right column / content */}
+        <div className="flex h-full min-h-0 flex-col bg-[#FAFAFA]">
+          {/* Mobile header + helper panel */}
+          <div className="md:hidden px-6">
+            <div className="text-[16px] font-semibold text-[#0F172A]">Blogs</div>
+            <p className="mt-2 text-[13px] leading-relaxed text-[#6B7280]">
+              Explore the latest article &amp; stay updated with latest trend &amp; insights in the industry
+            </p>
 
-          <div className="mt-3 space-y-3 rounded-2xl border border-gray-200 bg-white/60 p-3">
-            {STYLES.map((s) => (
-              <button
-                key={s.id}
-                onMouseEnter={() => setHover(s.id)}
-                onClick={() => {
-                  setHover(s.id);
-                  onCreateWithStyle(s.id);
-                }}
-                className={`flex w-full items-center justify-between rounded-2xl p-4 text-left transition
-                ${hover === s.id ? "bg-white shadow ring-1 ring-black/5" : "hover:bg-white"}`}
-                aria-pressed={hover === s.id}
-                title="Click to create a new blog with this style"
-              >
-                <div>
-                  <div className="font-semibold text-[#0F172A]">{s.title}</div>
-                  <div className="mt-1 max-w-[380px] text-[12px] leading-relaxed text-[#6B7280]">
-                    {s.desc}
-                  </div>
-                </div>
-                <div className="h-16 w-28 rounded-xl bg-gray-200/70" />
-              </button>
-            ))}
+            <div className="mt-4 rounded-2xl bg-[#F5F5F5] px-4 pt-3 pb-2 border border-[#ECECEC]">
+              <div className="text-[12px] text-[#9CA3AF]">
+                Select any <span className="font-medium text-[#6B7280]">1 style</span> to proceed
+              </div>
+              <div className="mt-2 border-t border-[#E5E7EB]" />
+            </div>
           </div>
 
-          <div className="mt-auto flex items-center justify-between pt-6">
-            <button
-              onClick={onCreateFromScratch}
-              className="text-[13px] font-medium text-[#0F172A] underline underline-offset-2"
-            >
+          {/* Desktop header */}
+          <div className="hidden md:flex flex-col p-6">
+            <div className="text-xl font-semibold text-[#0F172A]">Blogs</div>
+            <div className="mt-1 text-[12px] text-[#6B7280]">Select any 1 to create with that style</div>
+          </div>
+
+          {/* Scrollable list area */}
+          <div
+            className="min-h-0 flex-1 overflow-y-auto overscroll-contain px-6 pb-24 md:pb-6"
+            style={{ WebkitOverflowScrolling: "touch" }}
+          >
+            <div className="mt-3 md:mt-0 space-y-3">
+              {STYLES.map((s) => (
+                <button
+                  key={s.id}
+                  onMouseEnter={() => setHover(s.id)}
+                  onClick={() => {
+                    setHover(s.id);
+                    onCreateWithStyle(s.id);
+                  }}
+                  className={`
+                    w-full rounded-2xl p-4 text-left transition
+                    bg-white border border-[#EFEFEF] shadow-[0_2px_10px_rgba(0,0,0,0.06)]
+                    flex items-center justify-between
+                    ${hover === s.id ? "ring-1 ring-black/5" : "hover:ring-1 hover:ring-black/5"}
+                  `}
+                  aria-pressed={hover === s.id}
+                  title="Click to create a new blog with this style"
+                >
+                  <div className="pr-3">
+                    <div className="font-semibold text-[15px] text-[#0F172A]">{s.title}</div>
+                    <div className="mt-1 max-w-[380px] text-[12px] leading-relaxed text-[#6B7280]">
+                      {s.desc}
+                    </div>
+                  </div>
+                  <div className="relative shrink-0">
+                    <div className="h-[76px] w-[116px] rounded-[14px] bg-[#E5E7EB]" />
+                    <div className="pointer-events-none absolute inset-2 rounded-[10px] border border-white/60 shadow-inner" />
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Sticky footer */}
+          <div className="sticky bottom-0 left-0 right-0 bg-white border-t border-[#E5E7EB] px-6 py-4 flex items-center justify-between gap-3">
+            <button onClick={onCreateFromScratch} className="text-[13px] font-medium text-[#F97316]">
               Create from scratch
             </button>
-
-            <div className="flex items-center gap-3">
-              <button
-                onClick={onEditExisting}
-                className="rounded-full border border-gray-200 bg-white px-4 py-2 text-[13px] font-semibold text-[#0F172A] hover:bg-gray-50"
-              >
-                Edit existing page / blog
-              </button>
-            </div>
+            <button
+              onClick={onEditExisting}
+              className="inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-[13px] font-semibold text-white bg-[#F97316] hover:brightness-95 shadow-sm"
+            >
+              Edit existing page
+              <ChevronRight size={16} />
+            </button>
           </div>
         </div>
       </div>
     </div>
   );
 }
+
+
 
 /* ============================================================
    Opportunities Section
@@ -351,12 +407,12 @@ export default function OpportunitiesSection({ onOpenContentEditor }) {
     setStartOpen(false);
   };
 
- const handleCreateWithStyle = (styleId) => {
-   const tpl = styleTemplate(styleId);
-   // New doc seeded with content & styleId (CE can read it if needed)
-   dispatchNew({ ...tpl, kind: "blog", styleId });
-   setStartOpen(false);
- };
+  const handleCreateWithStyle = (styleId) => {
+    const tpl = styleTemplate(styleId);
+    // New doc seeded with content & styleId (CE can read it if needed)
+    dispatchNew({ ...tpl, kind: "blog", styleId });
+    setStartOpen(false);
+  };
 
   /* ---------- Small UI pieces ---------- */
 
@@ -381,7 +437,7 @@ export default function OpportunitiesSection({ onOpenContentEditor }) {
 
   function OpportunityCard({ type, index, data }) {
     const score = data?.score ?? 0;
-    const wc = data?.wordCount ?? 0;
+       const wc = data?.wordCount ?? 0;
     const kws = data?.keywords ?? 0;
     const status = data?.status ?? "Draft";
     // generic title for UI, keep realTitle for payload

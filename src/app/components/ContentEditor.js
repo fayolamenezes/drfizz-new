@@ -1,15 +1,25 @@
 // components/ContentEditor.js
 "use client";
 
-import React, { useEffect, useMemo, useRef, useState, useCallback } from "react";
-import CENavbar       from "./content-editor/CE.Navbar";
+import React, {
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  useCallback,
+} from "react";
+import dynamic from "next/dynamic";
+import CENavbar from "./content-editor/CE.Navbar";
 import CEMetricsStrip from "./content-editor/CE.MetricsStrip";
-import CEContentArea  from "./content-editor/CE.ContentArea";
+import CEContentArea from "./content-editor/CE.ContentArea";
+import { AlertTriangle, X } from "lucide-react";
 
 /* utils */
 function isBlankHtml(html) {
   if (!html) return true;
-  return String(html).replace(/<[^>]*>/g, "").replace(/&nbsp;/g, " ").trim() === "";
+  return (
+    String(html).replace(/<[^>]*>/g, "").replace(/&nbsp;/g, " ").trim() === ""
+  );
 }
 const norm = (s) => String(s || "").toLowerCase().replace(/\s+/g, " ").trim();
 
@@ -22,9 +32,19 @@ function broadcastResearchReset(nextQuery = "") {
   } catch {}
   try {
     window.dispatchEvent(new CustomEvent("research:reset"));
-    window.dispatchEvent(new CustomEvent("content-editor:query-changed", { detail: { query: nextQuery } }));
+    window.dispatchEvent(
+      new CustomEvent("content-editor:query-changed", {
+        detail: { query: nextQuery },
+      })
+    );
   } catch {}
 }
+
+/** Lazy-load the Research panel so it only runs when opened (mobile). */
+const CEResearchPanel = dynamic(
+  () => import("./content-editor/CE.ResearchPanel"),
+  { ssr: false }
+);
 
 export default function ContentEditor({ data, onBackToDashboard }) {
   /* load contenteditor.json (optional for downstream comps) */
@@ -35,7 +55,9 @@ export default function ContentEditor({ data, onBackToDashboard }) {
     let mounted = true;
     (async () => {
       try {
-        const res = await fetch("/data/contenteditor.json", { cache: "no-store" });
+        const res = await fetch("/data/contenteditor.json", {
+          cache: "no-store",
+        });
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const json = await res.json();
         if (mounted) setConfig(json);
@@ -43,11 +65,14 @@ export default function ContentEditor({ data, onBackToDashboard }) {
         if (mounted) setConfigError(String(e));
       }
     })();
-    return () => { mounted = false; };
+    return () => {
+      mounted = false;
+    };
   }, []);
 
   /* page config lookup */
-  const pageKey = data?.slug || data?.page || data?.id || norm(data?.title) || "";
+  const pageKey =
+    data?.slug || data?.page || data?.id || norm(data?.title) || "";
   const pageConfig = useMemo(() => {
     if (!config?.pages?.length) return null;
     let hit =
@@ -61,11 +86,17 @@ export default function ContentEditor({ data, onBackToDashboard }) {
 
   /* editor state */
   const [title, setTitle] = useState(data?.title || "Untitled");
-  const [content, setContent] = useState(typeof data?.content === "string" ? data.content : "");
+  const [content, setContent] = useState(
+    typeof data?.content === "string" ? data.content : ""
+  );
   const [activeTab, setActiveTab] = useState("content");
   const [seoMode, setSeoMode] = useState("basic");
-  const [lastEdited, setLastEdited] = useState(data?.ui?.lastEdited || "1 day ago");
-  const [query, setQuery] = useState(data?.ui?.query || data?.primaryKeyword || "");
+  const [lastEdited, setLastEdited] = useState(
+    data?.ui?.lastEdited || "1 day ago"
+  );
+  const [query, setQuery] = useState(
+    data?.ui?.query || data?.primaryKeyword || ""
+  );
   const [basicsUnlocked, setBasicsUnlocked] = useState(false);
 
   /* session id to force-remount CEContentArea (and its children like Research) */
@@ -105,10 +136,7 @@ export default function ContentEditor({ data, onBackToDashboard }) {
   );
 
   const WORD_TARGET_FROM_DATA =
-    data?.metrics?.wordTarget ??
-    data?.wordTarget ??
-    pageConfig?.wordTarget ??
-    1480;
+    data?.metrics?.wordTarget ?? data?.wordTarget ?? pageConfig?.wordTarget ?? 1480;
 
   const [metrics, setMetrics] = useState({
     plagiarism: 0,
@@ -191,7 +219,9 @@ export default function ContentEditor({ data, onBackToDashboard }) {
       const payload = { title, content, query };
       localStorage.setItem("content-editor-state", JSON.stringify(payload));
       // keep Research in sync if user changes/clears keyword
-      window.dispatchEvent(new CustomEvent("content-editor:query-changed", { detail: { query } }));
+      window.dispatchEvent(
+        new CustomEvent("content-editor:query-changed", { detail: { query } })
+      );
     } catch {}
   }, [title, content, query]);
 
@@ -199,7 +229,8 @@ export default function ContentEditor({ data, onBackToDashboard }) {
   const resetToNewDocument = useCallback(
     (payload = {}) => {
       const nextTitle = payload.title || "Untitled";
-      const nextContent = typeof payload.content === "string" ? payload.content : "";
+      const nextContent =
+        typeof payload.content === "string" ? payload.content : "";
       setTitle(nextTitle);
       setContent(nextContent);
       setQuery("");
@@ -290,9 +321,21 @@ export default function ContentEditor({ data, onBackToDashboard }) {
     if (nextWordTarget !== metrics.wordTarget) {
       setMetrics((m) => ({ ...m, wordTarget: nextWordTarget }));
     }
-    // Intentionally exclude `content` to avoid loops; guard updates above.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data, pageConfig, query, lastEdited, metrics.wordTarget]); // NOTE: 'title' intentionally omitted
+  }, [data, pageConfig, query, lastEdited, metrics.wordTarget]);
+
+  /* ===========================
+     MOBILE research drawer state
+     =========================== */
+  const [mobileResearchOpen, setMobileResearchOpen] = useState(false);
+
+  // ESC to close on mobile
+  useEffect(() => {
+    if (!mobileResearchOpen) return;
+    const onKey = (e) => e.key === "Escape" && setMobileResearchOpen(false);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [mobileResearchOpen]);
 
   return (
     <div className="min-h-screen bg-[var(--bg)] text-[var(--text)] transition-colors duration-300">
@@ -302,7 +345,9 @@ export default function ContentEditor({ data, onBackToDashboard }) {
           onBack={onBackToDashboard}
           onTitleChange={setTitle}
           searchVolume={data?.navbar?.searchVolume ?? data?.searchVolume}
-          keywordDifficulty={data?.navbar?.keywordDifficulty ?? data?.keywordDifficulty}
+          keywordDifficulty={
+            data?.navbar?.keywordDifficulty ?? data?.keywordDifficulty
+          }
         />
 
         <CEMetricsStrip
@@ -323,10 +368,14 @@ export default function ContentEditor({ data, onBackToDashboard }) {
           onQueryChange={(q) => {
             setQuery(q);
             try {
-              window.dispatchEvent(new CustomEvent("content-editor:query-changed", { detail: { query: q } }));
+              window.dispatchEvent(
+                new CustomEvent("content-editor:query-changed", {
+                  detail: { query: q },
+                })
+              );
             } catch {}
           }}
-          onStart={() => setBasicsUnlocked(true)}  // auto-unlock when Basics → Start
+          onStart={() => setBasicsUnlocked(true)} // auto-unlock when Basics → Start
           seoMode={seoMode}
           metrics={metrics}
           setMetrics={setMetrics}
@@ -340,9 +389,85 @@ export default function ContentEditor({ data, onBackToDashboard }) {
         />
 
         {process.env.NODE_ENV !== "production" && configError && (
-          <p className="mt-2 text-xs text-red-600">Config load error: {configError}</p>
+          <p className="mt-2 text-xs text-red-600">
+            Config load error: {configError}
+          </p>
         )}
       </main>
+
+      {/* ===== MOBILE-ONLY Research FAB (bottom-right symbol) ===== */}
+      <button
+        type="button"
+        onClick={() => setMobileResearchOpen(true)}
+        aria-label="Open research"
+        className="
+          fixed bottom-5 right-5 z-[60] lg:hidden
+          h-12 w-12 rounded-full shadow-lg grid place-items-center text-white
+          active:scale-95 transition-all
+          bg-gradient-to-br from-[#d74d2b] to-[#f59e0b]
+        "
+      >
+        <AlertTriangle size={22} />
+      </button>
+
+      {/* Backdrop (mobile only) */}
+      <div
+        onClick={() => setMobileResearchOpen(false)}
+        className={`
+          fixed inset-0 z-50 bg-black/25 transition-opacity lg:hidden
+          ${mobileResearchOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}
+        `}
+      />
+
+      {/* Slide-over Drawer (mobile only) */}
+      <aside
+        className={`
+          fixed top-0 right-0 z-[55] h-full w-[min(92vw,420px)] lg:hidden
+          bg-white border-l border-[var(--border)] rounded-l-2xl shadow-xl
+          transition-transform duration-300 will-change-transform
+          ${mobileResearchOpen ? "translate-x-0" : "translate-x-full"}
+        `}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Research panel"
+      >
+        <div className="sticky top-0 z-10 flex items-center justify-between px-4 py-3 border-b border-[var(--border)] bg-white/95 backdrop-blur">
+          <div className="text-sm font-semibold text-[var(--text-primary)]">
+            Research
+          </div>
+          <button
+            onClick={() => setMobileResearchOpen(false)}
+            aria-label="Close research"
+            className="p-2 rounded-lg hover:bg-gray-100 text-[var(--muted)]"
+          >
+            <X size={18} />
+          </button>
+        </div>
+
+        {mobileResearchOpen && (
+          <div className="h-[calc(100%-49px)] overflow-y-auto">
+            <CEResearchPanel
+              query={query}
+              onQueryChange={(q) => {
+                setQuery(q);
+                try {
+                  window.dispatchEvent(
+                    new CustomEvent("content-editor:query-changed", {
+                      detail: { query: q },
+                    })
+                  );
+                } catch {}
+              }}
+              onStart={() => setBasicsUnlocked(true)}
+              seoMode={seoMode}
+              metrics={metrics}
+              onFix={() => {}}
+              onPasteToEditor={() => {}}
+              editorContent={content}
+            />
+          </div>
+        )}
+      </aside>
     </div>
   );
 }

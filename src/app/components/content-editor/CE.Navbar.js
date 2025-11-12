@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import { ArrowLeft, Edit3, Sparkles, Plus } from "lucide-react";
+import { ArrowLeft, Edit3, Sparkles, Plus, Menu } from "lucide-react";
 
 export default function CENavbar({
   title,
@@ -16,7 +16,6 @@ export default function CENavbar({
   const [editing, setEditing] = useState(false);
   const nameRef = useRef(null);
 
-  // keep DOM text in sync when not editing
   useEffect(() => {
     if (!editing && nameRef.current) {
       nameRef.current.innerText = title || "Untitled";
@@ -24,10 +23,8 @@ export default function CENavbar({
   }, [title, editing]);
 
   const handleNewDoc = () => {
-    // Open a real empty doc (no demo fallback). Title stays "Untitled".
     window.dispatchEvent(
       new CustomEvent("content-editor:open", {
-        // use a single space to avoid any "falsy → demo content" fallbacks downstream
         detail: { title: "Untitled", content: " " },
       })
     );
@@ -40,7 +37,6 @@ export default function CENavbar({
       if (!el) return;
       el.innerText = title || "Untitled";
       el.focus();
-      // select all
       const r = document.createRange();
       r.selectNodeContents(el);
       const s = window.getSelection();
@@ -73,29 +69,44 @@ export default function CENavbar({
   };
 
   return (
-    <header className="mb-4 pr-16 md:pr-20">
-      <div className="grid grid-cols-[auto_1fr_auto] grid-rows-[auto_auto] items-center gap-x-4">
-        {/* TOP-LEFT: back link */}
-        <div className="col-start-1 row-start-1">
-          <button
-            onClick={() => onBack?.()}
-            className="inline-flex items-center gap-2 px-0 py-0 text-[12px] text-[var(--muted)] hover:opacity-70 transition"
-          >
-            <ArrowLeft size={16} />
-            <span className="font-medium">Back to DASHBOARD</span>
-          </button>
-        </div>
+    /* Pull up a bit on mobile, keep desktop as-is */
+    <header className="mb-2 md:mb-4 pr-3 md:pr-20 -mt-2 md:mt-0">
+    {/* ===================== MOBILE (extra compact) ===================== */}
+    <div className="md:hidden">
+      {/* Row 1 */}
+      <div className="flex items-center justify-between">
+        <button
+          onClick={() => onBack?.()}
+          className="inline-flex h-[28px] w-[28px] items-center justify-center rounded-md text-[var(--muted)] hover:bg-[var(--input)]"
+          aria-label="Menu"
+          title="Menu"
+        >
+          <Menu size={13} />
+        </button>
 
-        {/* BOTTOM-LEFT: title (no truncation, wraps) + pencil */}
-        <div className="col-start-1 row-start-2 flex items-baseline gap-1 min-w-0">
-          <h1
-            className="
-              flex-1 text-[16px] md:text-[18px]
-              font-semibold leading-tight
-              overflow-visible whitespace-normal break-words
-            "
-          >
-            Content Editor :{" "}
+        <button
+          className="inline-flex h-[32px] w-[32px] items-center justify-center rounded-lg text-white shadow-sm"
+          style={{
+            background:
+              "linear-gradient(135deg, #FF8C2A 0%, #F1761F 45%, #E06416 100%)",
+          }}
+          aria-label="Actions"
+          title="Actions"
+        >
+          <Sparkles size={13} />
+        </button>
+      </div>
+
+      {/* Row 2 */}
+      <div className="mt-0.5 text-[15px] font-bold leading-[1.1] text-[var(--text)]">
+        Blog Editor :
+      </div>
+
+      {/* Title + label */}
+      <div className="mt-[2px] flex flex-col">
+        {/* Title row */}
+        <div className="flex items-center gap-1.5">
+          <h1 className="m-0 text-[15px] font-bold leading-tight text-[var(--text)]">
             <span
               ref={nameRef}
               role="textbox"
@@ -106,10 +117,11 @@ export default function CENavbar({
               onBlur={commitTitle}
               onKeyDown={handleKeyDown}
               className={[
-                "inline-block whitespace-normal break-words px-1",
+                "inline-block max-w-[72vw] truncate align-baseline px-0.5",
                 editing ? "outline-none ring-2 ring-orange-300 bg-white" : "outline-none",
               ].join(" ")}
               style={{ cursor: editing ? "text" : "default" }}
+              title={title || "Untitled"}
             >
               {title || "Untitled"}
             </span>
@@ -118,40 +130,20 @@ export default function CENavbar({
           <button
             title={editing ? "Save (Enter) / Cancel (Esc)" : "Rename"}
             onClick={editing ? commitTitle : startEditing}
-            className="p-1 rounded text-[var(--muted)] hover:bg-[var(--input)]"
+            className="p-0.5 rounded text-[var(--muted)] hover:bg-[var(--input)] align-baseline"
+            aria-label="Rename"
           >
-            <Edit3 size={16} />
+            <Edit3 size={12} />
           </button>
         </div>
 
-        {/* BOTTOM-CENTER: inline stats */}
-        <div className="col-start-2 row-start-2 hidden md:flex items-center justify-center">
-          <div className="flex items-center gap-12 text-[12px] text-[var(--muted)]">
-            <span>
-              Search Volume : <span className="opacity-60">{sv}</span>
-            </span>
-            <span>
-              Keyword difficulty : <span className="opacity-60">{kd}</span>
-            </span>
-          </div>
-        </div>
-
-        {/* TOP-RIGHT: New document + Chat with AI */}
-        <div className="col-start-3 row-start-1 flex items-center gap-3">
-          <button
-            onClick={handleNewDoc}
-            className="inline-flex items-center gap-2 rounded-full px-5 py-2 text-[13px] font-semibold text-[var(--accent)] border border-[var(--accent)] hover:bg-[var(--accent)]/10 transition"
-          >
-            <Plus size={16} />
-            <span>New document</span>
-          </button>
-
-          <button className="inline-flex items-center gap-2 rounded-full px-5 py-2 text-[13px] font-semibold text-white shadow-sm bg-[image:var(--infoHighlight-gradient)] hover:opacity-90 transition">
-            <span>Chat with AI</span>
-            <Sparkles size={16} />
-          </button>
-        </div>
+        {/* Subtitle label */}
+        <span className="mt-[1px] text-[10.5px] font-medium text-[#9CA3AF]">
+          Suggested Keyword topic
+        </span>
       </div>
+    </div>
+
     </header>
   );
 }

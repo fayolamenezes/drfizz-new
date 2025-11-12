@@ -11,7 +11,6 @@ function useSpringNumber(target = 0, ms = 700) {
   const raf = useRef();
 
   useEffect(() => {
-    // Always keep hook order stable; do not early-return from component level.
     if (target === prevTarget.current) return;
     prevTarget.current = target;
 
@@ -45,7 +44,7 @@ function getStatus(pct, { invert = false } = {}) {
   return { label: "Needs Review", color: "text-red-600" };
 }
 
-/** progress bar */
+/** progress bar (desktop) */
 function Bar({ pct = 0, tone = "default", className = "" }) {
   const width = Math.max(0, Math.min(100, pct));
   const color =
@@ -66,7 +65,7 @@ function Bar({ pct = 0, tone = "default", className = "" }) {
   );
 }
 
-/** Generic metric card (Plagiarism, Primary Keyword) */
+/** Generic metric card (desktop) */
 function MetricCard({ label, valuePct }) {
   const invert = label === "PLAGIARISM";
   const anim = useSpringNumber(valuePct ?? 0);
@@ -97,18 +96,16 @@ function MetricCard({ label, valuePct }) {
   );
 }
 
-/** Word count card with snap-while-typing behavior (no conditional hooks) */
+/** Word count card (desktop) */
 function WordcountCard({ count = 0, target = 1200 }) {
   const pct = Math.max(0, Math.min(100, (count / Math.max(1, target)) * 100));
 
-  // Track "typing cadence"
   const [lastAt, setLastAt] = useState(0);
   useEffect(() => {
     setLastAt(performance.now());
   }, [count]);
   const recentlyUpdated = performance.now() - lastAt < 120;
 
-  // Always call hooks; choose value after.
   const countSpring = useSpringNumber(count, 400);
   const pctSpring = useSpringNumber(pct, 400);
 
@@ -140,7 +137,7 @@ function WordcountCard({ count = 0, target = 1200 }) {
   );
 }
 
-/** SEO pill (outlined; slightly smaller text so 'Advanced' fits) */
+/** SEO pill (desktop) */
 function SeoPill({ active, title, Icon, onClick, disabled }) {
   const base =
     "min-w-0 h-[74px] rounded-[12px] border px-3 text-left transition-all";
@@ -188,7 +185,169 @@ function SeoPill({ active, title, Icon, onClick, disabled }) {
   );
 }
 
-/** MAIN */
+/* ------------------------------- MOBILE ONLY ------------------------------- */
+
+/** Mobile pill (extra–extra compact) */
+function SeoPillMobile({ active, title, Icon, onClick, disabled }) {
+  return (
+    <button
+      onClick={disabled ? undefined : onClick}
+      disabled={disabled}
+      className={[
+        // height + radius + padding
+        "h-[46px] w-full rounded-[12px] border text-left transition-all",
+        // thinner active ring/shadow
+        active
+          ? "border-orange-300 bg-orange-50 shadow-[0_1px_0_0_rgba(255,159,64,0.25),0_0_0_2px_rgba(255,159,64,0.10)_inset]"
+          : "border-gray-200 bg-white",
+        disabled ? "opacity-60 cursor-not-allowed" : "",
+        "px-2"
+      ].join(" ")}
+    >
+      <div className="flex items-center gap-1.5">
+        <span
+          className={[
+            // smaller icon container
+            "grid place-items-center h-4 w-4 rounded-full border",
+            active ? "border-orange-200 bg-orange-100" : "border-gray-300 bg-gray-100"
+          ].join(" ")}
+        >
+          {/* smaller icon */}
+          <Icon size={12} className={active ? "text-orange-600" : "text-gray-500"} />
+        </span>
+        <div className="leading-tight min-w-0">
+          {/* smaller 'SEO' label */}
+          <div className={["text-[8.5px] font-semibold tracking-wide",
+                           active ? "text-gray-600" : "text-gray-400"].join(" ")}>
+            SEO
+          </div>
+          {/* smaller title */}
+          <div className={[
+              "truncate font-semibold",
+              active ? "text-orange-600" : "text-gray-500",
+              "text-[11px]"
+            ].join(" ")}
+          >
+            {title}
+          </div>
+        </div>
+      </div>
+    </button>
+  );
+}
+
+
+/** Circular metric (ultra compact, perfectly centered & balanced) */
+function CircularStat({
+  pct = 0,
+  label,
+  ring = "#10B981",
+  alt = false,
+  count,
+  target,
+}) {
+  const size = 48;
+  const stroke = 4;
+  const r = (size - stroke) / 2;
+  const c = 2 * Math.PI * r;
+
+  const clamped = Math.max(0, Math.min(100, pct));
+  const anim = useSpringNumber(clamped, 500);
+
+  const hasCt = typeof count === "number" && typeof target === "number";
+  const rounded = hasCt ? Math.round(count) : 0;
+
+  // Use tabular/lining numerals for consistent sizing (fixes “1” imbalance)
+  const NUMERIC_STYLE = {
+    fontVariantNumeric: "tabular-nums lining-nums",
+    fontFeatureSettings: "'tnum' 1, 'lnum' 1",
+  };
+
+  const mainSize = hasCt ? 12 : 13; // ratio for digits/% view
+  const subSize = 9;
+  const mainDy = "-0.15em";
+  const subDy = "0.95em";
+
+  return (
+    <div className="flex flex-col items-center">
+      <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
+        {/* White background ring base */}
+        <circle
+          cx={size / 2}
+          cy={size / 2}
+          r={r}
+          stroke="#fff"
+          strokeWidth={stroke}
+          fill="#fff"
+        />
+        {/* Progress ring (colored arc) */}
+        <circle
+          cx={size / 2}
+          cy={size / 2}
+          r={r}
+          stroke={ring}
+          strokeWidth={stroke}
+          fill="none"
+          strokeLinecap="round"
+          strokeDasharray={c}
+          strokeDashoffset={c - (anim / 100) * c}
+          transform={`rotate(-90 ${size / 2} ${size / 2})`}
+          className="transition-[stroke-dashoffset] duration-500"
+        />
+
+        {/* Inner text */}
+        {hasCt ? (
+          <text
+            x="50%"
+            y="50%"
+            textAnchor="middle"
+            dominantBaseline="middle"
+            className="fill-gray-900"
+            fontWeight="700"
+            style={NUMERIC_STYLE}
+          >
+            <tspan fontSize={mainSize} dy={mainDy}>
+              {rounded}
+            </tspan>
+            <tspan
+              x="50%"
+              dy={subDy}
+              className="fill-gray-500"
+              fontWeight="600"
+              fontSize={subSize}
+              style={NUMERIC_STYLE}
+            >
+              /{target}
+            </tspan>
+          </text>
+        ) : (
+          <text
+            x="50%"
+            y="50%"
+            dominantBaseline="middle"
+            textAnchor="middle"
+            className={alt ? "fill-rose-600" : "fill-gray-900"}
+            fontWeight="700"
+            fontSize={mainSize + 1}
+            style={NUMERIC_STYLE}
+          >
+            {Math.round(anim)}%
+          </text>
+        )}
+      </svg>
+
+      {/* Label below */}
+      <div className="mt-1 text-[8.5px] font-medium text-gray-700 text-center leading-[1.1]">
+        {label}
+      </div>
+    </div>
+  );
+}
+
+
+
+/* ---------------------------------- MAIN ---------------------------------- */
+
 export default function CEMetricsStrip({
   metrics,
   seoMode,
@@ -202,9 +361,12 @@ export default function CEMetricsStrip({
   const wcTarget = metrics?.wordTarget ?? 1200;
   const lsiPct = metrics?.lsiKeywords ?? 0;
 
+  const wcPct = Math.max(0, Math.min(100, (wc / Math.max(1, wcTarget)) * 100));
+
   return (
     <div className="mb-4">
-      <div className="grid grid-cols-[1.2fr_1.2fr_1.2fr_1.2fr_.8fr_.8fr_.8fr] gap-2.5 items-stretch">
+      {/* --------------------- DESKTOP (unchanged) --------------------- */}
+      <div className="hidden md:grid grid-cols-[1.2fr_1.2fr_1.2fr_1.2fr_.8fr_.8fr_.8fr] gap-2.5 items-stretch">
         <MetricCard label="PLAGIARISM" valuePct={plagPct} />
         <MetricCard label="PRIMARY KEYWORD" valuePct={pkPct} />
         <WordcountCard count={wc} target={wcTarget} />
@@ -231,6 +393,41 @@ export default function CEMetricsStrip({
           onClick={() => onChangeSeoMode?.("details")}
           disabled={!canAccessAdvanced}
         />
+      </div>
+
+      {/* ----------------------- MOBILE (compact) ----------------------- */}
+      <div className="md:hidden space-y-3">
+        {/* Pills row */}
+        <div className="grid grid-cols-3 gap-2">
+          <SeoPillMobile
+            title="Basic"
+            Icon={MinusCircle}
+            active={seoMode === "basic"}
+            onClick={() => onChangeSeoMode?.("basic")}
+          />
+          <SeoPillMobile
+            title="Advance"
+            Icon={PlusCircle}
+            active={seoMode === "advanced"}
+            onClick={() => onChangeSeoMode?.("advanced")}
+            disabled={!canAccessAdvanced}
+          />
+          <SeoPillMobile
+            title="Details"
+            Icon={ListChecks}
+            active={seoMode === "details"}
+            onClick={() => onChangeSeoMode?.("details")}
+            disabled={!canAccessAdvanced}
+          />
+        </div>
+
+        {/* Circular metrics row */}
+        <div className="grid grid-cols-4 gap-2">
+          <CircularStat pct={pkPct} label="PRIMARY KEYWORD" ring="#10B981" />
+          <CircularStat pct={plagPct} label="PLAGIARISM" ring="#E11D48" alt />
+          <CircularStat pct={lsiPct} label="LSI KEYWORDS" ring="#F59E0B" />
+          <CircularStat pct={wcPct} label="WORD COUNT" ring="#8B5CF6" count={wc} target={wcTarget} />
+        </div>
       </div>
     </div>
   );

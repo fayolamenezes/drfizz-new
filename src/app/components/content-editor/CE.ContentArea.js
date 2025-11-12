@@ -64,7 +64,9 @@ function toHeadingHtml(input) {
   // Allow plain string (fallback to H2 styling)
   if (typeof input === "string") {
     const s = HEADING_SIZES.h2;
-    return `<h2><span style="font-size:${s}px;font-weight:700">${escapeHtml(input)}</span></h2>`;
+    return `<h2><span style="font-size:${s}px;font-weight:700">${escapeHtml(
+      input
+    )}</span></h2>`;
   }
 
   const levelRaw = String(input?.level || "H2").toLowerCase();
@@ -303,9 +305,7 @@ export default function CEContentArea({
       // Support bulk arrays or single item
       const items = Array.isArray(heading) ? heading : [heading];
 
-      const blocks = items
-        .map((item) => toHeadingHtml(item))
-        .join("");
+      const blocks = items.map((item) => toHeadingHtml(item)).join("");
 
       // Add a soft separator before appended content for readability
       const separator = localContent ? "<p><br/></p>" : "";
@@ -317,9 +317,15 @@ export default function CEContentArea({
   );
 
   return (
-    <div className="grid grid-cols-[2fr_1fr] items-stretch rounded-[18px] overflow-hidden border border-[var(--border)] bg-white transition-colors">
+    <div
+      className="
+        grid grid-cols-1 lg:grid-cols-[2fr_1fr] items-stretch
+        rounded-[18px] overflow-hidden border border-[var(--border)] bg-white
+        transition-colors
+      "
+    >
       {/* LEFT AREA */}
-      <div className="min-w-0 border-r border-[var(--border)] bg-white">
+      <div className="min-w-0 bg-white lg:border-r border-[var(--border)]">
         <CEToolbar
           activeTab={activeTab}
           onTabChange={onTabChange}
@@ -337,8 +343,8 @@ export default function CEContentArea({
         </div>
       </div>
 
-      {/* RIGHT PANEL */}
-      <div className="min-w-[320px] border-l border-[var(--border)] bg-white">
+      {/* RIGHT PANEL — desktop only (mobile uses slide-over) */}
+      <div className="hidden lg:block min-w-[320px] border-l border-[var(--border)] bg-white">
         <CEResearchPanel
           query={query}
           onQueryChange={onQueryChange}

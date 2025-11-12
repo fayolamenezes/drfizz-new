@@ -122,6 +122,9 @@ export default function ContentEditor({ data, onBackToDashboard }) {
   const restoredRef = useRef(false);
   const newDocRef = useRef(false);
 
+  // Track previous incoming data.title to avoid clobbering user edits
+  const prevDataTitleRef = useRef(data?.title);
+
   // Mount: handle ?new/#new once, normalize to #editor, restore saved state
   useEffect(() => {
     try {
@@ -170,10 +173,12 @@ export default function ContentEditor({ data, onBackToDashboard }) {
           } catch {}
         }
         // Normalize hash to #editor (no flicker)
-        if (url.hash !== "#editor") {
-          url.hash = "#editor";
-          window.history.replaceState(null, "", url.toString());
-        }
+        try {
+          if (url.hash !== "#editor") {
+            url.hash = "#editor";
+            window.history.replaceState(null, "", url.toString());
+          }
+        } catch {}
       }
     } catch {}
 
@@ -245,14 +250,20 @@ export default function ContentEditor({ data, onBackToDashboard }) {
     return () => names.forEach((n) => window.removeEventListener(n, handler));
   }, [resetToNewDocument]);
 
-  /* sync when parent `data` changes, but don't clobber a fresh new doc */
+  /* sync when parent `data` changes, but don't clobber a fresh new doc or user edits */
   useEffect(() => {
-    if (!restoredRef.current || newDocRef.current) return;
+    if (!restoredRef.current || newDocRef.current) {
+      // Still keep the ref in sync even if we early-return
+      prevDataTitleRef.current = data?.title;
+      return;
+    }
 
-    // Title
-    if (typeof data?.title === "string" && data.title !== title) {
+    // Title: only update when the incoming source value actually changes
+    if (typeof data?.title === "string" && data.title !== prevDataTitleRef.current) {
       setTitle(data.title);
     }
+    // keep ref up to date
+    prevDataTitleRef.current = data?.title;
 
     // Content
     if (typeof data?.content === "string") {
@@ -281,7 +292,7 @@ export default function ContentEditor({ data, onBackToDashboard }) {
     }
     // Intentionally exclude `content` to avoid loops; guard updates above.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [data, pageConfig, title, query, lastEdited, metrics.wordTarget]);
+  }, [data, pageConfig, query, lastEdited, metrics.wordTarget]); // NOTE: 'title' intentionally omitted
 
   return (
     <div className="min-h-screen bg-[var(--bg)] text-[var(--text)] transition-colors duration-300">

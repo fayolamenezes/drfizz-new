@@ -13,7 +13,14 @@ import { FileText, Sparkles, ScrollText, Link2, Shapes } from "lucide-react";
 const HL_ATTR = "data-ce-hl"; // marker attribute for our highlights
 
 const CECanvas = forwardRef(function CECanvas(
-  { title = "Untitled", content = "", setContent },
+  {
+    title = "Untitled",
+    content = "",
+    setContent,
+    onTyping, // 👈 from parent
+    onFocusEditor, // 👈 from parent
+    onBlurEditor, // 👈 from parent
+  },
   ref
 ) {
   const editorRef = useRef(null);
@@ -23,22 +30,20 @@ const CECanvas = forwardRef(function CECanvas(
   const seededRef = useRef(false);
   const autosaveTimer = useRef(null);
 
-  // highlight rules sent from Optimize: [{ phrase, status, className }]
+  // highlight rules sent from Optimize
   const highlightRulesRef = useRef([]);
 
-  // “source-of-truth” guards
-  const lastLocalHtmlRef = useRef(""); // last html we emitted via setContent
-  const lastLocalEditAtRef = useRef(0); // timestamp of last local edit
-  const LOCAL_GRACE_MS = 80; // was 600 → now more responsive
+  // state guards
+  const lastLocalHtmlRef = useRef("");
+  const lastLocalEditAtRef = useRef(0);
+  const LOCAL_GRACE_MS = 80;
 
-  // re-entrancy guard to prevent onInput → setContent loops
   const suppressInputRef = useRef(false);
-
   const AUTOSAVE_MS = 800;
   const AUTOSAVE_KEY = `ce:autosave:${title || "untitled"}`;
 
   /** =========================
-   * Utility: sanitize + blank check
+   * Utility
    * ========================= */
   function sanitizeToHtml(input) {
     const str = String(input || "");
@@ -62,7 +67,7 @@ const CECanvas = forwardRef(function CECanvas(
   }, [content]);
 
   /** =========================
-   * Selection helpers (memoized)
+   * Selection helpers
    * ========================= */
   const saveSelectionSnapshot = useCallback(() => {
     const sel = window.getSelection?.();
@@ -72,7 +77,7 @@ const CECanvas = forwardRef(function CECanvas(
     if (container && anchor && container.contains(anchor)) {
       savedRangeRef.current = sel.getRangeAt(0).cloneRange();
     }
-  }, []); // editorRef is stable
+  }, []);
 
   const restoreSelectionSnapshot = useCallback(() => {
     const r = savedRangeRef.current;
@@ -95,13 +100,12 @@ const CECanvas = forwardRef(function CECanvas(
   }, [saveSelectionSnapshot]);
 
   /** =========================
-   * Highlighter core
+   * Highlighter
    * ========================= */
   const runHighlights = useCallback(() => {
     const root = editorRef.current;
     if (!root) return;
 
-    // 1) Remove previous highlights safely
     const oldMarks = root.querySelectorAll(`[${HL_ATTR}]`);
     oldMarks.forEach((el) => {
       const parent = el.parentNode;
@@ -112,7 +116,6 @@ const CECanvas = forwardRef(function CECanvas(
     const rules = highlightRulesRef.current;
     if (!Array.isArray(rules) || rules.length === 0) return;
 
-    // Prepare regexes
     const prepared = rules
       .filter((r) => r?.phrase)
       .map((r) => {
@@ -129,15 +132,14 @@ const CECanvas = forwardRef(function CECanvas(
       })
       .filter(Boolean);
 
-    // 2) Walk text nodes and wrap matches
     const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
       acceptNode(node) {
         const v = node.nodeValue || "";
         if (!v.trim()) return NodeFilter.FILTER_REJECT;
         const p = node.parentElement;
         if (!p) return NodeFilter.FILTER_REJECT;
-        if (p.closest(`[${HL_ATTR}]`)) return NodeFilter.FILTER_REJECT; // don't re-highlight inside marks
-        if (p.closest("code, pre")) return NodeFilter.FILTER_REJECT; // skip code/pre
+        if (p.closest(`[${HL_ATTR}]`)) return NodeFilter.FILTER_REJECT;
+        if (p.closest("code, pre")) return NodeFilter.FILTER_REJECT;
         return NodeFilter.FILTER_ACCEPT;
       },
     });
@@ -160,9 +162,8 @@ const CECanvas = forwardRef(function CECanvas(
           const start = match.index;
           const end = start + full.length;
 
-          if (start > lastIdx) {
+          if (start > lastIdx)
             pieces.push(document.createTextNode(text.slice(lastIdx, start)));
-          }
 
           const mark = document.createElement("mark");
           mark.setAttribute(HL_ATTR, "1");
@@ -175,17 +176,16 @@ const CECanvas = forwardRef(function CECanvas(
         }
 
         if (pieces.length) {
-          if (lastIdx < text.length) {
+          if (lastIdx < text.length)
             pieces.push(document.createTextNode(text.slice(lastIdx)));
-          }
           const frag = document.createDocumentFragment();
           pieces.forEach((n) => frag.appendChild(n));
           const parent = currentNode.parentNode;
           parent.insertBefore(frag, currentNode);
           parent.removeChild(currentNode);
-
-          // Set up for next rule against the last text node (remaining tail)
-          const lastText = pieces.filter((n) => n.nodeType === Node.TEXT_NODE).pop();
+          const lastText = pieces
+            .filter((n) => n.nodeType === Node.TEXT_NODE)
+            .pop();
           currentNode = lastText || parent;
           text = lastText ? lastText.nodeValue : "";
         }
@@ -193,7 +193,6 @@ const CECanvas = forwardRef(function CECanvas(
     }
   }, []);
 
-  // Receive highlight rules from Optimize
   useEffect(() => {
     function onRules(e) {
       highlightRulesRef.current = Array.isArray(e.detail) ? e.detail : [];
@@ -204,7 +203,7 @@ const CECanvas = forwardRef(function CECanvas(
   }, [runHighlights]);
 
   /** =========================
-   * Autosave + state sync
+   * Autosave + bubble
    * ========================= */
   function scheduleAutosave(html) {
     if (autosaveTimer.current) clearTimeout(autosaveTimer.current);
@@ -283,7 +282,7 @@ const CECanvas = forwardRef(function CECanvas(
   }, [AUTOSAVE_KEY, isTrulyEmpty, setContent, content, runHighlights]);
 
   /** =========================
-   * External sync (GUARDED)
+   * External sync
    * ========================= */
   useEffect(() => {
     const el = editorRef.current;
@@ -299,25 +298,24 @@ const CECanvas = forwardRef(function CECanvas(
       seededRef.current && Date.now() - lastLocalEditAtRef.current < LOCAL_GRACE_MS;
     if (justLocallyEdited) return;
 
-    // Adopt external html (e.g., pasted headings from right panel)
     suppressInputRef.current = true;
     el.innerHTML = htmlFromProp;
     queueMicrotask(() => {
       suppressInputRef.current = false;
     });
 
-    // Push to history so undo works, and move caret to end
     if (seededRef.current) {
       undoStack.current.push(htmlFromProp);
       redoStack.current = [];
     }
     setCaretToEnd(el);
-    // Scroll to end for visibility after append
     el.lastElementChild?.scrollIntoView({ block: "end" });
-
     requestAnimationFrame(runHighlights);
   }, [content, runHighlights, setCaretToEnd]);
 
+  /** =========================
+   * Imperative API
+   * ========================= */
   useImperativeHandle(ref, () => ({
     exec: (cmd, value) => execCommand(cmd, value),
   }));
@@ -330,7 +328,6 @@ const CECanvas = forwardRef(function CECanvas(
     if (!el) return;
     el.focus();
     restoreSelectionSnapshot();
-
     try {
       document.execCommand("styleWithCSS", false, true);
     } catch {}
@@ -356,83 +353,38 @@ const CECanvas = forwardRef(function CECanvas(
       case "saveSelection":
         saveSelectionSnapshot();
         return;
-
-      case "fontSizePx": {
-        const px = Number(value) || 16;
-        wrapSelectionWith("span", `font-size:${px}px;`);
+      case "fontSizePx":
+        wrapSelectionWith("span", `font-size:${Number(value) || 16}px;`);
         break;
-      }
-
-      case "code": {
+      case "code":
         wrapSelectionWith("code");
         break;
-      }
-
-      case "undo": {
-        if (undoStack.current.length > 1) {
-          const cur = undoStack.current.pop();
-          redoStack.current.push(cur);
-          const prev = undoStack.current[undoStack.current.length - 1] || "";
-          suppressInputRef.current = true;
-          el.innerHTML = prev;
-          setContent?.(prev);
-          lastLocalHtmlRef.current = prev;
-          lastLocalEditAtRef.current = Date.now();
-          queueMicrotask(() => {
-            suppressInputRef.current = false;
-          });
-          setCaretToEnd(el);
-        } else {
-          document.execCommand("undo", false, null);
-        }
-        break;
-      }
-
-      case "redo": {
-        if (redoStack.current.length > 0) {
-          const next = redoStack.current.pop();
-          undoStack.current.push(next);
-          suppressInputRef.current = true;
-          el.innerHTML = next;
-          setContent?.(next);
-          lastLocalHtmlRef.current = next;
-          lastLocalEditAtRef.current = Date.now();
-          queueMicrotask(() => {
-            suppressInputRef.current = false;
-          });
-          setCaretToEnd(el);
-        } else {
-          document.execCommand("redo", false, null);
-        }
-        break;
-      }
-
+      case "undo":
+      case "redo":
+        break; // handled externally
       default:
-        // Let the browser handle: bold, italic, underline, strikeThrough,
-        // justifyLeft/Center/Right, insertUnorderedList, createLink,
-        // formatBlock (h1/h2/h3/p), hiliteColor, foreColor, insertImage, etc.
         document.execCommand(cmd, false, value);
         break;
     }
 
     lastLocalHtmlRef.current = el.innerHTML;
     lastLocalEditAtRef.current = Date.now();
-    bubble({ pushHistory: true, notifyParent: true });
+    bubble();
   }
 
   const showStarter = isTrulyEmpty();
 
   return (
     <section
-      className="rounded-b-[12px] border border-t-0 border-[var(--border)] bg-white px-6 md:px-8 py-6 transition-colors"
+      className="rounded-b-[12px] border border-t-0 border-[var(--border)] bg-white px-4 md:px-8 py-6 transition-colors"
       aria-label="Editor canvas"
     >
-      <h2 className="text-[26px] md:text-[28px] font-bold text-[var(--text-primary)] mb-4 transition-colors">
+      <h2 className="text-[26px] md:text-[28px] font-bold text-[var(--text-primary)] mb-4">
         {title}
       </h2>
 
       {showStarter && (
-        <div className="mb-6 text-[var(--text)] transition-colors">
+        <div className="mb-6 text-[var(--text)]">
           <ul className="space-y-3">
             <li className="flex items-center gap-3 text-[15px]">
               <FileText size={18} className="opacity-70" />
@@ -464,9 +416,14 @@ const CECanvas = forwardRef(function CECanvas(
         suppressContentEditableWarning
         className="min-h-[420px] rounded-md border border-[var(--border)] bg-white px-4 py-4 leading-7 text-[15px] text-[var(--text-primary)] focus:outline-none prose prose-p:my-3 prose-h1:text-2xl prose-h2:text-xl prose-ul:list-disc prose-ul:pl-6 transition-colors"
         onInput={() => {
-          if (!suppressInputRef.current) {
-            bubble({ pushHistory: false, notifyParent: true });
-          }
+          bubble({ pushHistory: false, notifyParent: true });
+          onTyping?.();
+        }}
+        onFocus={() => {
+          onFocusEditor?.();
+        }}
+        onBlur={() => {
+          onBlurEditor?.();
         }}
         onKeyUp={saveSelectionSnapshot}
         onMouseUp={saveSelectionSnapshot}

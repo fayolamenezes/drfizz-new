@@ -100,12 +100,7 @@ export default function CEContentArea({
 
   /** ---------------------------------------------
    *  LOCAL CONTENT STATE (prevents JSON snapbacks)
-   *  ---------------------------------------------
-   * We treat `content` prop as an initial value (or external override),
-   * but we keep our own local state as the single source of truth we pass
-   * to Canvas + right panel. If a parent provides setContent, we forward
-   * changes to it too — but we never let a stale prop overwrite local edits.
-   */
+   *  --------------------------------------------- */
   const [localContent, setLocalContent] = useState(() => content || "");
   const lastLocalEditAtRef = useRef(0);
   const LOCAL_GRACE_MS = 300; // small window where external prop won't clobber local typing
@@ -282,7 +277,7 @@ export default function CEContentArea({
       emitMetricsThrottled(next);
     }, 40);
 
-    return () => clearTimeout(timer);
+  return () => clearTimeout(timer);
   }, [
     localContent,
     query,
@@ -316,6 +311,27 @@ export default function CEContentArea({
     [localContent, handleSetContent]
   );
 
+  /** =========================
+   * Mobile typing → show docked toolbar
+   * ========================= */
+  const [isTyping, setIsTyping] = useState(false);
+  const typingTimer = useRef(null);
+  const TYPING_IDLE_MS = 1100;
+
+  const handleTypingPulse = useCallback(() => {
+    setIsTyping(true);
+    clearTimeout(typingTimer.current);
+    typingTimer.current = setTimeout(() => setIsTyping(false), TYPING_IDLE_MS);
+  }, []);
+
+  const handleFocus = useCallback(() => setIsTyping(true), []);
+  const handleBlur = useCallback(() => {
+    // wait a bit to allow keyboard to close
+    setTimeout(() => setIsTyping(false), 150);
+  }, []);
+
+  useEffect(() => () => clearTimeout(typingTimer.current), []);
+
   return (
     <div
       className="
@@ -326,12 +342,15 @@ export default function CEContentArea({
     >
       {/* LEFT AREA */}
       <div className="min-w-0 bg-white lg:border-r border-[var(--border)]">
-        <CEToolbar
-          activeTab={activeTab}
-          onTabChange={onTabChange}
-          lastEdited={lastEdited}
-          editorRef={editorRef}
-        />
+        {/* Desktop toolbar only */}
+        <div className="hidden lg:block">
+          <CEToolbar
+            activeTab={activeTab}
+            onTabChange={onTabChange}
+            lastEdited={lastEdited}
+            editorRef={editorRef}
+          />
+        </div>
 
         <div className="bg-white">
           <CECanvas
@@ -339,6 +358,10 @@ export default function CEContentArea({
             title={title}
             content={localContent}
             setContent={handleSetContent}
+            /* mobile typing signals */
+            onTyping={handleTypingPulse}
+            onFocusEditor={handleFocus}
+            onBlurEditor={handleBlur}
           />
         </div>
       </div>
@@ -355,6 +378,26 @@ export default function CEContentArea({
           /* Allow panel to paste headings into canvas */
           onPasteToEditor={handlePasteHeadingToEditor}
         />
+      </div>
+
+      {/* MOBILE: docked, horizontally scrollable toolbar shown only while typing */}
+      <div
+        className={`
+          lg:hidden fixed left-0 right-0 z-50
+          ${isTyping ? "bottom-[env(safe-area-inset-bottom,0px)]" : "-bottom-24 pointer-events-none"}
+          transition-all duration-200
+        `}
+      >
+        <CEToolbar
+          mode="mobile"
+          editorRef={editorRef}
+          /* these props are ignored in mobile mode */
+          activeTab={activeTab}
+          onTabChange={onTabChange}
+          lastEdited={lastEdited}
+        />
+        {/* spacer to ensure canvas content isn’t covered when toolbar is visible */}
+        <div className={`${isTyping ? "h-14" : "h-0"}`} />
       </div>
     </div>
   );

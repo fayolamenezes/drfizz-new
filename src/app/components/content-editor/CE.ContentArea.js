@@ -277,7 +277,7 @@ export default function CEContentArea({
       emitMetricsThrottled(next);
     }, 40);
 
-  return () => clearTimeout(timer);
+    return () => clearTimeout(timer);
   }, [
     localContent,
     query,
@@ -312,25 +312,70 @@ export default function CEContentArea({
   );
 
   /** =========================
-   * Mobile typing → show docked toolbar
+   * Mobile toolbar visibility:
+   * - Only after user actually types
+   * - While the keyboard is visible
+   * - Hides when the keyboard hides
    * ========================= */
-  const [isTyping, setIsTyping] = useState(false);
-  const typingTimer = useRef(null);
-  const TYPING_IDLE_MS = 1100;
+  const [keyboardVisible, setKeyboardVisible] = useState(false);
+  const [hasTypedSinceFocus, setHasTypedSinceFocus] = useState(false);
+  const baselineViewportHeightRef = useRef(null);
+
+  // Detect keyboard visibility using viewport height changes
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const KEYBOARD_THRESHOLD_PX = 150;
+
+    const updateFromHeight = (currentHeight) => {
+      if (!currentHeight) return;
+
+      if (
+        baselineViewportHeightRef.current == null ||
+        currentHeight > baselineViewportHeightRef.current
+      ) {
+        // keep track of the largest height we've seen (no keyboard)
+        baselineViewportHeightRef.current = currentHeight;
+      }
+
+      const baseline = baselineViewportHeightRef.current;
+      const keyboardIsOpen = baseline - currentHeight > KEYBOARD_THRESHOLD_PX;
+      setKeyboardVisible(keyboardIsOpen);
+    };
+
+    const vv = window.visualViewport;
+    if (vv) {
+      // VisualViewport gives a better signal on mobile browsers
+      updateFromHeight(vv.height);
+      const onResize = () => updateFromHeight(vv.height);
+      vv.addEventListener("resize", onResize);
+      return () => vv.removeEventListener("resize", onResize);
+    }
+
+    // Fallback: use window.innerHeight
+    updateFromHeight(window.innerHeight);
+    const onResize = () => updateFromHeight(window.innerHeight);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
 
   const handleTypingPulse = useCallback(() => {
-    setIsTyping(true);
-    clearTimeout(typingTimer.current);
-    typingTimer.current = setTimeout(() => setIsTyping(false), TYPING_IDLE_MS);
+    // User actually typed – allow toolbar to appear (if keyboard is up)
+    setHasTypedSinceFocus(true);
   }, []);
 
-  const handleFocus = useCallback(() => setIsTyping(true), []);
+  const handleFocus = useCallback(() => {
+    // On new focus, reset "has typed" so we don't show toolbar
+    // until there's at least one actual input
+    setHasTypedSinceFocus(false);
+  }, []);
+
   const handleBlur = useCallback(() => {
-    // wait a bit to allow keyboard to close
-    setTimeout(() => setIsTyping(false), 150);
+    // When editor truly blurs, forget typing state
+    setHasTypedSinceFocus(false);
   }, []);
 
-  useEffect(() => () => clearTimeout(typingTimer.current), []);
+  const showMobileToolbar = keyboardVisible && hasTypedSinceFocus;
 
   return (
     <div
@@ -380,11 +425,17 @@ export default function CEContentArea({
         />
       </div>
 
-      {/* MOBILE: docked, horizontally scrollable toolbar shown only while typing */}
+      {/* MOBILE: docked, horizontally scrollable toolbar
+          - appears only after user starts typing
+          - hides when keyboard hides */}
       <div
         className={`
           lg:hidden fixed left-0 right-0 z-50
-          ${isTyping ? "bottom-[env(safe-area-inset-bottom,0px)]" : "-bottom-24 pointer-events-none"}
+          ${
+            showMobileToolbar
+              ? "bottom-[env(safe-area-inset-bottom,0px)]"
+              : "-bottom-24 pointer-events-none"
+          }
           transition-all duration-200
         `}
       >
@@ -397,7 +448,7 @@ export default function CEContentArea({
           lastEdited={lastEdited}
         />
         {/* spacer to ensure canvas content isn’t covered when toolbar is visible */}
-        <div className={`${isTyping ? "h-14" : "h-0"}`} />
+        <div className={showMobileToolbar ? "h-14" : "h-0"} />
       </div>
     </div>
   );

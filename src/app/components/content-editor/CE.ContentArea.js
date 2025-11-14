@@ -115,6 +115,23 @@ export default function CEContentArea({
     );
   };
 
+  // Compact version for mobile only (smaller font so it fits one line)
+  const MobileTab = ({ id, children }) => {
+    const is = activeTab === id;
+    return (
+      <button
+        onClick={() => onTabChange?.(id)}
+        className={`h-[28px] px-2 text-[11px] border-b-2 -mb-px transition-colors ${
+          is
+            ? "border-black text-black font-medium"
+            : "border-transparent text-gray-500 hover:text-black"
+        }`}
+      >
+        {children}
+      </button>
+    );
+  };
+
   /** ---------------------------------------------
    *  LOCAL CONTENT STATE (prevents JSON snapbacks)
    *  --------------------------------------------- */
@@ -408,7 +425,21 @@ export default function CEContentArea({
     >
       {/* LEFT AREA */}
       <div className="min-w-0 bg-white lg:border-r border-[var(--border)]">
-        {/* Tabs + 'Edited' row (desktop only) */}
+        {/* Mobile tabs row (smaller, one-line, no 'Edited' text) */}
+        <div className="flex lg:hidden items-center gap-1 px-2 pt-[3px] border-b border-[var(--border)]">
+          <button
+            onMouseDown={(e) => e.preventDefault()}
+            className="h-7 w-7 grid place-items-center rounded hover:bg-gray-100 text-gray-700 transition-colors"
+            title="Menu"
+          >
+            <Menu size={14} />
+          </button>
+          <MobileTab id="content">Content</MobileTab>
+          <MobileTab id="summary">Article Summary</MobileTab>
+          <MobileTab id="final">Final Content</MobileTab>
+        </div>
+
+        {/* Tabs + 'Edited' row (desktop only – unchanged) */}
         <div className="hidden lg:flex items-center justify-between px-2 pt-[3px]">
           <div className="flex items-center gap-1">
             <button

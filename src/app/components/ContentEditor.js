@@ -102,15 +102,15 @@ export default function ContentEditor({ data, onBackToDashboard }) {
   /* session id to force-remount CEContentArea (and its children like Research) */
   const [editorSessionId, setEditorSessionId] = useState(0);
 
+  // 🔑 Primary keyword source: always use canonical PK from data/pageConfig, not the live query
   const PRIMARY_KEYWORD = useMemo(
     () =>
       norm(
-        query ||
-          data?.primaryKeyword ||
+        data?.primaryKeyword ||
           pageConfig?.primaryKeyword ||
           "content marketing"
       ),
-    [query, data?.primaryKeyword, pageConfig?.primaryKeyword]
+    [data?.primaryKeyword, pageConfig?.primaryKeyword]
   );
 
   const LSI = useMemo(
@@ -141,13 +141,19 @@ export default function ContentEditor({ data, onBackToDashboard }) {
     pageConfig?.wordTarget ??
     1480;
 
-  const [metrics, setMetrics] = useState({
-    plagiarism: 0,
+  // Initial plagiarism pulled from data (multi-content) when available
+  const [metrics, setMetrics] = useState(() => ({
+    plagiarism:
+      typeof data?.plagiarism === "number"
+        ? data.plagiarism
+        : typeof data?.metrics?.plagiarism === "number"
+        ? data.metrics.plagiarism
+        : 0,
     primaryKeyword: 0,
     wordCount: 0,
     wordTarget: WORD_TARGET_FROM_DATA,
     lsiKeywords: 0,
-  });
+  }));
 
   /* persistence + fresh-new guard */
   const restoredRef = useRef(false);
@@ -290,7 +296,10 @@ export default function ContentEditor({ data, onBackToDashboard }) {
     }
 
     // Title: only update when the incoming source value actually changes
-    if (typeof data?.title === "string" && data.title !== prevDataTitleRef.current) {
+    if (
+      typeof data?.title === "string" &&
+      data.title !== prevDataTitleRef.current
+    ) {
       setTitle(data.title);
     }
     // keep ref up to date
@@ -321,13 +330,26 @@ export default function ContentEditor({ data, onBackToDashboard }) {
     if (nextWordTarget !== metrics.wordTarget) {
       setMetrics((m) => ({ ...m, wordTarget: nextWordTarget }));
     }
+
+    // Metrics.plagiarism – sync from incoming data (multi-content) when present
+    const nextPlagiarism =
+      typeof data?.plagiarism === "number"
+        ? data.plagiarism
+        : typeof data?.metrics?.plagiarism === "number"
+        ? data.metrics.plagiarism
+        : metrics.plagiarism;
+
+    if (nextPlagiarism !== metrics.plagiarism) {
+      setMetrics((m) => ({ ...m, plagiarism: nextPlagiarism }));
+    }
   }, [
     data,
     pageConfig,
     query,
     lastEdited,
     metrics.wordTarget,
-    content, // ✅ added so eslint is happy and logic is correct
+    metrics.plagiarism,
+    content, // eslint correctness + logic (we compare with content above)
   ]);
 
   /* ===========================
@@ -421,7 +443,11 @@ export default function ContentEditor({ data, onBackToDashboard }) {
         onClick={() => setMobileResearchOpen(false)}
         className={`
           fixed inset-0 z-50 bg-black/25 transition-opacity lg:hidden
-          ${mobileResearchOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}
+          ${
+            mobileResearchOpen
+              ? "opacity-100 pointer-events-auto"
+              : "opacity-0 pointer-events-none"
+          }
         `}
       />
 

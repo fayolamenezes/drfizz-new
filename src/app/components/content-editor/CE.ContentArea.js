@@ -173,9 +173,10 @@ export default function CEContentArea({
   );
 
   // ----- Keyword setup -----
+  // 🔑 IMPORTANT: use only the canonical primaryKeyword prop here (not query)
   const PRIMARY_KEYWORD = useMemo(
-    () => String(query || primaryKeyword || "content marketing").toLowerCase(),
-    [query, primaryKeyword]
+    () => String(primaryKeyword || "content marketing").toLowerCase(),
+    [primaryKeyword]
   );
 
   const LSI_KEYWORDS = useMemo(
@@ -268,7 +269,10 @@ export default function CEContentArea({
       }
       const lsiPct =
         LSI_KEYWORDS.length > 0
-          ? Math.max(0, Math.min(100, Math.round((lsiCovered / LSI_KEYWORDS.length) * 100)))
+          ? Math.max(
+              0,
+              Math.min(100, Math.round((lsiCovered / LSI_KEYWORDS.length) * 100))
+            )
           : 0;
 
       // --- Simple plagiarism heuristic ---
@@ -314,7 +318,6 @@ export default function CEContentArea({
     return () => clearTimeout(timer);
   }, [
     localContent,
-    query,
     PRIMARY_KEYWORD,
     LSI_KEYWORDS,
     metricsInternal.wordTarget,

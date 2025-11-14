@@ -144,15 +144,19 @@ function mapSeoRowToSchema(row) {
  * [
  *   {
  *     "domain": "google.com",
- *     "blog1": { "title": "...", "content": "..." },
- *     "blog2": { "title": "...", "content": "..." },
- *     "page1": { "title": "...", "content": "..." },
- *     "page2": { "title": "...", "content": "..." }
+ *     "blog1": {
+ *       "title": "...",
+ *       "content": "...",
+ *       "primaryKeyword": "...",
+ *       "lsiKeywords": [...],
+ *       "plagiarism": 12
+ *     },
+ *     ...
  *   },
  *   ...
  * ]
  *
- * 👉 Only cares about title + content (no metrics).
+ * 👉 Now also keeps primaryKeyword, lsiKeywords, plagiarism per slot.
  */
 function mapMultiRowToContent(row) {
   const safeSlot = (slot) =>
@@ -160,8 +164,18 @@ function mapMultiRowToContent(row) {
       ? {
           title: slot.title || null,
           content: slot.content || "",
+          primaryKeyword: slot.primaryKeyword || null,
+          lsiKeywords: Array.isArray(slot.lsiKeywords) ? slot.lsiKeywords : [],
+          plagiarism:
+            typeof slot.plagiarism === "number" ? slot.plagiarism : null,
         }
-      : { title: null, content: "" };
+      : {
+          title: null,
+          content: "",
+          primaryKeyword: null,
+          lsiKeywords: [],
+          plagiarism: null,
+        };
 
   return {
     domain: normalizeDomain(row.domain || ""),
@@ -398,7 +412,7 @@ export default function OpportunitiesSection({ onOpenContentEditor }) {
     };
   }, []);
 
-  // Load multi-content.json (rich content)
+  // Load multi-content.json (rich content + per-slot SEO: primary/LSI/plagiarism)
   useEffect(() => {
     let alive = true;
     (async () => {
@@ -447,7 +461,7 @@ export default function OpportunitiesSection({ onOpenContentEditor }) {
     return () => cancelAnimationFrame(raf);
   }, [seoRows]);
 
-  // Merge slots: metrics from seo-data, content/title from multi-content when available
+  // Merge slots: metrics from seo-data, content/title + SEO fields from multi-content when available
   const mergeSlot = (seoSlot, multiSlot, fallbackTitle) => {
     const title =
       multiSlot?.title || seoSlot?.title || fallbackTitle || "Untitled";
@@ -455,10 +469,29 @@ export default function OpportunitiesSection({ onOpenContentEditor }) {
 
     if (!seoSlot && !multiSlot) return {}; // no data at all
 
+    const primaryKeyword =
+      multiSlot?.primaryKeyword ?? seoSlot?.primaryKeyword ?? null;
+    const lsiKeywords =
+      (Array.isArray(multiSlot?.lsiKeywords) && multiSlot.lsiKeywords.length
+        ? multiSlot.lsiKeywords
+        : Array.isArray(seoSlot?.lsiKeywords)
+        ? seoSlot.lsiKeywords
+        : []) || [];
+    const plagiarism =
+      typeof multiSlot?.plagiarism === "number"
+        ? multiSlot.plagiarism
+        : typeof seoSlot?.plagiarism === "number"
+        ? seoSlot.plagiarism
+        : null;
+
     return {
-      ...seoSlot,
+      ...seoSlot, // keep numeric metrics (score, wordCount, etc.) from seo-data
+      ...multiSlot, // so title/content/seo fields from multi override if needed
       title,
       content,
+      primaryKeyword,
+      lsiKeywords,
+      plagiarism,
     };
   };
 
@@ -536,12 +569,16 @@ export default function OpportunitiesSection({ onOpenContentEditor }) {
 
   const handleEditExisting = () => {
     const real = startPayloadRef.current || {};
-    // open with real title + content + domain so ContentEditor can merge with contenteditor.json
+    // open with real title + content + domain + SEO fields so ContentEditor can use them
     dispatchOpen({
       title: real.title,
       kind: real.kind || "blog",
       content: real.content || "",
       domain: real.domain || domain,
+      primaryKeyword: real.primaryKeyword || null,
+      lsiKeywords: real.lsiKeywords || [],
+      plagiarism:
+        typeof real.plagiarism === "number" ? real.plagiarism : null,
     });
     setStartOpen(false);
   };
@@ -665,11 +702,18 @@ export default function OpportunitiesSection({ onOpenContentEditor }) {
           </button>
           <button
             onClick={() => {
+              // Keep all SEO fields (primary, LSI, plagiarism) from merged data
               startPayloadRef.current = {
                 kind: type, // "blog" or "page"
                 title: realTitle || displayTitle,
                 content: data?.content || "",
                 domain,
+                primaryKeyword: data?.primaryKeyword || null,
+                lsiKeywords: data?.lsiKeywords || [],
+                plagiarism:
+                  typeof data?.plagiarism === "number"
+                    ? data.plagiarism
+                    : null,
               };
               setStartOpen(true);
             }}

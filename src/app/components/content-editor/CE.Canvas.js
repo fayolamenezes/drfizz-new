@@ -88,16 +88,19 @@ const CECanvas = forwardRef(function CECanvas(
     sel.addRange(r);
   }, []);
 
-  const setCaretToEnd = useCallback((el) => {
-    if (!el) return;
-    const range = document.createRange();
-    range.selectNodeContents(el);
-    range.collapse(false);
-    const sel = window.getSelection?.();
-    sel?.removeAllRanges();
-    sel?.addRange(range);
-    saveSelectionSnapshot();
-  }, [saveSelectionSnapshot]);
+  const setCaretToEnd = useCallback(
+    (el) => {
+      if (!el) return;
+      const range = document.createRange();
+      range.selectNodeContents(el);
+      range.collapse(false);
+      const sel = window.getSelection?.();
+      sel?.removeAllRanges();
+      sel?.addRange(range);
+      saveSelectionSnapshot();
+    },
+    [saveSelectionSnapshot]
+  );
 
   /** =========================
    * Highlighter
@@ -313,20 +316,15 @@ const CECanvas = forwardRef(function CECanvas(
   }, [content, runHighlights, setCaretToEnd]);
 
   /** =========================
-   * Imperative API
-   * ========================= */
-  useImperativeHandle(ref, () => ({
-    exec: (cmd, value) => execCommand(cmd, value),
-  }));
-
-  /** =========================
    * execCommand
    * ========================= */
   function execCommand(cmd, value) {
     const el = editorRef.current;
     if (!el) return;
+
     el.focus();
     restoreSelectionSnapshot();
+
     try {
       document.execCommand("styleWithCSS", false, true);
     } catch {}
@@ -352,15 +350,27 @@ const CECanvas = forwardRef(function CECanvas(
       case "saveSelection":
         saveSelectionSnapshot();
         return;
+
       case "fontSizePx":
         wrapSelectionWith("span", `font-size:${Number(value) || 16}px;`);
         break;
+
       case "code":
         wrapSelectionWith("code");
         break;
+
       case "undo":
-      case "redo":
-        break; // handled externally
+      case "redo": {
+        // Use browser's native undo/redo so it matches Ctrl+Z/Y
+        document.execCommand(cmd, false, value);
+        const html = el.innerHTML;
+        lastLocalHtmlRef.current = html;
+        lastLocalEditAtRef.current = Date.now();
+        // Inform parent but don't push a new history item in our own stack
+        bubble({ pushHistory: false, notifyParent: true });
+        return;
+      }
+
       default:
         document.execCommand(cmd, false, value);
         break;
@@ -370,6 +380,22 @@ const CECanvas = forwardRef(function CECanvas(
     lastLocalEditAtRef.current = Date.now();
     bubble();
   }
+
+  /** =========================
+   * Imperative API (for toolbar)
+   * ========================= */
+  useImperativeHandle(ref, () => ({
+    exec: (cmd, value) => execCommand(cmd, value),
+    // Used by toolbar's ensureEditorFocus
+    focusEditor: () => {
+      const el = editorRef.current;
+      if (!el) return;
+      el.focus();
+      restoreSelectionSnapshot();
+    },
+    // Optional: gives direct access to the root node if needed
+    root: editorRef.current,
+  }));
 
   const showStarter = isTrulyEmpty();
 
@@ -415,6 +441,7 @@ const CECanvas = forwardRef(function CECanvas(
         suppressContentEditableWarning
         className="min-h-[420px] rounded-md border border-[var(--border)] bg-white px-4 py-4 leading-7 text-[15px] text-[var(--text-primary)] focus:outline-none prose prose-p:my-3 prose-h1:text-2xl prose-h2:text-xl prose-ul:list-disc prose-ul:pl-6 transition-colors"
         onInput={() => {
+          // Let parent know + optionally maintain our own stack if you want
           bubble({ pushHistory: false, notifyParent: true });
           onTyping?.();
         }}

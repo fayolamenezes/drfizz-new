@@ -7,6 +7,7 @@ import React, {
   useState,
   useCallback,
 } from "react";
+import { Menu, SquareStack } from "lucide-react";
 import CEToolbar from "./CE.Toolbar";
 import CECanvas from "./CE.Canvas";
 import CEResearchPanel from "./CE.ResearchPanel";
@@ -97,6 +98,22 @@ export default function CEContentArea({
   lsiKeywords,
 }) {
   const editorRef = useRef(null);
+
+  const Tab = ({ id, children }) => {
+    const is = activeTab === id;
+    return (
+      <button
+        onClick={() => onTabChange?.(id)}
+        className={`h-[34px] px-3 text-[13px] border-b-2 -mb-px transition-colors ${
+          is
+            ? "border-black text-black font-medium"
+            : "border-transparent text-gray-500 hover:text-black"
+        }`}
+      >
+        {children}
+      </button>
+    );
+  };
 
   /** ---------------------------------------------
    *  LOCAL CONTENT STATE (prevents JSON snapbacks)
@@ -338,7 +355,11 @@ export default function CEContentArea({
         baselineViewportHeightRef.current = currentHeight;
       }
 
-      const baseline = baselineViewportHeightRef.current;
+      const baseline =
+        baselineViewportHeightRef.current != null
+          ? baselineViewportHeightRef.current
+          : currentHeight;
+
       const keyboardIsOpen = baseline - currentHeight > KEYBOARD_THRESHOLD_PX;
       setKeyboardVisible(keyboardIsOpen);
     };
@@ -387,14 +408,29 @@ export default function CEContentArea({
     >
       {/* LEFT AREA */}
       <div className="min-w-0 bg-white lg:border-r border-[var(--border)]">
-        {/* Desktop toolbar only */}
+        {/* Tabs + 'Edited' row (desktop only) */}
+        <div className="hidden lg:flex items-center justify-between px-2 pt-[3px]">
+          <div className="flex items-center gap-1">
+            <button
+              onMouseDown={(e) => e.preventDefault()}
+              className="h-7 w-7 grid place-items-center rounded hover:bg-gray-100 text-gray-700 transition-colors"
+              title="Menu"
+            >
+              <Menu size={15} />
+            </button>
+            <Tab id="content">Content</Tab>
+            <Tab id="summary">Article Summary</Tab>
+            <Tab id="final">Final Content</Tab>
+          </div>
+          <div className="flex items-center gap-1.5 text-[11px] text-gray-500 pr-2">
+            <span>Edited {lastEdited}</span>
+            <SquareStack size={13} className="opacity-70" />
+          </div>
+        </div>
+
+        {/* Desktop formatting toolbar only (second row) */}
         <div className="hidden lg:block">
-          <CEToolbar
-            activeTab={activeTab}
-            onTabChange={onTabChange}
-            lastEdited={lastEdited}
-            editorRef={editorRef}
-          />
+          <CEToolbar editorRef={editorRef} />
         </div>
 
         <div className="bg-white">
@@ -439,14 +475,7 @@ export default function CEContentArea({
           transition-all duration-200
         `}
       >
-        <CEToolbar
-          mode="mobile"
-          editorRef={editorRef}
-          /* these props are ignored in mobile mode */
-          activeTab={activeTab}
-          onTabChange={onTabChange}
-          lastEdited={lastEdited}
-        />
+        <CEToolbar mode="mobile" editorRef={editorRef} />
         {/* spacer to ensure canvas content isn’t covered when toolbar is visible */}
         <div className={showMobileToolbar ? "h-14" : "h-0"} />
       </div>

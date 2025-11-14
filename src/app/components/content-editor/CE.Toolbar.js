@@ -2,16 +2,26 @@
 
 import React, { useRef, useState, useEffect, useCallback } from "react";
 import {
-  Menu, Undo2, Redo2, Bold, Italic, Underline, Strikethrough, Code2,
-  Link as LinkIcon, AlignLeft, AlignCenter, AlignRight, List,
-  MessageSquare, SquareStack, ChevronDown, Dot, Paintbrush,
+  Undo2,
+  Redo2,
+  Bold,
+  Italic,
+  Underline,
+  Strikethrough,
+  Code2,
+  Link as LinkIcon,
+  AlignLeft,
+  AlignCenter,
+  AlignRight,
+  List,
+  MessageSquare,
+  ChevronDown,
+  Dot,
+  Paintbrush,
 } from "lucide-react";
 
 export default function CEToolbar({
-  mode = "desktop",               // "desktop" | "mobile"
-  activeTab,
-  onTabChange,
-  lastEdited,
+  mode = "desktop", // "desktop" | "mobile"
   editorRef,
 }) {
   const isMobile = mode === "mobile";
@@ -37,6 +47,20 @@ export default function CEToolbar({
     [editorRef]
   );
 
+  // Make sure the editor has focus before running commands that depend on the native undo stack
+  const ensureEditorFocus = useCallback(() => {
+    const inst = editorRef?.current;
+    if (!inst) return;
+
+    // If your CECanvas exposes its own focus method, use it
+    if (typeof inst.focusEditor === "function") {
+      inst.focusEditor();
+    } else if (inst.root && typeof inst.root.focus === "function") {
+      // or focus the underlying contentEditable/root if you expose it
+      inst.root.focus();
+    }
+  }, [editorRef]);
+
   // Close palettes on outside click
   useEffect(() => {
     function onDocClick(e) {
@@ -56,7 +80,9 @@ export default function CEToolbar({
       const el = ref.current;
       if (!el) return () => {};
       let lastVal = null;
-      const onInput = (e) => { lastVal = e.target.value; };
+      const onInput = (e) => {
+        lastVal = e.target.value;
+      };
       const onChange = (e) => {
         exec("saveSelection");
         exec(command, lastVal || e.target.value);
@@ -75,45 +101,59 @@ export default function CEToolbar({
   );
 
   useEffect(() => wireNativeColor(colorInputRef, "foreColor"), [wireNativeColor]);
-  useEffect(() => wireNativeColor(highlightInputRef, "hiliteColor"), [wireNativeColor]);
-
-  // UI helpers
-  const Tab = ({ id, children }) => {
-    const is = activeTab === id;
-    return (
-      <button
-        onClick={() => onTabChange?.(id)}
-        className={`h-[34px] px-3 text-[13px] border-b-2 -mb-px transition-colors ${
-          is
-            ? "border-black text-black font-medium"
-            : "border-transparent text-gray-500 hover:text-black"
-        }`}
-      >
-        {children}
-      </button>
-    );
-  };
+  useEffect(
+    () => wireNativeColor(highlightInputRef, "hiliteColor"),
+    [wireNativeColor]
+  );
 
   const IconBtn = ({ title, children, onClick }) => (
     <button
       title={title}
       onMouseDown={noFocus}
       onClick={onClick}
-      className={`${isMobile ? "h-10 w-10" : "h-7 w-7"} grid place-items-center rounded hover:bg-gray-100 text-gray-700 transition-colors shrink-0`}
+      className={`${
+        isMobile ? "h-10 w-10" : "h-7 w-7"
+      } grid place-items-center rounded hover:bg-gray-100 text-gray-700 transition-colors shrink-0`}
     >
       {children}
     </button>
   );
 
   const TEXT_COLORS = [
-    "#000000","#434343","#666666","#999999","#B7B7B7","#CCCCCC","#EFEFEF","#FFFFFF",
-    "#FF0000","#FF6D00","#FFAB00","#FFD600","#00C853","#00B8D4","#2979FF","#6200EA",
+    "#000000",
+    "#434343",
+    "#666666",
+    "#999999",
+    "#B7B7B7",
+    "#CCCCCC",
+    "#EFEFEF",
+    "#FFFFFF",
+    "#FF0000",
+    "#FF6D00",
+    "#FFAB00",
+    "#FFD600",
+    "#00C853",
+    "#00B8D4",
+    "#2979FF",
+    "#6200EA",
   ];
   const HILITE_COLORS = [
-    "#FFF59D","#FFF176","#FFEE58","#FFEB3B",
-    "#FFD54F","#FFB74D","#FF8A65","#FF8A80",
-    "#A5D6A7","#80CBC4","#81D4FA","#90CAF9",
-    "#CE93D8","#F48FB1","#E0E0E0","#F5F5F5",
+    "#FFF59D",
+    "#FFF176",
+    "#FFEE58",
+    "#FFEB3B",
+    "#FFD54F",
+    "#FFB74D",
+    "#FF8A65",
+    "#FF8A80",
+    "#A5D6A7",
+    "#80CBC4",
+    "#81D4FA",
+    "#90CAF9",
+    "#CE93D8",
+    "#F48FB1",
+    "#E0E0E0",
+    "#F5F5F5",
     "#8B0000",
   ];
 
@@ -175,49 +215,45 @@ export default function CEToolbar({
     <div
       className={[
         "w-full bg-white transition-colors",
-        isMobile
-          ? "border-t border-gray-200 shadow-lg rounded-none"
-          : "border border-[var(--border)] border-b-0 border-r-0 rounded-tl-[12px]"
+        isMobile ? "border-t border-gray-200 shadow-lg rounded-none" : "",
       ].join(" ")}
     >
-      {/* Tabs Row (desktop only) */}
-      {!isMobile && (
-        <div className="flex items-center justify-between px-2 pt-[3px]">
-          <div className="flex items-center gap-1">
-            <button
-              onMouseDown={noFocus}
-              className="h-7 w-7 grid place-items-center rounded hover:bg-gray-100 text-gray-700 transition-colors"
-              title="Menu"
-            >
-              <Menu size={15} />
-            </button>
-            <Tab id="content">Content</Tab>
-            <Tab id="summary">Article Summary</Tab>
-            <Tab id="final">Final Content</Tab>
-          </div>
-          <div className="flex items-center gap-1.5 text-[11px] text-gray-500 pr-2">
-            <span>Edited {lastEdited}</span>
-            <SquareStack size={13} className="opacity-70" />
-          </div>
-        </div>
-      )}
-
       {/* Actions Row (mobile: horizontally scrollable) */}
       <div
         className={[
           "flex items-center gap-[2px] px-2 border-t border-[var(--border)] bg-white relative",
-          isMobile ? "py-2 overflow-x-auto whitespace-nowrap touch-pan-x" : "py-[3px]"
+          isMobile
+            ? "py-2 overflow-x-auto whitespace-nowrap touch-pan-x"
+            : "py-[3px]",
         ].join(" ")}
       >
-        <IconBtn title="Undo" onClick={() => exec("undo")}><Undo2 size={isMobile ? 18 : 14} /></IconBtn>
-        <IconBtn title="Redo" onClick={() => exec("redo")}><Redo2 size={isMobile ? 18 : 14} /></IconBtn>
+        <IconBtn
+          title="Undo"
+          onClick={() => {
+            ensureEditorFocus();
+            exec("undo");
+          }}
+        >
+          <Undo2 size={isMobile ? 18 : 14} />
+        </IconBtn>
+        <IconBtn
+          title="Redo"
+          onClick={() => {
+            ensureEditorFocus();
+            exec("redo");
+          }}
+        >
+          <Redo2 size={isMobile ? 18 : 14} />
+        </IconBtn>
 
         <div className="w-px h-5 bg-gray-200 mx-0.5 shrink-0" />
 
         {/* Heading */}
         <div className="relative inline-block shrink-0">
           <button
-            className={`px-2 ${isMobile ? "h-10" : "h-7"} rounded border border-[var(--border)] text-[13px] hover:bg-gray-100 inline-flex items-center gap-1 transition-colors`}
+            className={`px-2 ${
+              isMobile ? "h-10" : "h-7"
+            } rounded border border-[var(--border)] text-[13px] hover:bg-gray-100 inline-flex items-center gap-1 transition-colors`}
             onMouseDown={noFocus}
             onClick={() => {
               exec("saveSelection");
@@ -257,25 +293,49 @@ export default function CEToolbar({
         <div className="w-px h-5 bg-gray-200 mx-0.5 shrink-0" />
 
         {/* Inline formatting */}
-        <IconBtn title="Bold" onClick={() => exec("bold")}><Bold size={isMobile ? 18 : 14} /></IconBtn>
-        <IconBtn title="Italic" onClick={() => exec("italic")}><Italic size={isMobile ? 18 : 14} /></IconBtn>
-        <IconBtn title="Underline" onClick={() => exec("underline")}><Underline size={isMobile ? 18 : 14} /></IconBtn>
-        <IconBtn title="Strikethrough" onClick={() => exec("strikeThrough")}><Strikethrough size={isMobile ? 18 : 14} /></IconBtn>
-        <IconBtn title="Inline code" onClick={() => exec("code")}><Code2 size={isMobile ? 18 : 14} /></IconBtn>
+        <IconBtn title="Bold" onClick={() => exec("bold")}>
+          <Bold size={isMobile ? 18 : 14} />
+        </IconBtn>
+        <IconBtn title="Italic" onClick={() => exec("italic")}>
+          <Italic size={isMobile ? 18 : 14} />
+        </IconBtn>
+        <IconBtn title="Underline" onClick={() => exec("underline")}>
+          <Underline size={isMobile ? 18 : 14} />
+        </IconBtn>
+        <IconBtn title="Strikethrough" onClick={() => exec("strikeThrough")}>
+          <Strikethrough size={isMobile ? 18 : 14} />
+        </IconBtn>
+        <IconBtn title="Inline code" onClick={() => exec("code")}>
+          <Code2 size={isMobile ? 18 : 14} />
+        </IconBtn>
 
         {/* Link */}
-        <IconBtn title="Insert Link" onClick={() => {
-          const url = prompt("Enter URL");
-          if (url) exec("createLink", url);
-        }}>
+        <IconBtn
+          title="Insert Link"
+          onClick={() => {
+            const url = prompt("Enter URL");
+            if (url) exec("createLink", url);
+          }}
+        >
           <LinkIcon size={isMobile ? 18 : 14} />
         </IconBtn>
 
         {/* Alignment + List */}
-        <IconBtn title="Align left" onClick={() => exec("justifyLeft")}><AlignLeft size={isMobile ? 18 : 14} /></IconBtn>
-        <IconBtn title="Align center" onClick={() => exec("justifyCenter")}><AlignCenter size={isMobile ? 18 : 14} /></IconBtn>
-        <IconBtn title="Align right" onClick={() => exec("justifyRight")}><AlignRight size={isMobile ? 18 : 14} /></IconBtn>
-        <IconBtn title="Bulleted List" onClick={() => exec("insertUnorderedList")}><List size={isMobile ? 18 : 14} /></IconBtn>
+        <IconBtn title="Align left" onClick={() => exec("justifyLeft")}>
+          <AlignLeft size={isMobile ? 18 : 14} />
+        </IconBtn>
+        <IconBtn title="Align center" onClick={() => exec("justifyCenter")}>
+          <AlignCenter size={isMobile ? 18 : 14} />
+        </IconBtn>
+        <IconBtn title="Align right" onClick={() => exec("justifyRight")}>
+          <AlignRight size={isMobile ? 18 : 14} />
+        </IconBtn>
+        <IconBtn
+          title="Bulleted List"
+          onClick={() => exec("insertUnorderedList")}
+        >
+          <List size={isMobile ? 18 : 14} />
+        </IconBtn>
 
         <div className="w-px h-5 bg-gray-200 mx-0.5 shrink-0" />
 
@@ -283,7 +343,11 @@ export default function CEToolbar({
         <div className="relative inline-block shrink-0">
           <IconBtn
             title="Text color"
-            onClick={() => { exec("saveSelection"); setTextPaletteOpen((s) => !s); setHilitePaletteOpen(false); }}
+            onClick={() => {
+              exec("saveSelection");
+              setTextPaletteOpen((s) => !s);
+              setHilitePaletteOpen(false);
+            }}
           >
             <Dot size={isMobile ? 18 : 14} />
           </IconBtn>
@@ -291,7 +355,10 @@ export default function CEToolbar({
             <Palette
               title="Text color"
               colors={TEXT_COLORS}
-              onPick={(c) => { exec("foreColor", c); setTextPaletteOpen(false); }}
+              onPick={(c) => {
+                exec("foreColor", c);
+                setTextPaletteOpen(false);
+              }}
               onCustom={() => openNativeColor(colorInputRef)}
             />
           )}
@@ -302,7 +369,11 @@ export default function CEToolbar({
         <div className="relative inline-block shrink-0">
           <IconBtn
             title="Highlight color"
-            onClick={() => { exec("saveSelection"); setHilitePaletteOpen((s) => !s); setTextPaletteOpen(false); }}
+            onClick={() => {
+              exec("saveSelection");
+              setHilitePaletteOpen((s) => !s);
+              setTextPaletteOpen(false);
+            }}
           >
             <Paintbrush size={isMobile ? 18 : 14} />
           </IconBtn>
@@ -310,7 +381,10 @@ export default function CEToolbar({
             <Palette
               title="Highlight color"
               colors={HILITE_COLORS}
-              onPick={(c) => { exec("hiliteColor", c); setHilitePaletteOpen(false); }}
+              onPick={(c) => {
+                exec("hiliteColor", c);
+                setHilitePaletteOpen(false);
+              }}
               onCustom={() => openNativeColor(highlightInputRef)}
             />
           )}
@@ -322,7 +396,9 @@ export default function CEToolbar({
         {/* Insert */}
         <div className="relative inline-block shrink-0">
           <button
-            className={`px-2 ${isMobile ? "h-10" : "h-7"} rounded border border-[var(--border)] text-[13px] hover:bg-gray-100 inline-flex items-center gap-1 transition-colors`}
+            className={`px-2 ${
+              isMobile ? "h-10" : "h-7"
+            } rounded border border-[var(--border)] text-[13px] hover:bg-gray-100 inline-flex items-center gap-1 transition-colors`}
             onMouseDown={noFocus}
             onClick={() => setInsOpen((s) => !s)}
           >
@@ -333,7 +409,10 @@ export default function CEToolbar({
               <button
                 className="w-full text-left px-3 py-1.5 text-[13px] hover:bg-gray-100"
                 onMouseDown={noFocus}
-                onClick={() => { exec("insertHorizontalRule"); setInsOpen(false); }}
+                onClick={() => {
+                  exec("insertHorizontalRule");
+                  setInsOpen(false);
+                }}
               >
                 Horizontal Rule
               </button>
@@ -341,7 +420,9 @@ export default function CEToolbar({
                 className="w-full text-left px-3 py-1.5 text-[13px] hover:bg-gray-100"
                 onMouseDown={noFocus}
                 onClick={() => {
-                  const url = prompt("Image URL"); if (url) exec("insertImage", url); setInsOpen(false);
+                  const url = prompt("Image URL");
+                  if (url) exec("insertImage", url);
+                  setInsOpen(false);
                 }}
               >
                 Image (URL)
@@ -349,7 +430,10 @@ export default function CEToolbar({
               <button
                 className="w-full text-left px-3 py-1.5 text-[13px] hover:bg-gray-100"
                 onMouseDown={noFocus}
-                onClick={() => { exec("formatBlock", "blockquote"); setInsOpen(false); }}
+                onClick={() => {
+                  exec("formatBlock", "blockquote");
+                  setInsOpen(false);
+                }}
               >
                 Quote
               </button>
@@ -363,9 +447,12 @@ export default function CEToolbar({
             title="Text size"
             onMouseDown={noFocus}
             onClick={() => setSizeOpen((s) => !s)}
-            className={`ml-1 ${isMobile ? "h-10" : "h-7"} px-1.5 rounded hover:bg-gray-100 text-gray-700 text-[12px] font-medium inline-flex items-center gap-1 transition-colors`}
+            className={`ml-1 ${
+              isMobile ? "h-10" : "h-7"
+            } px-1.5 rounded hover:bg-gray-100 text-gray-700 text-[12px] font-medium inline-flex items-center gap-1 transition-colors`}
           >
-            T<span className="text-[10px] align-super">x</span> <ChevronDown size={12} />
+            T<span className="text-[10px] align-super">x</span>{" "}
+            <ChevronDown size={12} />
           </button>
           {sizeOpen && (
             <div className="absolute z-40 mt-1 min-w-[130px] rounded-md border border-[var(--border)] bg-white shadow-sm p-1">
@@ -374,7 +461,10 @@ export default function CEToolbar({
                   key={px}
                   className="w-full text-left px-3 py-1.5 text-[13px] hover:bg-gray-100"
                   onMouseDown={noFocus}
-                  onClick={() => { exec("fontSizePx", px); setSizeOpen(false); }}
+                  onClick={() => {
+                    exec("fontSizePx", px);
+                    setSizeOpen(false);
+                  }}
                 >
                   {px}px
                 </button>
@@ -405,7 +495,9 @@ export default function CEToolbar({
           )}
         </div>
 
-        <IconBtn title="Comment"><MessageSquare size={isMobile ? 18 : 14} /></IconBtn>
+        <IconBtn title="Comment">
+          <MessageSquare size={isMobile ? 18 : 14} />
+        </IconBtn>
       </div>
     </div>
   );

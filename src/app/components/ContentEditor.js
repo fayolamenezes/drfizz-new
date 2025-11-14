@@ -136,7 +136,10 @@ export default function ContentEditor({ data, onBackToDashboard }) {
   );
 
   const WORD_TARGET_FROM_DATA =
-    data?.metrics?.wordTarget ?? data?.wordTarget ?? pageConfig?.wordTarget ?? 1480;
+    data?.metrics?.wordTarget ??
+    data?.wordTarget ??
+    pageConfig?.wordTarget ??
+    1480;
 
   const [metrics, setMetrics] = useState({
     plagiarism: 0,
@@ -153,7 +156,7 @@ export default function ContentEditor({ data, onBackToDashboard }) {
   // Track previous incoming data.title to avoid clobbering user edits
   const prevDataTitleRef = useRef(data?.title);
 
-  // Mount: handle ?new/#new once, normalize to #editor, restore saved state
+  // Mount: handle ?new/#new once, restore saved state (no more hash forcing)
   useEffect(() => {
     try {
       const url = new URL(window.location.href);
@@ -185,9 +188,8 @@ export default function ContentEditor({ data, onBackToDashboard }) {
         setEditorSessionId((n) => n + 1);
         broadcastResearchReset("");
 
-        // Clean URL so refresh doesn’t repeat NEW
+        // Clean URL so refresh doesn’t repeat NEW (no hash change)
         url.searchParams.delete("new");
-        url.hash = "#editor";
         window.history.replaceState(null, "", url.toString());
       } else {
         // Normal restore from localStorage (do NOT read title/content/query to avoid deps)
@@ -200,12 +202,11 @@ export default function ContentEditor({ data, onBackToDashboard }) {
             if (typeof saved.query === "string") setQuery(saved.query);
           } catch {}
         }
-        // Normalize hash to #editor (no flicker)
+
+        // Just clean ?new if present; do not force any hash
         try {
-          if (url.hash !== "#editor") {
-            url.hash = "#editor";
-            window.history.replaceState(null, "", url.toString());
-          }
+          url.searchParams.delete("new");
+          window.history.replaceState(null, "", url.toString());
         } catch {}
       }
     } catch {}
@@ -262,11 +263,10 @@ export default function ContentEditor({ data, onBackToDashboard }) {
       setEditorSessionId((n) => n + 1);
       broadcastResearchReset("");
 
-      // Normalize URL after programmatic new
+      // Clean URL after programmatic new (no hash)
       try {
         const url = new URL(window.location.href);
         url.searchParams.delete("new");
-        url.hash = "#editor";
         window.history.replaceState(null, "", url.toString());
       } catch {}
     },
@@ -321,8 +321,14 @@ export default function ContentEditor({ data, onBackToDashboard }) {
     if (nextWordTarget !== metrics.wordTarget) {
       setMetrics((m) => ({ ...m, wordTarget: nextWordTarget }));
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data, pageConfig, query, lastEdited, metrics.wordTarget]);
+  }, [
+    data,
+    pageConfig,
+    query,
+    lastEdited,
+    metrics.wordTarget,
+    content, // ✅ added so eslint is happy and logic is correct
+  ]);
 
   /* ===========================
      MOBILE research drawer state

@@ -308,8 +308,7 @@ const CECanvas = forwardRef(function CECanvas(
       undoStack.current.push(htmlFromProp);
       redoStack.current = [];
     }
-    setCaretToEnd(el);
-    el.lastElementChild?.scrollIntoView({ block: "end" });
+
     requestAnimationFrame(runHighlights);
   }, [content, runHighlights, setCaretToEnd]);
 

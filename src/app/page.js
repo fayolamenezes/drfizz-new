@@ -41,7 +41,11 @@ function MobileStepsThreeTwo({ currentStep }) {
   const DottedConnector = ({ size = 3, count = 5, color = "bg-gray-300/90" }) => (
     <div className="flex items-center justify-center shrink-0 gap-1.5" aria-hidden>
       {Array.from({ length: count }).map((_, i) => (
-        <span key={i} className={`block rounded-full ${color}`} style={{ width: size, height: size }} />
+        <span
+          key={i}
+          className={`block rounded-full ${color}`}
+          style={{ width: size, height: size }}
+        />
       ))}
     </div>
   );
@@ -92,6 +96,9 @@ export default function Home() {
   const [catalog, setCatalog] = useState([]);
 
   const infoRef = useRef(null);
+
+  // ⭐ NEW: scroll container ref for the main host panel
+  const scrollContainerRef = useRef(null);
 
   // --- NEW: on first load, if URL hash is #editor, land on Content Editor
   useEffect(() => {
@@ -165,6 +172,12 @@ export default function Home() {
       // when leaving editor, clear the hash (or set whatever you prefer)
       history.replaceState(null, "", "#");
     }
+  }, [currentStep]);
+
+  // ⭐ NEW: always reset scroll position when step changes
+  useEffect(() => {
+    if (!scrollContainerRef.current) return;
+    scrollContainerRef.current.scrollTop = 0;
   }, [currentStep]);
 
   // --- NEW: listen for "wizard:navigate" from Step5Slide2 "Edit …" buttons
@@ -336,46 +349,57 @@ export default function Home() {
       <ThemeToggle />
 
       {/* FLEX COLUMN ROOT */}
-      <main className={`flex-1 min-w-0 flex flex-col min-h-0 transition-all duration-300 ${mainOffsetClass}`}>
+      <main
+        className={`flex-1 min-w-0 flex flex-col min-h-0 transition-all duration-300 ${mainOffsetClass}`}
+      >
         {/* Steps header (hidden on 5b & dashboard & editor) */}
-        {currentStep !== "5b" && currentStep !== "dashboard" && currentStep !== "contentEditor" && (
-          <>
-            {/* Mobile: 3 / 2 steps – centered, dotted connectors, lowered */}
-            <MobileStepsThreeTwo currentStep={currentStep} />
+        {currentStep !== "5b" &&
+          currentStep !== "dashboard" &&
+          currentStep !== "contentEditor" && (
+            <>
+              {/* Mobile: 3 / 2 steps – centered, dotted connectors, lowered */}
+              <MobileStepsThreeTwo currentStep={currentStep} />
 
-            {/* Tablet/Desktop: original full Steps bar */}
-            <div className="hidden sm:flex w-full justify-center">
-              <div
-                className="
-                  max-w-[100%] w-full rounded-tr-2xl rounded-tl-2xl
-                  px-5 md:px-6 py-5 md:py-6 bg-[var(--bg-panel)]
-                  text-sm md:text-base
-                  overflow-hidden
-                "
-              >
-                <div className="flex justify-center">
-                  <Steps currentStep={currentStep === "5b" ? 5 : currentStep} />
+              {/* Tablet/Desktop: original full Steps bar */}
+              <div className="hidden sm:flex w-full justify-center">
+                <div
+                  className="
+                    max-w-[100%] w-full rounded-tr-2xl rounded-tl-2xl
+                    px-5 md:px-6 py-5 md:py-6 bg-[var(--bg-panel)]
+                    text-sm md:text-base
+                    overflow-hidden
+                  "
+                >
+                  <div className="flex justify-center">
+                    <Steps currentStep={currentStep === "5b" ? 5 : currentStep} />
+                  </div>
                 </div>
               </div>
-            </div>
-          </>
-        )}
+            </>
+          )}
 
         {/* HOST PANEL — the only scroll container */}
-        <div className="flex-1 min-w-0 h-full flex justify-center items-start no-scrollbar">
+        <div className="flex-1 min-w-0 h-full flex justifyцентр items-start no-scrollbar">
           <style jsx global>{`
             .no-scrollbar {
               -ms-overflow-style: none; /* IE & Edge */
-              scrollbar-width: none;    /* Firefox */
+              scrollbar-width: none; /* Firefox */
             }
             .no-scrollbar::-webkit-scrollbar {
-              display: none;            /* Chrome, Safari, Opera */
+              display: none; /* Chrome, Safari, Opera */
             }
           `}</style>
 
           <div
+            ref={scrollContainerRef}
             className={`relative flex-1 min-w-0 h-full bg-[var(--bg-panel)] shadow-sm 
-              ${currentStep === "dashboard" || currentStep === "contentEditor" || currentStep === "5b" ? "rounded-2xl" : "rounded-bl-2xl rounded-br-2xl"} 
+              ${
+                currentStep === "dashboard" ||
+                currentStep === "contentEditor" ||
+                currentStep === "5b"
+                  ? "rounded-2xl"
+                  : "rounded-bl-2xl rounded-br-2xl"
+              } 
               overflow-y-scroll overscroll-contain no-scrollbar`}
           >
             {renderCurrentStep()}

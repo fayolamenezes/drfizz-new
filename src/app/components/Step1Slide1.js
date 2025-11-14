@@ -12,11 +12,8 @@ export default function Step1Slide1({ onNext, onWebsiteSubmit }) {
   const [isShaking, setIsShaking] = useState(true);
   const [showInput, setShowInput] = useState(true);
 
-  const panelRef = useRef(null);
   const scrollRef = useRef(null);
-  const bottomBarRef = useRef(null);
   const tailRef = useRef(null);
-  const [panelHeight, setPanelHeight] = useState(null);
 
   // ✅ Website validation
   const isValidWebsite = (url) => {
@@ -65,32 +62,6 @@ export default function Step1Slide1({ onNext, onWebsiteSubmit }) {
         return 0;
     }
   };
-
-  /* ---------------- Fixed height calculation ---------------- */
-  const recomputePanelHeight = () => {
-    if (!panelRef.current) return;
-    const vpH = window.innerHeight;
-    const barH = bottomBarRef.current?.getBoundingClientRect().height ?? 0;
-    const topOffset = panelRef.current.getBoundingClientRect().top;
-    const extraGutters = 0; // remove top/bottom gutters entirely
-    const h = Math.max(320, vpH - barH - topOffset - extraGutters);
-    setPanelHeight(h);
-  };
-
-  useEffect(() => {
-    recomputePanelHeight();
-    const ro = new ResizeObserver(recomputePanelHeight);
-    if (panelRef.current) ro.observe(panelRef.current);
-    window.addEventListener("resize", recomputePanelHeight);
-    return () => {
-      ro.disconnect();
-      window.removeEventListener("resize", recomputePanelHeight);
-    };
-  }, []);
-
-  useEffect(() => {
-    recomputePanelHeight();
-  }, [showInput, currentState, messages.length]);
 
   /* ---------------- Auto-scroll ---------------- */
   useEffect(() => {
@@ -141,7 +112,7 @@ export default function Step1Slide1({ onNext, onWebsiteSubmit }) {
 
   return (
     <div className="w-full h-full flex flex-col bg-transparent overflow-x-hidden">
-      {/* Hide scrollbar globally */}
+      {/* Hide scrollbar globally for the inner scroll area */}
       <style jsx global>{`
         .no-scrollbar {
           -ms-overflow-style: none;
@@ -153,13 +124,9 @@ export default function Step1Slide1({ onNext, onWebsiteSubmit }) {
       `}</style>
 
       {/* ---------------- Content Section ---------------- */}
-      {/* keep left/right (px-*) only; remove top/bottom */}
-      <div className="px-3 sm:px-4 md:px-6">
-        <div
-          ref={panelRef}
-          className="box-border mx-auto w-full max-w-screen-sm md:max-w-[820px] rounded-2xl bg-transparent px-3 sm:px-4 md:px-6 py-0"
-          style={{ height: panelHeight ? `${panelHeight}px` : "auto" }}
-        >
+      {/* flex-1 so this area fills all space above the bottom bar */}
+      <div className="px-3 sm:px-4 md:px-6 flex-1 flex">
+        <div className="box-border mx-auto w-full max-w-screen-sm md:max-w-[820px] rounded-2xl bg-transparent px-3 sm:px-4 md:px-6 py-0 flex-1 flex">
           <div
             ref={scrollRef}
             className="h-full w-full overflow-y-auto overflow-x-hidden no-scrollbar"
@@ -261,7 +228,8 @@ export default function Step1Slide1({ onNext, onWebsiteSubmit }) {
       </div>
 
       {/* ---------------- Bottom Bar ---------------- */}
-      <div ref={bottomBarRef} className="flex-shrink-0 bg-transparent">
+      {/* flex-shrink-0 so it stays anchored to the bottom, no JS height needed */}
+      <div className="flex-shrink-0 bg-transparent">
         <div className="border-t border-gray-200" />
         <div className="mx-auto w-full max-w-screen-sm md:max-w-[820px] px-3 sm:px-4 md:px-6">
           {showInput ? (

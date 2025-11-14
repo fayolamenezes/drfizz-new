@@ -48,7 +48,8 @@ export default function CENavbar({
   const commitTitle = () => {
     const el = nameRef.current;
     if (!el) return;
-    const next = (el.innerText || "").replace(/\s+/g, " ").trim() || "Untitled";
+    const next =
+      (el.innerText || "").replace(/\s+/g, " ").trim() || "Untitled";
     setEditing(false);
     if (next !== title) onTitleChange?.(next);
   };
@@ -118,7 +119,9 @@ export default function CENavbar({
                 onKeyDown={handleKeyDown}
                 className={[
                   "inline-block max-w-[72vw] truncate align-baseline px-0.5",
-                  editing ? "outline-none ring-2 ring-orange-300 bg-white" : "outline-none",
+                  editing
+                    ? "outline-none ring-2 ring-orange-300 bg-white"
+                    : "outline-none",
                 ].join(" ")}
                 style={{ cursor: editing ? "text" : "default" }}
                 title={title || "Untitled"}
@@ -179,7 +182,9 @@ export default function CENavbar({
                 onKeyDown={handleKeyDown}
                 className={[
                   "inline-block whitespace-normal break-words px-1",
-                  editing ? "outline-none ring-2 ring-orange-300 bg-white" : "outline-none",
+                  editing
+                    ? "outline-none ring-2 ring-orange-300 bg-white"
+                    : "outline-none",
                 ].join(" ")}
                 style={{ cursor: editing ? "text" : "default" }}
               >
@@ -209,7 +214,7 @@ export default function CENavbar({
           </div>
 
           {/* TOP-RIGHT: New document + Chat with AI */}
-          <div className="col-start-3 row-start-1 flex items-center gap-3">
+          <div className="col-start-3 row-start-1 flex items-center gap-3 mr-6 xl:mr-8">
             <button
               onClick={handleNewDoc}
               className="inline-flex items-center gap-2 rounded-full px-5 py-2 text-[13px] font-semibold text-[var(--accent)] border border-[var(--accent)] hover:bg-[var(--accent)]/10 transition"

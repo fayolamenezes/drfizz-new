@@ -92,15 +92,15 @@ export default function Home() {
   // holds payload for editor (null => open empty document)
   const [editorData, setEditorData] = useState(null);
 
-  // NEW: catalog from public/data/contenteditor.json
+  // catalog from public/data/contenteditor.json
   const [catalog, setCatalog] = useState([]);
 
   const infoRef = useRef(null);
 
-  // ⭐ NEW: scroll container ref for the main host panel
+  // scroll container ref for the main host panel
   const scrollContainerRef = useRef(null);
 
-  // --- NEW: on first load, if URL hash is #editor, land on Content Editor
+  // on first load, if URL hash is #editor, land on Content Editor
   useEffect(() => {
     if (typeof window === "undefined") return;
     if (window.location.hash === "#editor") {
@@ -108,7 +108,7 @@ export default function Home() {
     }
   }, []);
 
-  // --- NEW: Load Content Editor catalog once
+  // Load Content Editor catalog once
   useEffect(() => {
     fetch("/data/contenteditor.json")
       .then((r) => r.json())
@@ -135,24 +135,39 @@ export default function Home() {
   // Listen for custom events to switch between Dashboard and Content Editor
   useEffect(() => {
     const toEditor = (e) => {
-      // e.detail may be { title } or { domain }, or null (for new doc)
+      // e.detail may be { title, content, domain, kind } or null (for new doc)
       const p = e?.detail ?? null;
       if (!p) {
         setEditorData(null);
         setCurrentStep("contentEditor");
         return;
       }
+
+      // merge: catalog (contenteditor.json) for SEO config, payload (multi-content) for title+content
       const match =
-        catalog.find((x) => x.title === p.title) ||
         catalog.find((x) => x.domain === p.domain) ||
+        catalog.find((x) => x.title === p.title) ||
         null;
-      setEditorData(match ?? p);
+
+      const merged = match
+        ? {
+            ...match,
+            ...p,
+            // ensure title + content from payload win
+            title: p.title ?? match.title,
+            content: p.content ?? match.content,
+          }
+        : p;
+
+      setEditorData(merged);
       setCurrentStep("contentEditor");
     };
+
     const toDashboard = () => {
       setEditorData(null);
       setCurrentStep("dashboard");
     };
+
     window.addEventListener("content-editor:open", toEditor);
     window.addEventListener("content-editor:back", toDashboard);
     return () => {
@@ -161,7 +176,7 @@ export default function Home() {
     };
   }, [catalog]);
 
-  // --- NEW: keep the URL hash in sync ONLY for Content Editor
+  // keep the URL hash in sync ONLY for Content Editor
   useEffect(() => {
     if (typeof window === "undefined") return;
     if (currentStep === "contentEditor") {
@@ -169,18 +184,18 @@ export default function Home() {
         history.replaceState(null, "", "#editor");
       }
     } else if (window.location.hash === "#editor") {
-      // when leaving editor, clear the hash (or set whatever you prefer)
+      // when leaving editor, clear the hash
       history.replaceState(null, "", "#");
     }
   }, [currentStep]);
 
-  // ⭐ NEW: always reset scroll position when step changes
+  // always reset scroll position when step changes
   useEffect(() => {
     if (!scrollContainerRef.current) return;
     scrollContainerRef.current.scrollTop = 0;
   }, [currentStep]);
 
-  // --- NEW: listen for "wizard:navigate" from Step5Slide2 "Edit …" buttons
+  // listen for "wizard:navigate" from Step5Slide2 "Edit …" buttons
   useEffect(() => {
     const onWizardNavigate = (e) => {
       const step = e?.detail?.step ?? e?.step ?? null; // supports CustomEvent or plain object
@@ -224,7 +239,10 @@ export default function Home() {
   }, []);
 
   const handleBusinessDataSubmit = useCallback((business) => setBusinessData(business), []);
-  const handleLanguageLocationSubmit = useCallback((data) => setLanguageLocationData(data), []);
+  const handleLanguageLocationSubmit = useCallback(
+    (data) => setLanguageLocationData(data),
+    []
+  );
   const handleKeywordSubmit = useCallback((data) => setSelectedKeywords(data.keywords), []);
   const handleCompetitorSubmit = useCallback(
     (data) =>
@@ -284,18 +302,29 @@ export default function Home() {
       case "dashboard":
         return (
           <Dashboard
-            // Start from a card: pass payload to open editor with content
+            // Start from a card: pass payload to open editor with content from multi-content.json
             onOpenContentEditor={(payload) => {
               if (!payload) {
                 setEditorData(null);
                 setCurrentStep("contentEditor");
                 return;
               }
+
               const match =
-                catalog.find((x) => x.title === payload.title) ||
                 catalog.find((x) => x.domain === payload.domain) ||
+                catalog.find((x) => x.title === payload.title) ||
                 null;
-              setEditorData(match ?? payload);
+
+              const merged = match
+                ? {
+                    ...match,
+                    ...payload,
+                    title: payload.title ?? match.title,
+                    content: payload.content ?? match.content,
+                  }
+                : payload;
+
+              setEditorData(merged);
               setCurrentStep("contentEditor");
             }}
           />

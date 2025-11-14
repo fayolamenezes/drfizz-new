@@ -36,7 +36,9 @@ const STORAGE_DOMAIN_KEYS = [
 
 const normalizeDomain = (input = "") => {
   try {
-    const url = input.includes("://") ? new URL(input) : new URL(`https://${input}`);
+    const url = input.includes("://")
+      ? new URL(input)
+      : new URL(`https://${input}`);
     let host = url.hostname.toLowerCase();
     if (host.startsWith("www.")) host = host.slice(4);
     return host;
@@ -70,7 +72,16 @@ function getSiteFromStorageOrQuery(searchParams) {
   return "example.com";
 }
 
-function mapRowToSchema(row) {
+/**
+ * Mapper for seo-data.json rows (metrics + basic content)
+ * Shape (columns):
+ *  - Domain/Website / Domain
+ *  - Blog1_Title, Blog1_Word_Count, Blog1_Num_Keywords, Blog1_Score, Blog1_Status, Blog1_Content
+ *  - Blog2_...
+ *  - Page1_...
+ *  - Page2_...
+ */
+function mapSeoRowToSchema(row) {
   const n = (x, d = undefined) => {
     if (typeof x === "number" && Number.isFinite(x)) return x;
     if (typeof x === "string") {
@@ -124,6 +135,39 @@ function mapRowToSchema(row) {
           content: s(row["Page2_Content"], ""),
         },
       ],
+    },
+  };
+}
+
+/**
+ * Mapper for multi-content.json:
+ * [
+ *   {
+ *     "domain": "google.com",
+ *     "blog1": { "title": "...", "content": "..." },
+ *     "blog2": { "title": "...", "content": "..." },
+ *     "page1": { "title": "...", "content": "..." },
+ *     "page2": { "title": "...", "content": "..." }
+ *   },
+ *   ...
+ * ]
+ *
+ * 👉 Only cares about title + content (no metrics).
+ */
+function mapMultiRowToContent(row) {
+  const safeSlot = (slot) =>
+    slot && typeof slot === "object"
+      ? {
+          title: slot.title || null,
+          content: slot.content || "",
+        }
+      : { title: null, content: "" };
+
+  return {
+    domain: normalizeDomain(row.domain || ""),
+    content: {
+      blog: [safeSlot(row.blog1), safeSlot(row.blog2)],
+      pages: [safeSlot(row.page1), safeSlot(row.page2)],
     },
   };
 }
@@ -194,7 +238,9 @@ function StartModal({
             <div className="text-[34px] font-extrabold leading-[1.05] tracking-tight text-[#0F172A]">
               CREATE,<br />OPTIMIZE &<br />PUBLISH
             </div>
-            <div className="mt-2 text-[13px] text-[#9CA3AF]">No tab-hopping required.</div>
+            <div className="mt-2 text-[13px] text-[#9CA3AF]">
+              No tab-hopping required.
+            </div>
           </div>
         </div>
 
@@ -210,7 +256,9 @@ function StartModal({
             <div className="text-[56px] font-extrabold leading-[0.95] tracking-tight text-[#0F172A]">
               CREATE,<br />OPTIMIZE &<br />PUBLISH
             </div>
-            <div className="mt-4 text-[15px] text-[#6B7280]">No tab-hopping required.</div>
+            <div className="mt-4 text-[15px] text-[#6B7280]">
+              No tab-hopping required.
+            </div>
           </div>
         </div>
 
@@ -218,14 +266,19 @@ function StartModal({
         <div className="flex h-full min-h-0 flex-col bg-[#FAFAFA]">
           {/* Mobile header + helper panel */}
           <div className="md:hidden px-6">
-            <div className="text-[16px] font-semibold text-[#0F172A]">Blogs</div>
+            <div className="text-[16px] font-semibold text-[#0F172A]">
+              Blogs
+            </div>
             <p className="mt-2 text-[13px] leading-relaxed text-[#6B7280]">
-              Explore the latest article &amp; stay updated with latest trend &amp; insights in the industry
+              Explore the latest article &amp; stay updated with latest trend
+              &amp; insights in the industry
             </p>
 
             <div className="mt-4 rounded-2xl bg-[#F5F5F5] px-4 pt-3 pb-2 border border-[#ECECEC]">
               <div className="text-[12px] text-[#9CA3AF]">
-                Select any <span className="font-medium text-[#6B7280]">1 style</span> to proceed
+                Select any{" "}
+                <span className="font-medium text-[#6B7280]">1 style</span> to
+                proceed
               </div>
               <div className="mt-2 border-t border-[#E5E7EB]" />
             </div>
@@ -234,7 +287,9 @@ function StartModal({
           {/* Desktop header */}
           <div className="hidden md:flex flex-col p-6">
             <div className="text-xl font-semibold text-[#0F172A]">Blogs</div>
-            <div className="mt-1 text-[12px] text-[#6B7280]">Select any 1 to create with that style</div>
+            <div className="mt-1 text-[12px] text-[#6B7280]">
+              Select any 1 to create with that style
+            </div>
           </div>
 
           {/* Scrollable list area */}
@@ -255,13 +310,19 @@ function StartModal({
                     w-full rounded-2xl p-4 text-left transition
                     bg-white border border-[#EFEFEF] shadow-[0_2px_10px_rgba(0,0,0,0.06)]
                     flex items-center justify-between
-                    ${hover === s.id ? "ring-1 ring-black/5" : "hover:ring-1 hover:ring-black/5"}
+                    ${
+                      hover === s.id
+                        ? "ring-1 ring-black/5"
+                        : "hover:ring-1 hover:ring-black/5"
+                    }
                   `}
                   aria-pressed={hover === s.id}
                   title="Click to create a new blog with this style"
                 >
                   <div className="pr-3">
-                    <div className="font-semibold text-[15px] text-[#0F172A]">{s.title}</div>
+                    <div className="font-semibold text-[15px] text-[#0F172A]">
+                      {s.title}
+                    </div>
                     <div className="mt-1 max-w-[380px] text-[12px] leading-relaxed text-[#6B7280]">
                       {s.desc}
                     </div>
@@ -277,7 +338,10 @@ function StartModal({
 
           {/* Sticky footer */}
           <div className="sticky bottom-0 left-0 right-0 bg-white border-t border-[#E5E7EB] px-6 py-4 flex items-center justify-between gap-3">
-            <button onClick={onCreateFromScratch} className="text-[13px] font-medium text-[#F97316]">
+            <button
+              onClick={onCreateFromScratch}
+              className="text-[13px] font-medium text-[#F97316]"
+            >
               Create from scratch
             </button>
             <button
@@ -294,8 +358,6 @@ function StartModal({
   );
 }
 
-
-
 /* ============================================================
    Opportunities Section
 ============================================================ */
@@ -303,25 +365,30 @@ function StartModal({
 export default function OpportunitiesSection({ onOpenContentEditor }) {
   const searchParams = useSearchParams();
   const [domain, setDomain] = useState("example.com");
-  const [rows, setRows] = useState(null);
+
+  const [seoRows, setSeoRows] = useState(null);
+  const [multiRows, setMultiRows] = useState(null);
+
   const [prog, setProg] = useState(0);
 
   // Modal state
   const [startOpen, setStartOpen] = useState(false);
-  const startPayloadRef = useRef(null); // keep real title/kind for "Edit existing"
+  const startPayloadRef = useRef(null); // keep real title/kind/content/domain for "Edit existing"
 
   useEffect(() => {
     setDomain(getSiteFromStorageOrQuery(searchParams));
   }, [searchParams]);
 
-  // Load seo-data.json (array)
+  // Load seo-data.json (metrics + base)
   useEffect(() => {
     let alive = true;
     (async () => {
       try {
         const res = await fetch("/data/seo-data.json", { cache: "no-store" });
         const json = await res.json();
-        if (alive && Array.isArray(json)) setRows(json.map(mapRowToSchema));
+        if (alive && Array.isArray(json)) {
+          setSeoRows(json.map(mapSeoRowToSchema));
+        }
       } catch (e) {
         console.error("Failed to load /data/seo-data.json", e);
       }
@@ -331,15 +398,42 @@ export default function OpportunitiesSection({ onOpenContentEditor }) {
     };
   }, []);
 
-  const selected = useMemo(() => {
-    if (!rows?.length) return null;
-    const key = normalizeDomain(domain);
-    return rows.find((r) => r.domain === key) || null;
-  }, [rows, domain]);
-
-  // Score tick animation for cards
+  // Load multi-content.json (rich content)
   useEffect(() => {
-    if (!rows) return;
+    let alive = true;
+    (async () => {
+      try {
+        const res = await fetch("/data/multi-content.json", {
+          cache: "no-store",
+        });
+        const json = await res.json();
+        if (alive && Array.isArray(json)) {
+          setMultiRows(json.map(mapMultiRowToContent));
+        }
+      } catch (e) {
+        console.error("Failed to load /data/multi-content.json", e);
+      }
+    })();
+    return () => {
+      alive = false;
+    };
+  }, []);
+
+  const selectedSeo = useMemo(() => {
+    if (!seoRows?.length) return null;
+    const key = normalizeDomain(domain);
+    return seoRows.find((r) => r.domain === key) || null;
+  }, [seoRows, domain]);
+
+  const selectedMulti = useMemo(() => {
+    if (!multiRows?.length) return null;
+    const key = normalizeDomain(domain);
+    return multiRows.find((r) => r.domain === key) || null;
+  }, [multiRows, domain]);
+
+  // Score tick animation for cards – based on seoRows being loaded
+  useEffect(() => {
+    if (!seoRows) return;
     let raf;
     const t0 = performance.now();
     const dur = 900;
@@ -351,10 +445,52 @@ export default function OpportunitiesSection({ onOpenContentEditor }) {
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, [rows]);
+  }, [seoRows]);
 
-  const blogCards = selected?.content?.blog ?? [];
-  const pageCards = selected?.content?.pages ?? [];
+  // Merge slots: metrics from seo-data, content/title from multi-content when available
+  const mergeSlot = (seoSlot, multiSlot, fallbackTitle) => {
+    const title =
+      multiSlot?.title || seoSlot?.title || fallbackTitle || "Untitled";
+    const content = multiSlot?.content || seoSlot?.content || "";
+
+    if (!seoSlot && !multiSlot) return {}; // no data at all
+
+    return {
+      ...seoSlot,
+      title,
+      content,
+    };
+  };
+
+  const blogCards = useMemo(() => {
+    const seo = selectedSeo?.content?.blog ?? [];
+    const multi = selectedMulti?.content?.blog ?? [];
+    const out = [];
+    for (let i = 0; i < 2; i += 1) {
+      const merged = mergeSlot(
+        seo[i],
+        multi[i],
+        `Blog Opportunity ${i + 1}`
+      );
+      out.push(merged);
+    }
+    return out;
+  }, [selectedSeo, selectedMulti]);
+
+  const pageCards = useMemo(() => {
+    const seo = selectedSeo?.content?.pages ?? [];
+    const multi = selectedMulti?.content?.pages ?? [];
+    const out = [];
+    for (let i = 0; i < 2; i += 1) {
+      const merged = mergeSlot(
+        seo[i],
+        multi[i],
+        `Page Opportunity ${i + 1}`
+      );
+      out.push(merged);
+    }
+    return out;
+  }, [selectedSeo, selectedMulti]);
 
   /* ---------- Start Flow helpers ---------- */
 
@@ -382,22 +518,31 @@ export default function OpportunitiesSection({ onOpenContentEditor }) {
 
   const dispatchOpen = (payload) => {
     try {
-      window.dispatchEvent(new CustomEvent("content-editor:open", { detail: payload }));
+      window.dispatchEvent(
+        new CustomEvent("content-editor:open", { detail: payload })
+      );
     } catch {}
     onOpenContentEditor?.(payload);
   };
 
   const dispatchNew = (payload = {}) => {
     try {
-      window.dispatchEvent(new CustomEvent("content-editor:new", { detail: payload }));
+      window.dispatchEvent(
+        new CustomEvent("content-editor:new", { detail: payload })
+      );
     } catch {}
     onOpenContentEditor?.(payload);
   };
 
   const handleEditExisting = () => {
     const real = startPayloadRef.current || {};
-    // open with the real title so ContentEditor resolves pageConfig from contenteditor.json
-    dispatchOpen({ title: real.title, kind: real.kind || "blog" });
+    // open with real title + content + domain so ContentEditor can merge with contenteditor.json
+    dispatchOpen({
+      title: real.title,
+      kind: real.kind || "blog",
+      content: real.content || "",
+      domain: real.domain || domain,
+    });
     setStartOpen(false);
   };
 
@@ -420,16 +565,41 @@ export default function OpportunitiesSection({ onOpenContentEditor }) {
     const v = Number(score) || 0;
     const cfg =
       v <= 30
-        ? { label: "High Priority", bg: "#FFF0F4", br: "#FFE1EA", dot: "#EF4444", txt: "#D12C2C" }
+        ? {
+            label: "High Priority",
+            bg: "#FFF0F4",
+            br: "#FFE1EA",
+            dot: "#EF4444",
+            txt: "#D12C2C",
+          }
         : v <= 70
-        ? { label: "Medium Priority", bg: "#FFF5D9", br: "#FDE7B8", dot: "#F59E0B", txt: "#B98500" }
-        : { label: "Low Priority", bg: "#EAF8F1", br: "#CBEBD9", dot: "#22C55E", txt: "#178A5D" };
+        ? {
+            label: "Medium Priority",
+            bg: "#FFF5D9",
+            br: "#FDE7B8",
+            dot: "#F59E0B",
+            txt: "#B98500",
+          }
+        : {
+            label: "Low Priority",
+            bg: "#EAF8F1",
+            br: "#CBEBD9",
+            dot: "#22C55E",
+            txt: "#178A5D",
+          };
     return (
       <span
         className="inline-flex items-center gap-2 rounded-[10px] px-2.5 py-1 text-[12px] font-medium"
-        style={{ backgroundColor: cfg.bg, border: `1px solid ${cfg.br}`, color: cfg.txt }}
+        style={{
+          backgroundColor: cfg.bg,
+          border: `1px solid ${cfg.br}`,
+          color: cfg.txt,
+        }}
       >
-        <span className="h-2.5 w-2.5 rounded-full" style={{ backgroundColor: cfg.dot }} />
+        <span
+          className="h-2.5 w-2.5 rounded-full"
+          style={{ backgroundColor: cfg.dot }}
+        />
         {cfg.label}
       </span>
     );
@@ -437,13 +607,16 @@ export default function OpportunitiesSection({ onOpenContentEditor }) {
 
   function OpportunityCard({ type, index, data }) {
     const score = data?.score ?? 0;
-       const wc = data?.wordCount ?? 0;
+    const wc = data?.wordCount ?? 0;
     const kws = data?.keywords ?? 0;
     const status = data?.status ?? "Draft";
-    // generic title for UI, keep realTitle for payload
-    const displayTitle =
-      GENERIC_CARD_TITLES[index % GENERIC_CARD_TITLES.length] || "SEO Opportunity";
+
+    // We keep generic title for UI, but realTitle for payload (from seo or multi)
     const realTitle = data?.title;
+    const displayTitle =
+      GENERIC_CARD_TITLES[index % GENERIC_CARD_TITLES.length] ||
+      realTitle ||
+      "SEO Opportunity";
 
     return (
       <div className="relative rounded-[18px] border border-[var(--border)] bg-[var(--input)] p-4 shadow-sm">
@@ -492,7 +665,12 @@ export default function OpportunitiesSection({ onOpenContentEditor }) {
           </button>
           <button
             onClick={() => {
-              startPayloadRef.current = { kind: type, title: realTitle };
+              startPayloadRef.current = {
+                kind: type, // "blog" or "page"
+                title: realTitle || displayTitle,
+                content: data?.content || "",
+                domain,
+              };
               setStartOpen(true);
             }}
             className="inline-flex items-center gap-2 rounded-[14px] px-4 py-2 text-[13px] font-semibold text-white shadow-sm bg-[image:var(--infoHighlight-gradient)] hover:opacity-90 transition"

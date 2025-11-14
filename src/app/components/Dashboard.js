@@ -6,6 +6,7 @@ import { useEffect, useRef, useState, useMemo } from "react";
 import { useSearchParams } from "next/navigation";
 import OpportunitiesSection from "./OpportunitiesSection";
 import NewOnPageSEOTable from "./NewOnPageSEOTable";
+import DashboardHeader from "./DashboardHeader";
 
 // --- Prefill content templates for the 4 "Top On-Page Content Opportunities" cards ---
 const PREFILL_BY_TITLE = {
@@ -613,6 +614,7 @@ const seoTableProg = Math.max(0, prog);
   return (
     <main className="min-h-screen bg-[var(--bg-panel)] px-4 py-6 sm:px-6 lg:px-8 overflow-x-hidden">
       <div className="mx-auto max-w-[100%] mt-1">
+        <DashboardHeader />
         {/* Row 1 */}
         <h2 className="text-[16px] font-bold text-[var(--text)] mb-3 ml-1">
           Off-Page SEO Metrics

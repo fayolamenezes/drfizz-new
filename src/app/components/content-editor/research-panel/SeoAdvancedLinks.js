@@ -16,7 +16,6 @@ function IconHintButton({
   size = 18,
   className = "",
 }) {
-  // NOTE: Use a non-button interactive element to avoid nesting <button> inside <button>
   const onKeyDown = (e) => {
     if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
@@ -28,7 +27,6 @@ function IconHintButton({
     <div
       className={[
         "relative",
-        // hidden by default; shown when the parent row (with class 'group') is hovered
         "opacity-0 pointer-events-none transition-opacity duration-150",
         "group-hover:opacity-100 group-hover:pointer-events-auto",
         className,
@@ -40,7 +38,6 @@ function IconHintButton({
         onClick={onClick}
         onKeyDown={onKeyDown}
         aria-label={label}
-        /* Approved style: no background, no border — just the wireframe icon */
         className="p-0 m-0 inline-flex items-center justify-center leading-none align-middle focus:outline-none h-8 w-8"
       >
         <CopyIcon
@@ -77,22 +74,64 @@ function BadgeScore({ score }) {
   );
 }
 
+/**
+ * Safely derive a hostname for favicon lookup.
+ * Accepts "https://domain.com/...", "domain.com", etc.
+ */
+function getFaviconHostname(domainOrUrl) {
+  if (!domainOrUrl) return "";
+  try {
+    const hasProtocol = /^https?:\/\//i.test(domainOrUrl);
+    const url = new URL(hasProtocol ? domainOrUrl : `https://${domainOrUrl}`);
+    return url.hostname;
+  } catch {
+    return domainOrUrl.split("/")[0];
+  }
+}
+
+// Custom loader so next/image doesn't enforce domains for favicons
+const faviconLoader = ({ src }) => src;
+
 function LinkRow({ rankScore, domain, sources, onPaste }) {
+  const hostname = getFaviconHostname(domain);
+  const faviconUrl = hostname
+    ? `https://www.google.com/s2/favicons?domain=${encodeURIComponent(
+        hostname
+      )}&sz=64`
+    : null;
+
   return (
     <div className="rounded-2xl border border-[var(--border)] bg-white shadow-sm dark:bg-[var(--bg-panel)]">
       <button
         type="button"
-        className="group w-full px-4 py-3 flex items-center justify-between gap-3 text-left rounded-2xl
-                   hover:bg-gray-50 dark:hover:bg-[var(--bg-hover)]"
+        className="group w-full px-4 py-3 flex items-center justify-between gap-3 text-left rounded-2xl hover:bg-gray-50 dark:hover:bg-[var(--bg-hover)]"
       >
         <div className="flex min-w-0 items-center gap-3">
-          <BadgeScore score={rankScore} />
+          {/* Favicon instead of numeric badge */}
+          <div className="flex h-8 w-8 items-center justify-center rounded-md bg-gray-100 dark:bg-neutral-800 overflow-hidden">
+            {faviconUrl ? (
+              <Image
+                loader={faviconLoader}
+                src={faviconUrl}
+                alt={hostname || domain || "site icon"}
+                width={18}
+                height={18}
+                className="rounded-sm"
+                unoptimized
+              />
+            ) : (
+              <span className="text-[11px] font-semibold text-gray-600 dark:text-gray-300">
+                {domain?.[0]?.toUpperCase() ?? "?"}
+              </span>
+            )}
+          </div>
+
           <div className="min-w-0">
             <div className="truncate text-[14px] font-semibold text-gray-900 dark:text-[var(--text-primary)]">
               {domain}
             </div>
             <div className="text-[11.5px] text-gray-500 dark:text-[var(--muted)]">
-              Source : {sources}
+              Links : {sources}
             </div>
           </div>
         </div>
@@ -151,8 +190,6 @@ export default function SeoAdvancedLinks({
 
   const linksData = currentPage?.linksTab || {};
 
-  // Prefer page-specific data from links-dataset.json (props),
-  // fall back to static contenteditor.json data on the page.
   const externalRows =
     Array.isArray(linksExternal) && linksExternal.length
       ? linksExternal
@@ -177,33 +214,17 @@ export default function SeoAdvancedLinks({
       ? linksData.totalDomains
       : externalRows.length || 19;
 
-  // 🔍 DEBUG: see where data is coming from
-  console.log("[SeoAdvancedLinks] data source", {
-    pageTitle: currentPage?.title,
-    fromPropsExternal: Array.isArray(linksExternal)
-      ? linksExternal.length
-      : null,
-    fromPropsInternal: Array.isArray(linksInternal)
-      ? linksInternal.length
-      : null,
-    fromPageExternal: Array.isArray(linksData.external)
-      ? linksData.external.length
-      : null,
-    fromPageInternal: Array.isArray(linksData.internal)
-      ? linksData.internal.length
-      : null,
-  });
-
   const rows = (linkTab === "external" ? externalRows : internalRows).map(
     (r) => ({
       rankScore: r.rankScore ?? r.value ?? 0,
       domain: r.domain ?? r.url ?? r.targetUrl ?? "",
       sources:
+        r.links ??
+        r.linkCount ??
+        r.count ??
+        r.total ??
         r.sources ??
         r.source ??
-        r.pageTitle ??
-        r.pageType ??
-        r.domain ??
         0,
     })
   );
@@ -213,20 +234,16 @@ export default function SeoAdvancedLinks({
   );
 
   return (
-    <div
-      className="mt-1 rounded-2xl border border-[var(--border)] bg-white p-4
-                 dark:bg-[var(--bg-panel)]"
-    >
+    <div className="mt-1 rounded-2xl border border-[var(--border)] bg-white p-4 dark:bg-[var(--bg-panel)]">
       <div className="flex items-center gap-6 border-b border-[var(--border)] px-1">
         <button
           type="button"
           onClick={() => setLinkTab("external")}
-          className={`relative px-1 pb-2 text-[13px] font-semibold transition-colors
-            ${
-              linkTab === "external"
-                ? "text-gray-900 dark:text-[var(--text-primary)]"
-                : "text-gray-500 dark:text-[var(--muted)]"
-            }`}
+          className={`relative px-1 pb-2 text-[13px] font-semibold transition-colors ${
+            linkTab === "external"
+              ? "text-gray-900 dark:text-[var(--text-primary)]"
+              : "text-gray-500 dark:text-[var(--muted)]"
+          }`}
         >
           External Link
           {linkTab === "external" && (
@@ -236,12 +253,11 @@ export default function SeoAdvancedLinks({
         <button
           type="button"
           onClick={() => setLinkTab("internal")}
-          className={`relative px-1 pb-2 text-[13px] font-semibold transition-colors
-            ${
-              linkTab === "internal"
-                ? "text-gray-900 dark:text-[var(--text-primary)]"
-                : "text-gray-500 dark:text-[var(--muted)]"
-            }`}
+          className={`relative px-1 pb-2 text-[13px] font-semibold transition-colors ${
+            linkTab === "internal"
+              ? "text-gray-900 dark:text-[var(--text-primary)]"
+              : "text-gray-500 dark:text-[var(--muted)]"
+          }`}
         >
           Internal link
           {linkTab === "internal" && (
@@ -250,11 +266,7 @@ export default function SeoAdvancedLinks({
         </button>
       </div>
 
-      <div
-        className="mt-3 rounded-2xl border border-[var(--border)] bg-gray-100/80 px-4 py-3
-                   text-gray-800 shadow-inner
-                   dark:bg-[var(--bg-hover)] dark:text-[var(--text-primary)]"
-      >
+      <div className="mt-3 rounded-2xl border border-[var(--border)] bg-gray-100/80 px-4 py-3 text-gray-800 shadow-inner dark:bg-[var(--bg-hover)] dark:text-[var(--text-primary)]">
         <div className="text-[28px] leading-7 font-extrabold">
           {externalTotal}
         </div>
@@ -271,8 +283,7 @@ export default function SeoAdvancedLinks({
 
       <div className="relative mt-3">
         <input
-          className="w-full h-10 rounded-xl border border-[var(--border)] bg-white px-9 text-[13px] text-gray-800 placeholder-gray-400 outline-none focus:border-amber-400
-                     dark:bg-[var(--bg-panel)] dark:text-[var(--text-primary)] dark:placeholder-[var(--muted)]"
+          className="w-full h-10 rounded-xl border border-[var(--border)] bg-white px-9 text-[13px] text-gray-800 placeholder-gray-400 outline-none focus:border-amber-400 dark:bg-[var(--bg-panel)] dark:text-[var(--text-primary)] dark:placeholder-[var(--muted)]"
           placeholder="Filter by keywords"
           value={kwFilter}
           onChange={(e) => setKwFilter(e.target.value)}

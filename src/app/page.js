@@ -144,9 +144,16 @@ export default function Home() {
       }
 
       // merge: catalog (contenteditor.json) for SEO config, payload (multi-content) for title+content
+      // When merging payload with SEO config from the catalog, prefer
+      // matching by the exact title first.  Domains often have
+      // multiple entries (one per blog/page) so matching on domain
+      // alone would always pick the first entry and override the
+      // payload with the wrong SEO data.  By checking the title
+      // first, we ensure we pick the correct page.  Only if the
+      // title is absent or unmatched do we fall back to domain.
       const match =
-        catalog.find((x) => x.domain === p.domain) ||
         catalog.find((x) => x.title === p.title) ||
+        catalog.find((x) => x.domain === p.domain) ||
         null;
 
       const merged = match
@@ -158,6 +165,20 @@ export default function Home() {
             content: p.content ?? match.content,
           }
         : p;
+
+      // Persist the selected domain to localStorage for the research panel.
+      // Without updating this key the optimize tab may load data from a previous
+      // domain and fallback to the first page【14921893551222†L259-L279】.
+      if (merged && merged.domain) {
+        try {
+          localStorage.setItem(
+            "websiteData",
+            JSON.stringify({ site: merged.domain })
+          );
+        } catch {
+          // ignore storage errors (e.g. private browsing)
+        }
+      }
 
       setEditorData(merged);
       setCurrentStep("contentEditor");
@@ -310,9 +331,13 @@ export default function Home() {
                 return;
               }
 
+              // Same matching logic as in the toEditor handler: pick by
+              // title first to avoid grabbing the wrong page when
+              // multiple pages share a domain.  Fall back to domain
+              // only if the title isn’t available.
               const match =
-                catalog.find((x) => x.domain === payload.domain) ||
                 catalog.find((x) => x.title === payload.title) ||
+                catalog.find((x) => x.domain === payload.domain) ||
                 null;
 
               const merged = match
@@ -323,6 +348,21 @@ export default function Home() {
                     content: payload.content ?? match.content,
                   }
                 : payload;
+
+              // Persist the selected domain to localStorage so the
+              // research panel opens the correct optimize dataset.  Without
+              // this, the optimize tab may retain the previous domain and
+              // default to the first page【14921893551222†L259-L279】.
+              if (merged && merged.domain) {
+                try {
+                  localStorage.setItem(
+                    "websiteData",
+                    JSON.stringify({ site: merged.domain })
+                  );
+                } catch {
+                  // ignore storage errors
+                }
+              }
 
               setEditorData(merged);
               setCurrentStep("contentEditor");

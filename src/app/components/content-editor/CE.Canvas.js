@@ -36,7 +36,8 @@ const CECanvas = forwardRef(function CECanvas(
   // state guards
   const lastLocalHtmlRef = useRef("");
   const lastLocalEditAtRef = useRef(0);
-  const LOCAL_GRACE_MS = 80;
+  // Wider grace so external props don't clobber active typing
+  const LOCAL_GRACE_MS = 300;
 
   const suppressInputRef = useRef(false);
   const AUTOSAVE_MS = 800;
@@ -292,28 +293,41 @@ const CECanvas = forwardRef(function CECanvas(
     if (!el) return;
 
     const htmlFromProp = sanitizeToHtml(content);
-    const currentDom = el.innerHTML;
+    const currentDom = el.innerHTML || "";
 
+    // Before initial seeding, mount hydration handles it
+    if (!seededRef.current) return;
+
+    // No change, or matches what we already know locally
     if (htmlFromProp === currentDom) return;
     if (htmlFromProp === lastLocalHtmlRef.current) return;
 
-    const justLocallyEdited =
-      seededRef.current && Date.now() - lastLocalEditAtRef.current < LOCAL_GRACE_MS;
-    if (justLocallyEdited) return;
+    // If we *just* edited locally, don't let prop snap back and override typing
+    const recentlyTyped =
+      Date.now() - lastLocalEditAtRef.current < LOCAL_GRACE_MS;
+
+    if (recentlyTyped || suppressInputRef.current) return;
+
+    // SAFETY: never overwrite a richer current DOM with a shorter prop snapshot
+    // This prevents "remote older snapshot" from nuking what the user just typed.
+    if (currentDom.length > htmlFromProp.length) {
+      return;
+    }
 
     suppressInputRef.current = true;
     el.innerHTML = htmlFromProp;
+    lastLocalHtmlRef.current = htmlFromProp;
+
     queueMicrotask(() => {
       suppressInputRef.current = false;
     });
 
-    if (seededRef.current) {
-      undoStack.current.push(htmlFromProp);
-      redoStack.current = [];
-    }
+    undoStack.current.push(htmlFromProp);
+    redoStack.current = [];
 
+    // Don't touch caret here – avoids surprise jumps while editing
     requestAnimationFrame(runHighlights);
-  }, [content, runHighlights, setCaretToEnd]);
+  }, [content, runHighlights]);
 
   /** =========================
    * execCommand
@@ -391,7 +405,12 @@ const CECanvas = forwardRef(function CECanvas(
       const el = editorRef.current;
       if (!el) return;
       el.focus();
-      restoreSelectionSnapshot();
+      // If we have a stored selection, restore it; otherwise go to end
+      if (savedRangeRef.current) {
+        restoreSelectionSnapshot();
+      } else {
+        setCaretToEnd(el);
+      }
     },
     // Optional: gives direct access to the root node if needed
     root: editorRef.current,
@@ -404,30 +423,30 @@ const CECanvas = forwardRef(function CECanvas(
       className="rounded-b-[12px] border border-t-0 border-[var(--border)] bg-white px-4 md:px-8 py-6 transition-colors"
       aria-label="Editor canvas"
     >
-      <h2 className="text-[26px] md:text-[28px] font-bold text-[var(--text-primary)] mb-4">
+      <h2 className="text-[20px] md:text-[26px] font-bold text-[var(--text-primary)] mb-4">
         {title}
       </h2>
 
       {showStarter && (
         <div className="mb-6 text-[var(--text)]">
           <ul className="space-y-3">
-            <li className="flex items-center gap-3 text-[15px]">
+            <li className="flex items-center gap-3 text-[14px] md:text-[15px]">
               <FileText size={18} className="opacity-70" />
               <span>Empty page</span>
             </li>
-            <li className="flex items-center gap-3 text-[15px]">
+            <li className="flex items-center gap-3 text-[14px] md:text-[15px]">
               <Sparkles size={18} className="opacity-70" />
               <span>Start with AI...</span>
             </li>
-            <li className="flex items-center gap-3 text-[15px]">
+            <li className="flex items-center gap-3 text-[14px] md:text-[15px]">
               <ScrollText size={18} className="opacity-70" />
               <span>Generate content brief</span>
             </li>
-            <li className="flex items-center gap-3 text-[15px]">
+            <li className="flex items-center gap-3 text-[14px] md:text-[15px]">
               <Link2 size={18} className="opacity-70" />
               <span>Import content from URL</span>
             </li>
-            <li className="flex items-center gap-3 text-[15px]">
+            <li className="flex items-center gap-3 text-[14px] md:text-[15px]">
               <Shapes size={18} className="opacity-70" />
               <span>Import template</span>
             </li>
@@ -439,7 +458,7 @@ const CECanvas = forwardRef(function CECanvas(
         ref={editorRef}
         contentEditable
         suppressContentEditableWarning
-        className="min-h-[420px] rounded-md border border-[var(--border)] bg-white px-4 py-4 leading-7 text-[15px] text-[var(--text-primary)] focus:outline-none prose prose-p:my-3 prose-h1:text-2xl prose-h2:text-xl prose-ul:list-disc prose-ul:pl-6 transition-colors"
+        className="min-h-[300px] md:min-h-[420px] rounded-md border border-[var(--border)] bg-white px-4 py-4 leading-7 text-sm md:text-[15px] text-[var(--text-primary)] focus:outline-none prose prose-p:my-3 prose-h1:text-xl md:prose-h1:text-2xl prose-h2:text-lg md:prose-h2:text-xl prose-ul:list-disc prose-ul:pl-6 transition-colors"
         onInput={() => {
           // Let parent know + optionally maintain our own stack if you want
           bubble({ pushHistory: false, notifyParent: true });

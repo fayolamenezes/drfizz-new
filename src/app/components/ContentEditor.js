@@ -70,19 +70,59 @@ export default function ContentEditor({ data, onBackToDashboard }) {
     };
   }, []);
 
-  /* page config lookup */
-  const pageKey =
-    data?.slug || data?.page || data?.id || norm(data?.title) || "";
+  /* page config lookup key(s) */
+  const rawPageKey =
+    data?.slug || data?.page || data?.id || data?.title || "";
+  const pageKey = norm(rawPageKey);
+  // slugified version of title: "SEO Research Services Overview" -> "seo-research-services-overview"
+  const titleSlugKey = data?.title
+    ? norm(data.title).replace(/\s+/g, "-")
+    : "";
+
   const pageConfig = useMemo(() => {
-    if (!config?.pages?.length) return null;
-    let hit =
-      config.pages.find((p) => norm(p.slug) === norm(pageKey)) ||
-      config.pages.find((p) => norm(p.id) === norm(pageKey));
-    if (!hit && data?.title) {
-      hit = config.pages.find((p) => norm(p.title) === norm(data.title));
+    if (!config?.length && !config?.pages?.length) return null;
+
+    // Support both `[ ... ]` and `{ pages: [...] }` shapes
+    const pages = Array.isArray(config?.pages) ? config.pages : config;
+
+    if (!Array.isArray(pages) || !pages.length) return null;
+
+    let hit = null;
+
+    // 1) Direct match via slug/id against pageKey (slug/id/title/id-from-data)
+    if (pageKey) {
+      hit =
+        pages.find((p) => norm(p.slug) === pageKey) ||
+        pages.find((p) => norm(p.id) === pageKey);
     }
-    return hit || config.pages[0] || null;
-  }, [config, pageKey, data?.title]);
+
+    // 2) Try slug-from-title : "seo research services overview" -> "seo-research-services-overview"
+    if (!hit && titleSlugKey) {
+      hit =
+        pages.find((p) => norm(p.slug) === titleSlugKey) ||
+        pages.find((p) => norm(p.id) === titleSlugKey);
+    }
+
+    // 3) Exact title match
+    if (!hit && data?.title) {
+      hit = pages.find((p) => norm(p.title) === norm(data.title));
+    }
+
+    // 4) Final safety net
+    return hit || pages[0] || null;
+  }, [config, pageKey, titleSlugKey, data?.title]);
+
+  // 🔍 DEBUG: see what pageConfig we resolved for this card
+  console.log("ContentEditor pageConfig:", {
+    pageKey,
+    rawPageKey,
+    titleSlugKey,
+    dataId: data?.id,
+    dataTitle: data?.title,
+    title: pageConfig?.title,
+    domain: pageConfig?.domain,
+    optPageId: pageConfig?.optPageId,
+  });
 
   /* editor state */
   const [title, setTitle] = useState(data?.title || "Untitled");
@@ -158,6 +198,28 @@ export default function ContentEditor({ data, onBackToDashboard }) {
   /* persistence + fresh-new guard */
   const restoredRef = useRef(false);
   const newDocRef = useRef(false);
+
+  // ------------------------------------------------------------------
+  // Persist the current domain to localStorage for the Research panel.
+  //
+  // The Research panel uses localStorage.websiteData.site (set by
+  // Step1Slide1) to determine which domain’s optimize dataset to load. If
+  // this value isn’t updated when the user opens a new document from a
+  // different domain, the panel will continue to load the previous
+  // domain’s optimize data and fall back to the first page of that
+  // domain.
+  const pageDomain = data?.domain || pageConfig?.domain || "";
+  useEffect(() => {
+    if (!pageDomain) return;
+    try {
+      localStorage.setItem(
+        "websiteData",
+        JSON.stringify({ site: pageDomain })
+      );
+    } catch {
+      // Ignore storage errors (e.g., SSR or private mode)
+    }
+  }, [pageDomain]);
 
   // Track previous incoming data.title to avoid clobbering user edits
   const prevDataTitleRef = useRef(data?.title);
@@ -287,6 +349,22 @@ export default function ContentEditor({ data, onBackToDashboard }) {
     return () => names.forEach((n) => window.removeEventListener(n, handler));
   }, [resetToNewDocument]);
 
+  /*
+   * Whenever the parent data/page key changes (i.e. a different page is opened),
+   * force a remount of the Content Area (and thus the Research panel) and
+   * broadcast a reset to clear any persisted research state.
+   */
+  useEffect(() => {
+    // skip on initial mount or new document boot
+    if (!restoredRef.current || newDocRef.current) return;
+    // force remount by bumping editorSessionId
+    setEditorSessionId((n) => n + 1);
+    // reset research state with the next query from this page
+    const nextQuery = data?.ui?.query || data?.primaryKeyword || "";
+    broadcastResearchReset(nextQuery);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pageKey]);
+
   /* sync when parent `data` changes, but don't clobber a fresh new doc or user edits */
   useEffect(() => {
     if (!restoredRef.current || newDocRef.current) {
@@ -349,7 +427,7 @@ export default function ContentEditor({ data, onBackToDashboard }) {
     lastEdited,
     metrics.wordTarget,
     metrics.plagiarism,
-    content, // eslint correctness + logic (we compare with content above)
+    content,
   ]);
 
   /* ===========================
@@ -414,6 +492,10 @@ export default function ContentEditor({ data, onBackToDashboard }) {
           }}
           primaryKeyword={PRIMARY_KEYWORD}
           lsiKeywords={LSI}
+          // Pass the pageConfig and optPageId down so the Research panel
+          // can match the correct optimize-dataset entry without guessing.
+          page={pageConfig}
+          optPageId={pageConfig?.optPageId}
         />
 
         {process.env.NODE_ENV !== "production" && configError && (
@@ -496,6 +578,9 @@ export default function ContentEditor({ data, onBackToDashboard }) {
               onFix={() => {}}
               onPasteToEditor={() => {}}
               editorContent={content}
+              /* Pass the resolved page and optPageId to prevent first-page fallback on mobile */
+              page={pageConfig}
+              optPageId={pageConfig?.optPageId}
             />
           </div>
         )}

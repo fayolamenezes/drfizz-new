@@ -96,6 +96,14 @@ export default function CEContentArea({
   setContent,
   primaryKeyword,
   lsiKeywords,
+  /**
+   * Optional: pass the page object (from contenteditor.json) and explicit optPageId
+   * to the Research panel. When provided, the Research panel will use these
+   * values instead of inferring them from the editor content or query. This
+   * prevents fallback to the first page in the optimize dataset.
+   */
+  page,
+  optPageId,
 }) {
   const editorRef = useRef(null);
 
@@ -492,6 +500,11 @@ export default function CEContentArea({
           editorContent={localContent}
           /* Allow panel to paste headings into canvas */
           onPasteToEditor={handlePasteHeadingToEditor}
+          /* Pass through page + explicit optPageId so the Research panel
+             can select the correct optimize-dataset page instead of
+             guessing from editor HTML and falling back to the first page. */
+          page={page}
+          optPageId={optPageId}
         />
       </div>
 

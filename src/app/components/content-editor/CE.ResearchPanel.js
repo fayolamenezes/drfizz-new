@@ -356,23 +356,6 @@ export default function CEResearchPanel({
       return;
     }
 
-    // 🔍 DEBUG: what are we matching against?
-    console.log("===== OPTIMIZE DEBUG =====");
-    console.log("resolvedPage.domain:", resolvedPage?.domain);
-    console.log("activeDomainKey:", activeDomainKey);
-    console.log("optActiveDomain.domain:", optActiveDomain?.domain);
-    console.log("optPageId (prop):", optPageId);
-    console.log("resolvedPage.optPageId:", resolvedPage?.optPageId);
-    console.log(
-      "domPages (id/editorKey):",
-      domPages.map((p) => ({
-        id: p.id,
-        editorKey: p.editorKey,
-        title: p.title,
-      }))
-    );
-    console.log("==========================");
-
     let next = null;
 
     // 1) Try to map by explicit editor ID (recommended flow)

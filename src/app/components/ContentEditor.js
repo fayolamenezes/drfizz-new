@@ -113,16 +113,6 @@ export default function ContentEditor({ data, onBackToDashboard }) {
   }, [config, pageKey, titleSlugKey, data?.title]);
 
   // 🔍 DEBUG: see what pageConfig we resolved for this card
-  console.log("ContentEditor pageConfig:", {
-    pageKey,
-    rawPageKey,
-    titleSlugKey,
-    dataId: data?.id,
-    dataTitle: data?.title,
-    title: pageConfig?.title,
-    domain: pageConfig?.domain,
-    optPageId: pageConfig?.optPageId,
-  });
 
   /* editor state */
   const [title, setTitle] = useState(data?.title || "Untitled");

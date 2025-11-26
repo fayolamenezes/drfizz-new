@@ -380,12 +380,9 @@ export default function ContentEditor({ data, onBackToDashboard }) {
       if (content !== "") setContent("");
     }
 
-    // Query + lastEdited
+    // Query (keep syncing from data)
     const nextQuery = data?.ui?.query || data?.primaryKeyword || "";
     if (nextQuery !== query) setQuery(nextQuery);
-
-    const nextLastEdited = data?.ui?.lastEdited || "1 day ago";
-    if (nextLastEdited !== lastEdited) setLastEdited(nextLastEdited);
 
     // Metrics.wordTarget (avoid re-setting same value)
     const nextWordTarget =
@@ -414,7 +411,6 @@ export default function ContentEditor({ data, onBackToDashboard }) {
     data,
     pageConfig,
     query,
-    lastEdited,
     metrics.wordTarget,
     metrics.plagiarism,
     content,

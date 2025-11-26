@@ -31,7 +31,7 @@ export default function DashboardHeader() {
           <span className="font-semibold text-[#020617]">Sam!</span>
         </p>
 
-        <div className="mt-0.5 flex flex-col gap-1 sm:flex-row sm:items-baseline sm:gap-4">
+        <div className="mt-0.5 flex flex-col gap-1.5 sm:flex-row sm:items-baseline sm:gap-4">
           <h1 className="text-[22px] sm:text-[24px] md:text-[26px] font-extrabold leading-tight text-[#020617]">
             Dashboard
           </h1>
@@ -40,13 +40,17 @@ export default function DashboardHeader() {
           <div className="flex flex-wrap items-center gap-1.5 text-[11px] sm:text-[12px]">
             <span className="font-medium text-[#6B7280]">Scope :</span>
 
-            <span className="font-semibold text-[#EA580C]">
+            <span className="font-semibold text-[#EA580C] break-all sm:break-normal">
               {domain ? `https://${domain}` : "https://yourcompany.com"}
             </span>
 
             <button
               type="button"
-              className="inline-flex h-4 w-4 items-center justify-center rounded-full border border-[#E5E7EB] text-[#9CA3AF] bg-white"
+              className="
+                inline-flex h-4 w-4 items-center justify-center
+                rounded-full border border-[#E5E7EB] text-[#9CA3AF] bg-white
+                flex-shrink-0
+              "
             >
               <HelpCircle size={10} />
             </button>
@@ -57,8 +61,11 @@ export default function DashboardHeader() {
       {/* RIGHT SIDE */}
       <div
         className="
-          flex items-center 
+          flex flex-wrap
+          items-stretch
+          justify-start sm:justify-end
           gap-2 sm:gap-3
+          mt-2 sm:mt-0
           relative
         "
       >
@@ -66,11 +73,12 @@ export default function DashboardHeader() {
         <button
           type="button"
           className="
-            inline-flex items-center gap-2
+            inline-flex items-center justify-center gap-2
             rounded-full border border-[#F97316] bg-[#FFF7ED]
-            px-4 py-2
-            text-[12px] sm:text-[13px] font-semibold text-[#C05621]
+            px-3 py-1.5 sm:px-4 sm:py-2
+            text-[11px] sm:text-[13px] font-semibold text-[#C05621]
             hover:bg-[#FFE7D1] transition
+            whitespace-nowrap
           "
         >
           <Plus size={14} />
@@ -81,11 +89,12 @@ export default function DashboardHeader() {
         <button
           type="button"
           className="
-            inline-flex items-center gap-2
-            rounded-full px-4 py-2
-            text-[12px] sm:text-[13px] font-semibold text-white
+            inline-flex items-center justify-center gap-2
+            rounded-full px-3 py-1.5 sm:px-4 sm:py-2
+            text-[11px] sm:text-[13px] font-semibold text-white
             shadow-sm bg-[image:var(--infoHighlight-gradient)]
             hover:opacity-90 transition
+            whitespace-nowrap
           "
         >
           <span>Chat with Ai</span>
@@ -94,10 +103,9 @@ export default function DashboardHeader() {
 
         {/*
           RESERVED SPACE FOR YOUR EXISTING THEME TOGGLE
-          This ensures alignment and prevents overlap.
-          Adjust width if your toggle is wider.
+          Hidden on very small screens to avoid crowding; shows from `sm` upwards.
         */}
-        <div className="w-[68px] sm:w-[72px]" />
+        <div className="hidden sm:block sm:w-[68px] md:w-[72px]" />
       </div>
     </header>
   );

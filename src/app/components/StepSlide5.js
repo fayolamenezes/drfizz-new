@@ -273,17 +273,19 @@ export default function StepSlide5({ onNext, onBack, onCompetitorSubmit }) {
       disabled={disabled}
       type="button"
       aria-pressed={isSelected}
-      className={`keyword-chip group inline-flex items-center gap-1 ${isSelected ? "active" : ""} ${
-        disabled ? "opacity-60 cursor-not-allowed" : ""
-      }`}
+      className={`keyword-chip group inline-flex items-center justify-between mx-1 px-3.5 sm:px-4 py-2.5 min-h-[34px] sm:min-h-[36px] text-[11px] sm:text-[12px] md:text-[13px] leading-normal gap-1 ${
+        isSelected ? "active" : ""
+      } ${disabled ? "opacity-60 cursor-not-allowed" : ""}`}
     >
-      <span>{label}</span>
+      <span className="truncate max-w-[150px] sm:max-w-[180px] md:max-w-none">
+        {label}
+      </span>
 
       {label !== "More" && (
         <>
-          {!isSelected && <Plus size={16} className="ml-1" />}
+          {!isSelected && <Plus size={16} className="ml-1 flex-shrink-0" />}
           {isSelected && (
-            <span className="relative ml-1 inline-flex w-4 h-4 items-center justify-center">
+            <span className="relative ml-1 inline-flex w-4 h-4 items-center justify-center flex-shrink-0">
               <Check
                 size={16}
                 className="absolute opacity-100 group-hover:opacity-0 transition-opacity duration-150"
@@ -321,6 +323,12 @@ export default function StepSlide5({ onNext, onBack, onCompetitorSubmit }) {
               background: var(--border);
               animation: pulse 1.2s ease-in-out infinite;
             }
+            @media (max-width: 640px) {
+              .chip-skel {
+                height: 32px;
+                width: 72px;
+              }
+            }
             @keyframes pulse {
               0%, 100% { opacity: 0.6; }
               50% { opacity: 1; }
@@ -355,28 +363,31 @@ export default function StepSlide5({ onNext, onBack, onCompetitorSubmit }) {
                   Business Competitors
                 </h3>
 
-                <div className="flex flex-wrap gap-2.5 sm:gap-3 items-center">
+                <div className="flex flex-wrap justify-start gap-2 sm:gap-2.5 md:gap-3 items-center -mx-1">
                   {isLoading && businessSuggestions.length === 0
                     ? Array.from({ length: 6 }).map((_, i) => (
-                        <span key={`biz-skel-${i}`} className="chip-skel" />
+                        <span key={`biz-skel-${i}`} className="chip-skel mx-1" />
                       ))
                     : businessSuggestions.map((label) => {
                         const isSelected = selectedBusinessCompetitors.includes(label);
 
                         if (label === "More" && addingBusiness) {
                           return (
-                            <div key="biz-inline-input" className="flex items-center gap-2">
+                            <div
+                              key="biz-inline-input"
+                              className="flex flex-wrap items-center gap-2 mx-1 w-full sm:w-auto"
+                            >
                               <input
                                 id="biz-more-input"
                                 value={bizInput}
                                 onChange={(e) => setBizInput(e.target.value)}
                                 onKeyDown={(e) => { if (e.key === "Enter") addCustomBusiness(); }}
                                 placeholder="Add business competitor"
-                                className="px-3 sm:px-4 py-2 border border-[#d45427] rounded-xl bg-[var(--input)] text-[12px] sm:text-[13px] md:text-[14px] text-[var(--text)] placeholder:text-[var(--muted)] focus:outline-none focus:border-[#d45427]"
+                                className="w-full sm:w-[240px] px-3 sm:px-4 py-2 border border-[#d45427] rounded-xl bg-[var(--input)] text-[12px] sm:text-[13px] md:text-[14px] text-[var(--text)] placeholder:text-[var(--muted)] focus:outline-none focus:border-[#d45427]"
                               />
                               <button
                                 onClick={addCustomBusiness}
-                                className="px-3 sm:px-4 py-2 bg-[image:var(--infoHighlight-gradient)] text-white rounded-xl hover:opacity-90"
+                                className="w-full sm:w-auto px-3 sm:px-4 py-2 bg-[image:var(--infoHighlight-gradient)] text-white rounded-xl hover:opacity-90"
                               >
                                 <Plus size={16} />
                               </button>
@@ -410,28 +421,31 @@ export default function StepSlide5({ onNext, onBack, onCompetitorSubmit }) {
                   Search Engine Competitors
                 </h3>
 
-                <div className="flex flex-wrap gap-2.5 sm:gap-3 items-center">
+                <div className="flex flex-wrap justify-start gap-2 sm:gap-2.5 md:gap-3 items-center -mx-1">
                   {isLoading && searchSuggestions.length === 0
                     ? Array.from({ length: 6 }).map((_, i) => (
-                        <span key={`ser-skel-${i}`} className="chip-skel" />
+                        <span key={`ser-skel-${i}`} className="chip-skel mx-1" />
                       ))
                     : searchSuggestions.map((label) => {
                         const isSelected = selectedSearchCompetitors.includes(label);
 
                         if (label === "More" && addingSearch) {
                           return (
-                            <div key="search-inline-input" className="flex items-center gap-2">
+                            <div
+                              key="search-inline-input"
+                              className="flex flex-wrap items-center gap-2 mx-1 w-full sm:w-auto"
+                            >
                               <input
                                 id="search-more-input"
                                 value={searchInput}
                                 onChange={(e) => setSearchInput(e.target.value)}
                                 onKeyDown={(e) => { if (e.key === "Enter") addCustomSearch(); }}
                                 placeholder="Add search competitor"
-                                className="px-3 sm:px-4 py-2 border border-[#d45427] rounded-xl bg-[var(--input)] text-[12px] sm:text-[13px] md:text-[14px] text-[var(--text)] placeholder:text-[var(--muted)] focus:outline-none focus:border-[#d45427]"
+                                className="w-full sm:w-[240px] px-3 sm:px-4 py-2 border border-[#d45427] rounded-xl bg-[var(--input)] text-[12px] sm:text-[13px] md:text-[14px] text-[var(--text)] placeholder:text-[var(--muted)] focus:outline-none focus:border-[#d45427]"
                               />
                               <button
                                 onClick={addCustomSearch}
-                                className="px-3 sm:px-4 py-2 bg-[image:var(--infoHighlight-gradient)] text-white rounded-xl hover:opacity-90"
+                                className="w-full sm:w-auto px-3 sm:px-4 py-2 bg-[image:var(--infoHighlight-gradient)] text-white rounded-xl hover:opacity-90"
                               >
                                 <Plus size={16} />
                               </button>

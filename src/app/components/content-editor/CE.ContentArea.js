@@ -7,7 +7,7 @@ import React, {
   useState,
   useCallback,
 } from "react";
-import { Menu, SquareStack } from "lucide-react";
+import { Menu, SquareStack, ChevronsUp, ChevronsDown } from "lucide-react";
 import CEToolbar from "./CE.Toolbar";
 import CECanvas from "./CE.Canvas";
 import CEResearchPanel from "./CE.ResearchPanel";
@@ -181,7 +181,6 @@ export default function CEContentArea({
   );
 
   // ----- Keyword setup -----
-  // 🔑 IMPORTANT: use only the canonical primaryKeyword prop here (not query)
   const PRIMARY_KEYWORD = useMemo(
     () => String(primaryKeyword || "content marketing").toLowerCase(),
     [primaryKeyword]
@@ -357,10 +356,7 @@ export default function CEContentArea({
   );
 
   /** =========================
-   * Mobile toolbar visibility:
-   * - Only after user actually types
-   * - While the keyboard is visible
-   * - Hides when the keyboard hides
+   * Mobile toolbar visibility
    * ========================= */
   const [keyboardVisible, setKeyboardVisible] = useState(false);
   const [hasTypedSinceFocus, setHasTypedSinceFocus] = useState(false);
@@ -394,7 +390,6 @@ export default function CEContentArea({
 
     const vv = window.visualViewport;
     if (vv) {
-      // VisualViewport gives a better signal on mobile browsers
       updateFromHeight(vv.height);
       const onResize = () => updateFromHeight(vv.height);
       vv.addEventListener("resize", onResize);
@@ -409,22 +404,46 @@ export default function CEContentArea({
   }, []);
 
   const handleTypingPulse = useCallback(() => {
-    // User actually typed – allow toolbar to appear (if keyboard is up)
     setHasTypedSinceFocus(true);
   }, []);
 
   const handleFocus = useCallback(() => {
-    // On new focus, reset "has typed" so we don't show toolbar
-    // until there's at least one actual input
     setHasTypedSinceFocus(false);
   }, []);
 
   const handleBlur = useCallback(() => {
-    // When editor truly blurs, forget typing state
     setHasTypedSinceFocus(false);
   }, []);
 
   const showMobileToolbar = keyboardVisible && hasTypedSinceFocus;
+
+  /** =========================
+   * Mobile metrics collapse toggle
+   * ========================= */
+  const [mobileMetricsCollapsed, setMobileMetricsCollapsed] = useState(false);
+
+  const handleToggleMobileMetrics = useCallback(() => {
+    setMobileMetricsCollapsed((prev) => {
+      const next = !prev;
+
+      if (typeof window !== "undefined") {
+        const stripEl = document.getElementById("ce-metrics-mobile");
+        const summaryEl = document.getElementById("ce-metrics-mobile-summary");
+
+        if (stripEl) {
+          if (next) stripEl.classList.add("hidden");
+          else stripEl.classList.remove("hidden");
+        }
+
+        if (summaryEl) {
+          if (next) summaryEl.classList.remove("hidden");
+          else summaryEl.classList.add("hidden");
+        }
+      }
+
+      return next;
+    });
+  }, []);
 
   return (
     <div
@@ -475,6 +494,22 @@ export default function CEContentArea({
           <CEToolbar editorRef={editorRef} />
         </div>
 
+        {/* Mobile/tablet only double-chevron icon (between tabs and content) */}
+        <div className="flex lg:hidden items-center justify-start px-2 py-1 bg-white">
+          <button
+            type="button"
+            onClick={handleToggleMobileMetrics}
+            className="h-6 w-6 flex items-center justify-center text-gray-400"
+            aria-label="Toggle metrics strip"
+          >
+            {mobileMetricsCollapsed ? (
+              <ChevronsDown size={16} />
+            ) : (
+              <ChevronsUp size={16} />
+            )}
+          </button>
+        </div>
+
         <div className="bg-white">
           <CECanvas
             ref={editorRef}
@@ -508,9 +543,7 @@ export default function CEContentArea({
         />
       </div>
 
-      {/* MOBILE: docked, horizontally scrollable toolbar
-          - appears only after user starts typing
-          - hides when keyboard hides */}
+      {/* MOBILE: docked, horizontally scrollable toolbar */}
       <div
         className={`
           lg:hidden fixed left-0 right-0 z-50

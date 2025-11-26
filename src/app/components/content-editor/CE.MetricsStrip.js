@@ -141,12 +141,9 @@ function WordcountCard({ count = 0, target = 1200 }) {
 function SeoPill({ active, title, Icon, onClick, disabled }) {
   const base =
     "min-w-0 h-[74px] rounded-[12px] border px-3 text-left transition-all";
-  const activeCls =
-    "border-[1.5px] border-orange-600 bg-orange-50";
-  const inactiveCls =
-    "border-[var(--border)] bg-white hover:bg-gray-50";
-  const disabledCls =
-    "opacity-50 cursor-not-allowed hover:bg-white";
+  const activeCls = "border-[1.5px] border-orange-600 bg-orange-50";
+  const inactiveCls = "border-[var(--border)] bg-white hover:bg-gray-50";
+  const disabledCls = "opacity-50 cursor-not-allowed hover:bg-white";
 
   return (
     <button
@@ -154,7 +151,9 @@ function SeoPill({ active, title, Icon, onClick, disabled }) {
       disabled={disabled}
       aria-disabled={disabled || undefined}
       title={disabled ? "Type a keyword and click Start to unlock" : title}
-      className={`${base} ${active ? activeCls : inactiveCls} ${disabled ? disabledCls : ""}`}
+      className={`${base} ${active ? activeCls : inactiveCls} ${
+        disabled ? disabledCls : ""
+      }`}
     >
       <div className="flex items-center gap-2">
         <span
@@ -194,38 +193,37 @@ function SeoPillMobile({ active, title, Icon, onClick, disabled }) {
       onClick={disabled ? undefined : onClick}
       disabled={disabled}
       className={[
-        // height + radius + padding
         "h-[46px] w-full rounded-[12px] border text-left transition-all",
-        // thinner active ring/shadow
         active
           ? "border-orange-300 bg-orange-50 shadow-[0_1px_0_0_rgba(255,159,64,0.25),0_0_0_2px_rgba(255,159,64,0.10)_inset]"
           : "border-gray-200 bg-white",
         disabled ? "opacity-60 cursor-not-allowed" : "",
-        "px-2"
+        "px-2",
       ].join(" ")}
     >
       <div className="flex items-center gap-1.5">
         <span
           className={[
-            // smaller icon container
             "grid place-items-center h-4 w-4 rounded-full border",
-            active ? "border-orange-200 bg-orange-100" : "border-gray-300 bg-gray-100"
+            active ? "border-orange-200 bg-orange-100" : "border-gray-300 bg-gray-100",
           ].join(" ")}
         >
-          {/* smaller icon */}
           <Icon size={12} className={active ? "text-orange-600" : "text-gray-500"} />
         </span>
         <div className="leading-tight min-w-0">
-          {/* smaller 'SEO' label */}
-          <div className={["text-[8.5px] font-semibold tracking-wide",
-                           active ? "text-gray-600" : "text-gray-400"].join(" ")}>
+          <div
+            className={[
+              "text-[8.5px] font-semibold tracking-wide",
+              active ? "text-gray-600" : "text-gray-400",
+            ].join(" ")}
+          >
             SEO
           </div>
-          {/* smaller title */}
-          <div className={[
+          <div
+            className={[
               "truncate font-semibold",
               active ? "text-orange-600" : "text-gray-500",
-              "text-[11px]"
+              "text-[11px]",
             ].join(" ")}
           >
             {title}
@@ -235,7 +233,6 @@ function SeoPillMobile({ active, title, Icon, onClick, disabled }) {
     </button>
   );
 }
-
 
 /** Circular metric (ultra compact, perfectly centered & balanced) */
 function CircularStat({
@@ -257,13 +254,12 @@ function CircularStat({
   const hasCt = typeof count === "number" && typeof target === "number";
   const rounded = hasCt ? Math.round(count) : 0;
 
-  // Use tabular/lining numerals for consistent sizing (fixes “1” imbalance)
   const NUMERIC_STYLE = {
     fontVariantNumeric: "tabular-nums lining-nums",
     fontFeatureSettings: "'tnum' 1, 'lnum' 1",
   };
 
-  const mainSize = hasCt ? 12 : 13; // ratio for digits/% view
+  const mainSize = hasCt ? 12 : 13;
   const subSize = 9;
   const mainDy = "-0.15em";
   const subDy = "0.95em";
@@ -271,7 +267,6 @@ function CircularStat({
   return (
     <div className="flex flex-col items-center">
       <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
-        {/* White background ring base */}
         <circle
           cx={size / 2}
           cy={size / 2}
@@ -280,7 +275,6 @@ function CircularStat({
           strokeWidth={stroke}
           fill="#fff"
         />
-        {/* Progress ring (colored arc) */}
         <circle
           cx={size / 2}
           cy={size / 2}
@@ -295,7 +289,6 @@ function CircularStat({
           className="transition-[stroke-dashoffset] duration-500"
         />
 
-        {/* Inner text */}
         {hasCt ? (
           <text
             x="50%"
@@ -336,7 +329,6 @@ function CircularStat({
         )}
       </svg>
 
-      {/* Label below */}
       <div className="mt-1 text-[8.5px] font-medium text-gray-700 text-center leading-[1.1]">
         {label}
       </div>
@@ -344,7 +336,24 @@ function CircularStat({
   );
 }
 
-
+/* Tiny inline badge used in collapsed mobile summary bar */
+/* Compact inline badge — slightly larger than micro */
+function MiniMetricBadge({ colorClass, bgClass, label, value }) {
+  return (
+    <div className="flex items-center gap-[1px] whitespace-nowrap m-0 p-0">
+      <span
+        className={`flex items-center justify-center min-w-[10px] h-[11px] rounded-full px-[2px] text-[6px] font-semibold text-white ${bgClass}`}
+      >
+        {value}
+      </span>
+      <span
+        className={`text-[6px] leading-[1] font-semibold tracking-tight ${colorClass}`}
+      >
+        {label}
+      </span>
+    </div>
+  );
+}
 
 /* ---------------------------------- MAIN ---------------------------------- */
 
@@ -362,6 +371,11 @@ export default function CEMetricsStrip({
   const lsiPct = metrics?.lsiKeywords ?? 0;
 
   const wcPct = Math.max(0, Math.min(100, (wc / Math.max(1, wcTarget)) * 100));
+
+  const pkBadge = Math.round(pkPct);
+  const plagBadge = Math.round(plagPct);
+  const wcBadge = Math.round(wcPct);
+  const lsiBadge = Math.round(lsiPct);
 
   return (
     <div className="mb-4">
@@ -395,8 +409,41 @@ export default function CEMetricsStrip({
         />
       </div>
 
-      {/* ----------------------- MOBILE (compact) ----------------------- */}
-      <div className="md:hidden space-y-3">
+      {/* --------- MOBILE: collapsed summary strip (shown on collapse) --------- */}
+      <div
+        id="ce-metrics-mobile-summary"
+        className="md:hidden hidden px-2 pt-1 pb-1 border-b border-[var(--border)] bg-white"
+      >
+        <div className="flex flex-nowrap items-center gap-3 overflow-x-auto no-scrollbar">
+          <MiniMetricBadge
+            value={pkBadge}
+            label="PRIMARY KEYWORD"
+            colorClass="text-gray-800"
+            bgClass="bg-emerald-500"
+          />
+          <MiniMetricBadge
+            value={plagBadge}
+            label="PLAGIARISM"
+            colorClass="text-gray-800"
+            bgClass="bg-rose-500"
+          />
+          <MiniMetricBadge
+            value={wcBadge}
+            label="WORD COUNT"
+            colorClass="text-gray-800"
+            bgClass="bg-violet-500"
+          />
+          <MiniMetricBadge
+            value={lsiBadge}
+            label="LSI KEYWORDS"
+            colorClass="text-gray-800"
+            bgClass="bg-amber-500"
+          />
+        </div>
+      </div>
+
+      {/* ----------------------- MOBILE (full metrics) ------------------------ */}
+      <div id="ce-metrics-mobile" className="md:hidden space-y-3">
         {/* Pills row */}
         <div className="grid grid-cols-3 gap-2">
           <SeoPillMobile
@@ -426,7 +473,13 @@ export default function CEMetricsStrip({
           <CircularStat pct={pkPct} label="PRIMARY KEYWORD" ring="#10B981" />
           <CircularStat pct={plagPct} label="PLAGIARISM" ring="#E11D48" alt />
           <CircularStat pct={lsiPct} label="LSI KEYWORDS" ring="#F59E0B" />
-          <CircularStat pct={wcPct} label="WORD COUNT" ring="#8B5CF6" count={wc} target={wcTarget} />
+          <CircularStat
+            pct={wcPct}
+            label="WORD COUNT"
+            ring="#8B5CF6"
+            count={wc}
+            target={wcTarget}
+          />
         </div>
       </div>
     </div>

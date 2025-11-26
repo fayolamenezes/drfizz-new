@@ -258,8 +258,13 @@ export default function StepSlide4({ onNext, onBack, onKeywordSubmit }) {
         >
           {/* hide inner scrollbar */}
           <style jsx>{`
-            .inner-scroll { scrollbar-width: none; -ms-overflow-style: none; }
-            .inner-scroll::-webkit-scrollbar { display: none; }
+            .inner-scroll {
+              scrollbar-width: none;
+              -ms-overflow-style: none;
+            }
+            .inner-scroll::-webkit-scrollbar {
+              display: none;
+            }
             .chip-skel {
               display: inline-block;
               border-radius: 0.75rem;
@@ -268,7 +273,21 @@ export default function StepSlide4({ onNext, onBack, onKeywordSubmit }) {
               background: var(--border);
               animation: pulse 1.2s ease-in-out infinite;
             }
-            @keyframes pulse { 0%, 100% { opacity: 0.6; } 50% { opacity: 1; } }
+            @media (max-width: 640px) {
+              .chip-skel {
+                height: 32px;
+                width: 72px;
+              }
+            }
+            @keyframes pulse {
+              0%,
+              100% {
+                opacity: 0.6;
+              }
+              50% {
+                opacity: 1;
+              }
+            }
           `}</style>
 
           <div ref={scrollRef} className="inner-scroll h-full w-full overflow-y-auto">
@@ -294,13 +313,14 @@ export default function StepSlide4({ onNext, onBack, onKeywordSubmit }) {
               </div>
 
               {/* Keyword picker area — suggestions + inline More-input */}
-              <div className="w-full max-w-[880px] space-y-6 sm:space-y-8">
+              <div className="w-full max-w-[880px] space-y-5 sm:space-y-6">
                 {/* Suggested pills */}
-                <div className="flex flex-wrap justify-start gap-2.5 sm:gap-3">
+                <div className="flex flex-wrap justify-start gap-2 sm:gap-2.5 md:gap-3 -mx-1">
                   {/* Loading skeletons */}
-                  {isLoadingKeywords && suggestedKeywords.length === 0 &&
+                  {isLoadingKeywords &&
+                    suggestedKeywords.length === 0 &&
                     Array.from({ length: 8 }).map((_, i) => (
-                      <span key={`skel-${i}`} className="chip-skel" />
+                      <span key={`skel-${i}`} className="chip-skel mx-1" />
                     ))}
 
                   {/* Real chips */}
@@ -311,7 +331,10 @@ export default function StepSlide4({ onNext, onBack, onKeywordSubmit }) {
                       // Render “More” as inline input when toggled
                       if (keyword === "More" && showInlineMoreInput) {
                         return (
-                          <div key="more-inline-input" className="flex items-center gap-2">
+                          <div
+                            key="more-inline-input"
+                            className="flex flex-wrap items-center gap-2 mx-1 w-full sm:w-auto"
+                          >
                             <input
                               ref={moreInputRef}
                               type="text"
@@ -319,13 +342,13 @@ export default function StepSlide4({ onNext, onBack, onKeywordSubmit }) {
                               value={customKeyword}
                               onChange={(e) => setCustomKeyword(e.target.value)}
                               onKeyDown={handleKeyDown}
-                              className="px-3 sm:px-4 py-2 border border-[#d45427] rounded-xl bg-[var(--input)] text-[12px] sm:text-[13px] md:text-[14px] text-[var(--text)] placeholder:text-[var(--muted)] focus:outline-none focus:border-[#d45427]"
+                              className="w-full sm:w-[220px] px-3 sm:px-4 py-2 border border-[#d45427] rounded-xl bg-[var(--input)] text-[12px] sm:text-[13px] md:text-[14px] text-[var(--text)] placeholder:text-[var(--muted)] focus:outline-none focus:border-[#d45427]"
                             />
                             <button
                               onClick={handleAddCustom}
                               disabled={!customKeyword.trim()}
                               type="button"
-                              className="px-3 sm:px-4 py-2 bg-[image:var(--infoHighlight-gradient)] text-white rounded-xl hover:opacity-90 disabled:opacity-70 disabled:cursor-not-allowed transition-opacity duration-200"
+                              className="w-full sm:w-auto px-3 sm:px-4 py-2 bg-[image:var(--infoHighlight-gradient)] text-white rounded-xl hover:opacity-90 disabled:opacity-70 disabled:cursor-not-allowed transition-opacity duration-200"
                               aria-label="Add custom keyword"
                             >
                               <Plus size={16} />
@@ -342,16 +365,20 @@ export default function StepSlide4({ onNext, onBack, onKeywordSubmit }) {
                           type="button"
                           aria-pressed={selected}
                           onClick={() => handleKeywordToggle(keyword)}
-                          className={`keyword-chip group inline-flex items-center gap-1 ${selected ? "active" : ""}`}
+                          className={`keyword-chip group inline-flex items-center justify-between mx-1 px-3.5 sm:px-4 py-2.5 min-h-[34px] sm:min-h-[36px] text-[11px] sm:text-[12px] md:text-[13px] leading-normal ${
+                            selected ? "active" : ""
+                          }`}
                         >
-                          <span>{keyword}</span>
+                          <span className="truncate max-w-[150px] sm:max-w-[180px] md:max-w-none">
+                            {keyword}
+                          </span>
 
                           {/* Icon logic */}
                           {keyword !== "More" && (
                             <>
-                              {!selected && <Plus size={16} className="ml-1" />}
+                              {!selected && <Plus size={16} className="ml-1 flex-shrink-0" />}
                               {selected && (
-                                <span className="relative ml-1 inline-flex w-4 h-4 items-center justify-center">
+                                <span className="relative ml-1 inline-flex w-4 h-4 items-center justify-center flex-shrink-0">
                                   <Check
                                     size={16}
                                     className="absolute opacity-100 group-hover:opacity-0 transition-opacity duration-150"
@@ -374,7 +401,7 @@ export default function StepSlide4({ onNext, onBack, onKeywordSubmit }) {
 
               {/* System message / CTA (after at least one selection) */}
               {showSummary && (
-                <div className="max-w-[640px] text-left self-start mt-5 sm:mt-6">
+                <div className="max-w=[640px] text-left self-start mt-5 sm:mt-6">
                   <h3 className="text-[15px] sm:text-[16px] md:text-[18px] font-bold text=[var(--text)] mb-2.5 sm:mb-3">
                     Here’s your site report — take a quick look on
                     <br />

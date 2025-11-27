@@ -112,6 +112,32 @@ export default function ContentEditor({ data, onBackToDashboard }) {
     return hit || null;
   }, [config, pageKey, titleSlugKey, data?.title]);
 
+  // Stable doc identity for per-document persistence
+  const docId = useMemo(() => {
+    const idCandidate =
+      data?.slug ||
+      data?.id ||
+      pageConfig?.slug ||
+      pageConfig?.id ||
+      pageConfig?.optPageId ||
+      pageKey ||
+      null;
+    return idCandidate || null;
+  }, [
+    data?.slug,
+    data?.id,
+    pageConfig?.slug,
+    pageConfig?.id,
+    pageConfig?.optPageId,
+    pageKey,
+  ]);
+
+  const STORAGE_KEY = docId
+    ? `content-editor-state:${docId}`
+    : "content-editor-state:global";
+
+  const hasIncomingData = !!(data && (data.title || data.content));
+
   /* editor state */
   const [title, setTitle] = useState(data?.title || "Untitled");
   const [content, setContent] = useState(
@@ -164,7 +190,10 @@ export default function ContentEditor({ data, onBackToDashboard }) {
   );
 
   const WORD_TARGET_FROM_DATA =
-    data?.metrics?.wordTarget ?? data?.wordTarget ?? pageConfig?.wordTarget ?? 1480;
+    data?.metrics?.wordTarget ??
+    data?.wordTarget ??
+    pageConfig?.wordTarget ??
+    1480;
 
   // Initial plagiarism pulled from data (multi-content) when available
   const [metrics, setMetrics] = useState(() => ({
@@ -212,7 +241,12 @@ export default function ContentEditor({ data, onBackToDashboard }) {
 
       if (hasNewFlag) {
         // NEW document boot (handle once)
-        localStorage.removeItem("content-editor-state");
+        try {
+          localStorage.removeItem(STORAGE_KEY);
+          // legacy key cleanup
+          localStorage.removeItem("content-editor-state");
+        } catch {}
+
         setTitle("Untitled");
         setContent("");
         setQuery("");
@@ -234,13 +268,12 @@ export default function ContentEditor({ data, onBackToDashboard }) {
         setEditorSessionId((n) => n + 1);
         broadcastResearchReset("");
 
-
         // Clean URL so refresh doesn’t repeat NEW (no hash change)
         url.searchParams.delete("new");
         window.history.replaceState(null, "", url.toString());
-      } else {
-        // Normal restore from localStorage (do NOT read title/content/query to avoid deps)
-        const raw = localStorage.getItem("content-editor-state");
+      } else if (!hasIncomingData) {
+        // Only restore from localStorage when there is NO incoming data
+        const raw = localStorage.getItem(STORAGE_KEY);
         if (raw) {
           try {
             const saved = JSON.parse(raw);
@@ -255,23 +288,29 @@ export default function ContentEditor({ data, onBackToDashboard }) {
           url.searchParams.delete("new");
           window.history.replaceState(null, "", url.toString());
         } catch {}
+      } else {
+        // Incoming data present: skip restore, just clean ?new if there
+        try {
+          url.searchParams.delete("new");
+          window.history.replaceState(null, "", url.toString());
+        } catch {}
       }
     } catch {}
 
     restoredRef.current = true;
-  }, [WORD_TARGET_FROM_DATA]); // runs once per mount (plus if word target changes)
+  }, [WORD_TARGET_FROM_DATA, STORAGE_KEY, hasIncomingData]);
 
   // Persist minimal state on edits (does NOT include activeTab/seoMode to keep scope small)
   useEffect(() => {
     try {
       const payload = { title, content, query };
-      localStorage.setItem("content-editor-state", JSON.stringify(payload));
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
       // keep Research in sync if user changes/clears keyword
       window.dispatchEvent(
         new CustomEvent("content-editor:query-changed", { detail: { query } })
       );
     } catch {}
-  }, [title, content, query]);
+  }, [title, content, query, STORAGE_KEY]);
 
   /* central reset helper (memoized to satisfy exhaustive-deps) */
   const resetToNewDocument = useCallback(
@@ -300,7 +339,7 @@ export default function ContentEditor({ data, onBackToDashboard }) {
       }));
       try {
         localStorage.setItem(
-          "content-editor-state",
+          STORAGE_KEY,
           JSON.stringify({ title: nextTitle, content: nextContent, query: "" })
         );
       } catch {}
@@ -317,7 +356,7 @@ export default function ContentEditor({ data, onBackToDashboard }) {
         window.history.replaceState(null, "", url.toString());
       } catch {}
     },
-    [data?.metrics?.wordTarget, data?.wordTarget, pageConfig?.wordTarget]
+    [data?.metrics?.wordTarget, data?.wordTarget, pageConfig?.wordTarget, STORAGE_KEY]
   );
 
   /* listen for multiple "new doc" event names */
@@ -498,6 +537,8 @@ export default function ContentEditor({ data, onBackToDashboard }) {
           // can match the correct optimize-dataset entry without guessing.
           page={pageConfig}
           optPageId={pageConfig?.optPageId}
+          // New: pass docId down so Canvas/autosave can be per-document
+          docId={docId}
         />
 
         {process.env.NODE_ENV !== "production" && configError && (

@@ -104,6 +104,8 @@ export default function CEContentArea({
    */
   page,
   optPageId,
+  /** OPTIONAL: explicit docId from parent (e.g. slug/id) */
+  docId: docIdProp,
 }) {
   const editorRef = useRef(null);
 
@@ -139,6 +141,17 @@ export default function CEContentArea({
       </button>
     );
   };
+
+  /** ---------------------------------------------
+   *  DOC ID for per-page autosave / local state
+   *  --------------------------------------------- */
+  const docId = useMemo(() => {
+    if (docIdProp) return String(docIdProp);
+    if (optPageId) return String(optPageId);
+    if (page?.id) return String(page.id);
+    if (page?.slug) return String(page.slug).toLowerCase();
+    return String(title || "untitled").toLowerCase();
+  }, [docIdProp, optPageId, page, title]);
 
   /** ---------------------------------------------
    *  LOCAL CONTENT STATE (prevents JSON snapbacks)
@@ -513,6 +526,7 @@ export default function CEContentArea({
         <div className="bg-white">
           <CECanvas
             ref={editorRef}
+            docId={docId}
             title={title}
             content={localContent}
             setContent={handleSetContent}

@@ -14,6 +14,7 @@ const HL_ATTR = "data-ce-hl"; // marker attribute for our highlights
 
 const CECanvas = forwardRef(function CECanvas(
   {
+    docId,               // 👈 NEW: unique per page/document (slug/id)
     title = "Untitled",
     content = "",
     setContent,
@@ -44,7 +45,8 @@ const CECanvas = forwardRef(function CECanvas(
 
   const suppressInputRef = useRef(false);
   const AUTOSAVE_MS = 800;
-  const AUTOSAVE_KEY = `ce:autosave:${title || "untitled"}`;
+  // 🔑 Scope autosave per document, falling back to title/global
+  const AUTOSAVE_KEY = `ce:autosave:${docId || title || "untitled"}`;
 
   /** =========================
    * Utility
@@ -267,6 +269,7 @@ const CECanvas = forwardRef(function CECanvas(
     const el = editorRef.current;
     if (!el) return;
 
+    // 1) No initial content => try per-doc autosave
     if (!seededRef.current && isTrulyEmpty()) {
       const saved =
         typeof window !== "undefined"
@@ -281,7 +284,9 @@ const CECanvas = forwardRef(function CECanvas(
           suppressInputRef.current = false;
         });
       }
-    } else if (!seededRef.current) {
+    }
+    // 2) We *do* have incoming content -> seed from props
+    else if (!seededRef.current) {
       const html = sanitizeToHtml(content);
       if (el.innerHTML !== html) {
         suppressInputRef.current = true;
@@ -327,7 +332,6 @@ const CECanvas = forwardRef(function CECanvas(
     if (recentlyTyped || suppressInputRef.current) return;
 
     // SAFETY: never overwrite a richer current DOM with a shorter prop snapshot
-    // This prevents "remote older snapshot" from nuking what the user just typed.
     if (currentDom.length > htmlFromProp.length) {
       return;
     }
@@ -394,7 +398,6 @@ const CECanvas = forwardRef(function CECanvas(
         break;
 
       case "undo": {
-        // custom undo using undoStack / redoStack
         if (undoStack.current.length > 1) {
           const current = undoStack.current.pop();
           redoStack.current.push(current);
@@ -420,7 +423,6 @@ const CECanvas = forwardRef(function CECanvas(
       }
 
       case "redo": {
-        // custom redo using undoStack / redoStack
         if (redoStack.current.length > 0) {
           const next = redoStack.current.pop() ?? "";
           undoStack.current.push(next);
@@ -444,9 +446,8 @@ const CECanvas = forwardRef(function CECanvas(
       }
 
       case "insertText": {
-        // Used by Research Panel / external paste into canvas
         document.execCommand("insertText", false, value);
-        moveCaretToEndAfter = true; // ensure you can continue typing
+        moveCaretToEndAfter = true;
         break;
       }
 
@@ -456,7 +457,6 @@ const CECanvas = forwardRef(function CECanvas(
     }
 
     if (moveCaretToEndAfter) {
-      // put caret at the end so typing continues smoothly
       setCaretToEnd(el);
     }
 
@@ -530,7 +530,6 @@ const CECanvas = forwardRef(function CECanvas(
         suppressContentEditableWarning
         className="min-h-[300px] md:min-h-[420px] rounded-md border border-[var(--border)] bg-white px-4 py-4 leading-7 text-sm md:text-[15px] text-[var(--text-primary)] focus:outline-none prose prose-p:my-3 prose-h1:text-xl md:prose-h1:text-2xl prose-h2:text-lg md:prose-h2:text-xl prose-ul:list-disc prose-ul:pl-6 transition-colors"
         onInput={() => {
-          // now also pushing into undo history on typing
           bubble({ pushHistory: true, notifyParent: true });
           onTyping?.();
         }}

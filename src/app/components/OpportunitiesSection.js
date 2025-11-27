@@ -520,6 +520,8 @@ export default function OpportunitiesSection({ onOpenContentEditor }) {
         ? seoSlot.keywordDifficulty
         : null;
 
+    const baseTitle = multiSlot?.title || seoSlot?.title || fallbackTitle;
+
     return {
       ...seoSlot, // keep numeric metrics (score, wordCount, etc.) from seo-data
       ...multiSlot, // so title/content/seo fields from multi override if needed
@@ -530,6 +532,11 @@ export default function OpportunitiesSection({ onOpenContentEditor }) {
       plagiarism,
       searchVolume,
       keywordDifficulty,
+      // 👇 identity for the document, primarily from multi-content
+      slug:
+        multiSlot?.slug ||
+        seoSlot?.slug ||
+        (baseTitle ? slugify(baseTitle) : undefined),
     };
   };
 
@@ -764,7 +771,9 @@ export default function OpportunitiesSection({ onOpenContentEditor }) {
               startPayloadRef.current = {
                 kind: type, // "blog" or "page"
                 title: realTitle || displayTitle,
-                slug: titleForSlug ? slugify(titleForSlug) : undefined,
+                slug:
+                  data?.slug ||
+                  (titleForSlug ? slugify(titleForSlug) : undefined),
                 content: data?.content || "",
                 domain,
                 primaryKeyword: data?.primaryKeyword || null,

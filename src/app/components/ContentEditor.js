@@ -202,18 +202,6 @@ export default function ContentEditor({ data, onBackToDashboard }) {
     }
   }, [pageDomain]);
 
-  // 🔐 Per-page storage key so each domain/page gets its own saved editor state
-  const STORAGE_KEY = useMemo(() => {
-    // Try to make the key as specific as possible: domain + slug/id/title
-    const baseParts = [];
-    if (pageDomain) baseParts.push(pageDomain);
-    if (pageKey) baseParts.push(pageKey);
-    else if (titleSlugKey) baseParts.push(titleSlugKey);
-
-    const base = baseParts.join(":") || "global";
-    return `content-editor-state:${base}`;
-  }, [pageDomain, pageKey, titleSlugKey]);
-
   // Track previous incoming data.title to avoid clobbering user edits
   const prevDataTitleRef = useRef(data?.title);
 
@@ -226,13 +214,8 @@ export default function ContentEditor({ data, onBackToDashboard }) {
       const hasNewFlag = hadNewParam || hadNewHash;
 
       if (hasNewFlag) {
-        // NEW document boot (handle once) — clear ONLY this page's state
-        try {
-          localStorage.removeItem(STORAGE_KEY);
-          // clean up any legacy global key too, just in case
-          localStorage.removeItem("content-editor-state");
-        } catch {}
-
+        // NEW document boot (handle once)
+        localStorage.removeItem("content-editor-state");
         setTitle("Untitled");
         setContent("");
         setQuery("");
@@ -258,11 +241,8 @@ export default function ContentEditor({ data, onBackToDashboard }) {
         url.searchParams.delete("new");
         window.history.replaceState(null, "", url.toString());
       } else {
-        // Normal restore from localStorage (per page)
-        const raw =
-          localStorage.getItem(STORAGE_KEY) ||
-          // fallback to legacy key if present
-          localStorage.getItem("content-editor-state");
+        // Normal restore from localStorage (do NOT read title/content/query to avoid deps)
+        const raw = localStorage.getItem("content-editor-state");
         if (raw) {
           try {
             const saved = JSON.parse(raw);
@@ -281,19 +261,19 @@ export default function ContentEditor({ data, onBackToDashboard }) {
     } catch {}
 
     restoredRef.current = true;
-  }, [WORD_TARGET_FROM_DATA, STORAGE_KEY]); // runs once per mount (plus if word target or key changes)
+  }, [WORD_TARGET_FROM_DATA]); // runs once per mount (plus if word target changes)
 
   // Persist minimal state on edits (does NOT include activeTab/seoMode to keep scope small)
   useEffect(() => {
     try {
       const payload = { title, content, query };
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+      localStorage.setItem("content-editor-state", JSON.stringify(payload));
       // keep Research in sync if user changes/clears keyword
       window.dispatchEvent(
         new CustomEvent("content-editor:query-changed", { detail: { query } })
       );
     } catch {}
-  }, [title, content, query, STORAGE_KEY]);
+  }, [title, content, query]);
 
   /* central reset helper (memoized to satisfy exhaustive-deps) */
   const resetToNewDocument = useCallback(
@@ -322,7 +302,7 @@ export default function ContentEditor({ data, onBackToDashboard }) {
       }));
       try {
         localStorage.setItem(
-          STORAGE_KEY,
+          "content-editor-state",
           JSON.stringify({ title: nextTitle, content: nextContent, query: "" })
         );
       } catch {}
@@ -339,7 +319,7 @@ export default function ContentEditor({ data, onBackToDashboard }) {
         window.history.replaceState(null, "", url.toString());
       } catch {}
     },
-    [data?.metrics?.wordTarget, data?.wordTarget, pageConfig?.wordTarget, STORAGE_KEY]
+    [data?.metrics?.wordTarget, data?.wordTarget, pageConfig?.wordTarget]
   );
 
   /* listen for multiple "new doc" event names */

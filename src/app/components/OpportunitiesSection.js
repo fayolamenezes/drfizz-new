@@ -700,9 +700,11 @@ export default function OpportunitiesSection({ onOpenContentEditor }) {
     const status = data?.status ?? "Draft";
 
     const realTitle = data?.title;
+
+    // 🔑 Change: prefer realTitle (from multi-content/seo-data) first
     const displayTitle =
-      GENERIC_CARD_TITLES[index % GENERIC_CARD_TITLES.length] ||
       realTitle ||
+      GENERIC_CARD_TITLES[index % GENERIC_CARD_TITLES.length] ||
       "SEO Opportunity";
 
     return (

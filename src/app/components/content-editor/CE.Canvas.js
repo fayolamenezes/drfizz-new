@@ -373,15 +373,53 @@ const CECanvas = forwardRef(function CECanvas(
         wrapSelectionWith("code");
         break;
 
-      case "undo":
+      case "undo": {
+        // custom undo using undoStack / redoStack
+        if (undoStack.current.length > 1) {
+          const current = undoStack.current.pop();
+          redoStack.current.push(current);
+
+          const prev = undoStack.current[undoStack.current.length - 1] ?? "";
+
+          suppressInputRef.current = true;
+          el.innerHTML = prev;
+          lastLocalHtmlRef.current = prev;
+          lastLocalEditAtRef.current = Date.now();
+
+          setContent?.(prev);
+          scheduleAutosave(prev);
+
+          queueMicrotask(() => {
+            suppressInputRef.current = false;
+          });
+
+          saveSelectionSnapshot();
+          requestAnimationFrame(runHighlights);
+        }
+        return;
+      }
+
       case "redo": {
-        // Use browser's native undo/redo so it matches Ctrl+Z/Y
-        document.execCommand(cmd, false, value);
-        const html = el.innerHTML;
-        lastLocalHtmlRef.current = html;
-        lastLocalEditAtRef.current = Date.now();
-        // Inform parent but don't push a new history item in our own stack
-        bubble({ pushHistory: false, notifyParent: true });
+        // custom redo using undoStack / redoStack
+        if (redoStack.current.length > 0) {
+          const next = redoStack.current.pop() ?? "";
+          undoStack.current.push(next);
+
+          suppressInputRef.current = true;
+          el.innerHTML = next;
+          lastLocalHtmlRef.current = next;
+          lastLocalEditAtRef.current = Date.now();
+
+          setContent?.(next);
+          scheduleAutosave(next);
+
+          queueMicrotask(() => {
+            suppressInputRef.current = false;
+          });
+
+          saveSelectionSnapshot();
+          requestAnimationFrame(runHighlights);
+        }
         return;
       }
 
@@ -460,8 +498,8 @@ const CECanvas = forwardRef(function CECanvas(
         suppressContentEditableWarning
         className="min-h-[300px] md:min-h-[420px] rounded-md border border-[var(--border)] bg-white px-4 py-4 leading-7 text-sm md:text-[15px] text-[var(--text-primary)] focus:outline-none prose prose-p:my-3 prose-h1:text-xl md:prose-h1:text-2xl prose-h2:text-lg md:prose-h2:text-xl prose-ul:list-disc prose-ul:pl-6 transition-colors"
         onInput={() => {
-          // Let parent know + optionally maintain our own stack if you want
-          bubble({ pushHistory: false, notifyParent: true });
+          // now also pushing into undo history on typing
+          bubble({ pushHistory: true, notifyParent: true });
           onTyping?.();
         }}
         onFocus={() => {

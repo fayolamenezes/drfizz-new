@@ -51,6 +51,17 @@ const normalizeDomain = (input = "") => {
   }
 };
 
+const slugify = (title = "") =>
+  String(title)
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "");
+
+/**
+ * Try to recover current site/domain from URL or storage
+ */
 function getSiteFromStorageOrQuery(searchParams) {
   const qp = searchParams?.get?.("site");
   if (qp) return normalizeDomain(qp);
@@ -596,9 +607,14 @@ export default function OpportunitiesSection({ onOpenContentEditor }) {
 
   const handleEditExisting = () => {
     const real = startPayloadRef.current || {};
+    if (!real.title && !real.content) {
+      setStartOpen(false);
+      return;
+    }
     // open with real title + content + domain + SEO fields so ContentEditor can use them
     dispatchOpen({
       title: real.title,
+      slug: real.slug || (real.title ? slugify(real.title) : undefined),
       kind: real.kind || "blog",
       content: real.content || "",
       domain: real.domain || domain,
@@ -727,7 +743,9 @@ export default function OpportunitiesSection({ onOpenContentEditor }) {
               </div>
             </div>
             <div>
-              <div className="text-[12px] text-[var(--muted)]">Keywords</div>
+              <div className="text-[12px] text-[var(--muted)]">
+                Keywords
+              </div>
               <div className="mt-1 text-[28px] font-semibold leading-none text-[var(--text)] tabular-nums">
                 {kws}
               </div>
@@ -742,9 +760,11 @@ export default function OpportunitiesSection({ onOpenContentEditor }) {
           <button
             onClick={() => {
               // Keep all SEO fields (primary, LSI, plagiarism, SV, KD) from merged data
+              const titleForSlug = realTitle || displayTitle;
               startPayloadRef.current = {
                 kind: type, // "blog" or "page"
                 title: realTitle || displayTitle,
+                slug: titleForSlug ? slugify(titleForSlug) : undefined,
                 content: data?.content || "",
                 domain,
                 primaryKeyword: data?.primaryKeyword || null,

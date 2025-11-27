@@ -108,8 +108,8 @@ export default function ContentEditor({ data, onBackToDashboard }) {
       hit = pages.find((p) => norm(p.title) === norm(data.title));
     }
 
-    // 4) Final safety net
-    return hit || pages[0] || null;
+    // 4) Final safety net – now NO default pages[0] fallback
+    return hit || null;
   }, [config, pageKey, titleSlugKey, data?.title]);
 
   /* editor state */
@@ -164,10 +164,7 @@ export default function ContentEditor({ data, onBackToDashboard }) {
   );
 
   const WORD_TARGET_FROM_DATA =
-    data?.metrics?.wordTarget ??
-    data?.wordTarget ??
-    pageConfig?.wordTarget ??
-    1480;
+    data?.metrics?.wordTarget ?? data?.wordTarget ?? pageConfig?.wordTarget ?? 1480;
 
   // Initial plagiarism pulled from data (multi-content) when available
   const [metrics, setMetrics] = useState(() => ({
@@ -236,6 +233,7 @@ export default function ContentEditor({ data, onBackToDashboard }) {
         // Force remount & tell research to reset
         setEditorSessionId((n) => n + 1);
         broadcastResearchReset("");
+
 
         // Clean URL so refresh doesn’t repeat NEW (no hash change)
         url.searchParams.delete("new");

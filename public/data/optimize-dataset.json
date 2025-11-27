@@ -2724,7 +2724,7 @@
         {
           "id": "blog-saas-content-strategy",
           "url": "https://itzfizz.com/blog-saas-content-strategy",
-          "title": "Content Strategy for Growing SaaS Brands",
+          "title": "SEO Strategies That Drive Quick Wins for SMEs",
           "pageType": "blog",
           "kpis": {
             "headings": 4,
@@ -2733,8 +2733,8 @@
           },
           "keywords": [
             {
-              "id": "blog-saas-content-strategy-k1",
-              "title": "saas content",
+              "id": "blog-seo-strategies-k1",
+              "title": "SEO strategies",
               "used": 2,
               "recommended": 3,
               "sources": 10,
@@ -2744,20 +2744,20 @@
               "results": 3,
               "links": [
                 {
-                  "url": "https://itzfizz.com/guide/saas-content",
-                  "title": "Saas Content Guide for itzfizz.com",
-                  "snippet": "A practical guide on saas content tailored for itzfizz.com, aligned with the content of blog-saas-content-strategy."
+                  "url": "https://itzfizz.com/guide/sme-seo-strategies",
+                  "title": "SEO Strategies Guide for SMEs (itzfizz.com)",
+                  "snippet": "An actionable guide to SEO strategies for SMEs, focused on practical tactics and high-leverage actions that deliver quick search visibility gains."
                 },
                 {
-                  "url": "https://itzfizz.com/checklist/saas-content",
-                  "title": "Saas Content Checklist (itzfizz.com)",
-                  "snippet": "A short checklist to implement saas content on itzfizz.com based on the associated content."
+                  "url": "https://itzfizz.com/checklist/sme-seo-quick-wins",
+                  "title": "SME SEO Quick Wins Checklist (itzfizz.com)",
+                  "snippet": "A step-by-step checklist of SEO strategies that small and medium businesses can use to unlock quick wins and early results."
                 }
               ]
             },
             {
-              "id": "blog-saas-content-strategy-k2",
-              "title": "topic mapping",
+              "id": "blog-seo-strategies-k2",
+              "title": "high intent landing pages",
               "used": 2,
               "recommended": 3,
               "sources": 10,
@@ -2767,20 +2767,20 @@
               "results": 3,
               "links": [
                 {
-                  "url": "https://itzfizz.com/guide/topic-mapping",
-                  "title": "Topic Mapping Guide for itzfizz.com",
-                  "snippet": "A practical guide on topic mapping tailored for itzfizz.com, aligned with the content of blog-saas-content-strategy."
+                  "url": "https://itzfizz.com/guide/high-intent-landing-pages",
+                  "title": "High-Intent Landing Pages Guide (itzfizz.com)",
+                  "snippet": "A detailed guide on designing high-intent landing pages that convert ready-to-buy visitors with clear messaging and strong CTAs."
                 },
                 {
-                  "url": "https://itzfizz.com/checklist/topic-mapping",
-                  "title": "Topic Mapping Checklist (itzfizz.com)",
-                  "snippet": "A short checklist to implement topic mapping on itzfizz.com based on the associated content."
+                  "url": "https://itzfizz.com/checklist/high-intent-landing-pages",
+                  "title": "High-Intent Landing Pages Optimization Checklist (itzfizz.com)",
+                  "snippet": "A practical checklist for optimizing high-intent landing pages around search intent, user flow, and conversion elements."
                 }
               ]
             },
             {
-              "id": "blog-saas-content-strategy-k3",
-              "title": "signature formats",
+              "id": "blog-seo-strategies-k3",
+              "title": "on page enhancements",
               "used": 2,
               "recommended": 3,
               "sources": 10,
@@ -2790,20 +2790,20 @@
               "results": 3,
               "links": [
                 {
-                  "url": "https://itzfizz.com/guide/signature-formats",
-                  "title": "Signature Formats Guide for itzfizz.com",
-                  "snippet": "A practical guide on signature formats tailored for itzfizz.com, aligned with the content of blog-saas-content-strategy."
+                  "url": "https://itzfizz.com/guide/on-page-enhancements",
+                  "title": "On-Page Enhancements Guide (itzfizz.com)",
+                  "snippet": "A comprehensive guide to on-page enhancements such as meta improvements, internal links, image optimization, and FAQ sections."
                 },
                 {
-                  "url": "https://itzfizz.com/checklist/signature-formats",
-                  "title": "Signature Formats Checklist (itzfizz.com)",
-                  "snippet": "A short checklist to implement signature formats on itzfizz.com based on the associated content."
+                  "url": "https://itzfizz.com/checklist/on-page-enhancements",
+                  "title": "On-Page Enhancements Checklist (itzfizz.com)",
+                  "snippet": "A concise checklist of high-impact on-page enhancements SMEs can implement to boost rankings and user engagement."
                 }
               ]
             },
             {
-              "id": "blog-saas-content-strategy-k4",
-              "title": "onboarding content",
+              "id": "blog-seo-strategies-k4",
+              "title": "conversion optimization",
               "used": 2,
               "recommended": 3,
               "sources": 10,
@@ -2813,338 +2813,338 @@
               "results": 3,
               "links": [
                 {
-                  "url": "https://itzfizz.com/guide/onboarding-content",
-                  "title": "Onboarding Content Guide for itzfizz.com",
-                  "snippet": "A practical guide on onboarding content tailored for itzfizz.com, aligned with the content of blog-saas-content-strategy."
+                  "url": "https://itzfizz.com/guide/conversion-optimization",
+                  "title": "Conversion Optimization Guide (itzfizz.com)",
+                  "snippet": "A guide to conversion optimization strategies that complement SEO, helping SMEs turn organic traffic into leads and revenue."
                 },
                 {
-                  "url": "https://itzfizz.com/checklist/onboarding-content",
-                  "title": "Onboarding Content Checklist (itzfizz.com)",
-                  "snippet": "A short checklist to implement onboarding content on itzfizz.com based on the associated content."
+                  "url": "https://itzfizz.com/checklist/conversion-optimization",
+                  "title": "Conversion Optimization Checklist (itzfizz.com)",
+                  "snippet": "A practical checklist for improving forms, CTAs, page structure, and user journeys to lift conversion rates."
                 }
               ]
             }
           ],
           "editorKey": "blog-saas-content-strategy"
         },
+{
+  "id": "blog-local-seo-agencies",
+  "url": "https://itzfizz.com/local-seo-agencies",
+  "title": "Complete Guide to Local SEO for Agencies",
+  "pageType": "blog",
+  "kpis": {
+    "headings": 4,
+    "links": 6,
+    "images": 2
+  },
+  "keywords": [
+    {
+      "id": "blog-local-seo-agencies-k1",
+      "title": "local SEO",
+      "used": 2,
+      "recommended": 3,
+      "sources": 10,
+      "type": "All Topics",
+      "mine": 1,
+      "avg": 4,
+      "results": 3,
+      "links": [
         {
-          "id": "blog-webinar-evergreen-assets",
-          "url": "https://itzfizz.com/blog-webinar-evergreen-assets",
-          "title": "Turning Webinars Into Evergreen Assets",
-          "pageType": "blog",
-          "kpis": {
-            "headings": 4,
-            "links": 6,
-            "images": 2
-          },
-          "keywords": [
-            {
-              "id": "blog-webinar-evergreen-assets-k1",
-              "title": "webinar assets",
-              "used": 2,
-              "recommended": 3,
-              "sources": 10,
-              "type": "All Topics",
-              "mine": 1,
-              "avg": 4,
-              "results": 3,
-              "links": [
-                {
-                  "url": "https://itzfizz.com/guide/webinar-assets",
-                  "title": "Webinar Assets Guide for itzfizz.com",
-                  "snippet": "A practical guide on webinar assets tailored for itzfizz.com, aligned with the content of blog-webinar-evergreen-assets."
-                },
-                {
-                  "url": "https://itzfizz.com/checklist/webinar-assets",
-                  "title": "Webinar Assets Checklist (itzfizz.com)",
-                  "snippet": "A short checklist to implement webinar assets on itzfizz.com based on the associated content."
-                }
-              ]
-            },
-            {
-              "id": "blog-webinar-evergreen-assets-k2",
-              "title": "content slicing",
-              "used": 2,
-              "recommended": 3,
-              "sources": 10,
-              "type": "All Topics",
-              "mine": 1,
-              "avg": 4,
-              "results": 3,
-              "links": [
-                {
-                  "url": "https://itzfizz.com/guide/content-slicing",
-                  "title": "Content Slicing Guide for itzfizz.com",
-                  "snippet": "A practical guide on content slicing tailored for itzfizz.com, aligned with the content of blog-webinar-evergreen-assets."
-                },
-                {
-                  "url": "https://itzfizz.com/checklist/content-slicing",
-                  "title": "Content Slicing Checklist (itzfizz.com)",
-                  "snippet": "A short checklist to implement content slicing on itzfizz.com based on the associated content."
-                }
-              ]
-            },
-            {
-              "id": "blog-webinar-evergreen-assets-k3",
-              "title": "replay views",
-              "used": 2,
-              "recommended": 3,
-              "sources": 10,
-              "type": "All Topics",
-              "mine": 1,
-              "avg": 4,
-              "results": 3,
-              "links": [
-                {
-                  "url": "https://itzfizz.com/guide/replay-views",
-                  "title": "Replay Views Guide for itzfizz.com",
-                  "snippet": "A practical guide on replay views tailored for itzfizz.com, aligned with the content of blog-webinar-evergreen-assets."
-                },
-                {
-                  "url": "https://itzfizz.com/checklist/replay-views",
-                  "title": "Replay Views Checklist (itzfizz.com)",
-                  "snippet": "A short checklist to implement replay views on itzfizz.com based on the associated content."
-                }
-              ]
-            },
-            {
-              "id": "blog-webinar-evergreen-assets-k4",
-              "title": "assisted conversions",
-              "used": 2,
-              "recommended": 3,
-              "sources": 10,
-              "type": "All Topics",
-              "mine": 1,
-              "avg": 4,
-              "results": 3,
-              "links": [
-                {
-                  "url": "https://itzfizz.com/guide/assisted-conversions",
-                  "title": "Assisted Conversions Guide for itzfizz.com",
-                  "snippet": "A practical guide on assisted conversions tailored for itzfizz.com, aligned with the content of blog-webinar-evergreen-assets."
-                },
-                {
-                  "url": "https://itzfizz.com/checklist/assisted-conversions",
-                  "title": "Assisted Conversions Checklist (itzfizz.com)",
-                  "snippet": "A short checklist to implement assisted conversions on itzfizz.com based on the associated content."
-                }
-              ]
-            }
-          ],
-          "editorKey": "blog-webinar-evergreen-assets"
+          "url": "https://itzfizz.com/guide/local-seo-basics",
+          "title": "Local SEO Basics Guide (itzfizz.com)",
+          "snippet": "A foundational guide explaining how local SEO improves visibility, map presence, and customer trust for service-based businesses."
         },
         {
-          "id": "marketing-services-overview",
-          "url": "https://itzfizz.com/marketing-services-overview",
-          "title": "Services Overview for Marketing Partnerships",
-          "pageType": "service",
-          "kpis": {
-            "headings": 4,
-            "links": 6,
-            "images": 2
-          },
-          "keywords": [
-            {
-              "id": "marketing-services-overview-k1",
-              "title": "marketing services",
-              "used": 2,
-              "recommended": 3,
-              "sources": 10,
-              "type": "All Topics",
-              "mine": 1,
-              "avg": 4,
-              "results": 3,
-              "links": [
-                {
-                  "url": "https://itzfizz.com/guide/marketing-services",
-                  "title": "Marketing Services Guide for itzfizz.com",
-                  "snippet": "A practical guide on marketing services tailored for itzfizz.com, aligned with the content of marketing-services-overview."
-                },
-                {
-                  "url": "https://itzfizz.com/checklist/marketing-services",
-                  "title": "Marketing Services Checklist (itzfizz.com)",
-                  "snippet": "A short checklist to implement marketing services on itzfizz.com based on the associated content."
-                }
-              ]
-            },
-            {
-              "id": "marketing-services-overview-k2",
-              "title": "positioning workshops",
-              "used": 2,
-              "recommended": 3,
-              "sources": 10,
-              "type": "All Topics",
-              "mine": 1,
-              "avg": 4,
-              "results": 3,
-              "links": [
-                {
-                  "url": "https://itzfizz.com/guide/positioning-workshops",
-                  "title": "Positioning Workshops Guide for itzfizz.com",
-                  "snippet": "A practical guide on positioning workshops tailored for itzfizz.com, aligned with the content of marketing-services-overview."
-                },
-                {
-                  "url": "https://itzfizz.com/checklist/positioning-workshops",
-                  "title": "Positioning Workshops Checklist (itzfizz.com)",
-                  "snippet": "A short checklist to implement positioning workshops on itzfizz.com based on the associated content."
-                }
-              ]
-            },
-            {
-              "id": "marketing-services-overview-k3",
-              "title": "content support",
-              "used": 2,
-              "recommended": 3,
-              "sources": 10,
-              "type": "All Topics",
-              "mine": 1,
-              "avg": 4,
-              "results": 3,
-              "links": [
-                {
-                  "url": "https://itzfizz.com/guide/content-support",
-                  "title": "Content Support Guide for itzfizz.com",
-                  "snippet": "A practical guide on content support tailored for itzfizz.com, aligned with the content of marketing-services-overview."
-                },
-                {
-                  "url": "https://itzfizz.com/checklist/content-support",
-                  "title": "Content Support Checklist (itzfizz.com)",
-                  "snippet": "A short checklist to implement content support on itzfizz.com based on the associated content."
-                }
-              ]
-            },
-            {
-              "id": "marketing-services-overview-k4",
-              "title": "analytics consulting",
-              "used": 2,
-              "recommended": 3,
-              "sources": 10,
-              "type": "All Topics",
-              "mine": 1,
-              "avg": 4,
-              "results": 3,
-              "links": [
-                {
-                  "url": "https://itzfizz.com/guide/analytics-consulting",
-                  "title": "Analytics Consulting Guide for itzfizz.com",
-                  "snippet": "A practical guide on analytics consulting tailored for itzfizz.com, aligned with the content of marketing-services-overview."
-                },
-                {
-                  "url": "https://itzfizz.com/checklist/analytics-consulting",
-                  "title": "Analytics Consulting Checklist (itzfizz.com)",
-                  "snippet": "A short checklist to implement analytics consulting on itzfizz.com based on the associated content."
-                }
-              ]
-            }
-          ],
-          "editorKey": "marketing-services-overview"
+          "url": "https://itzfizz.com/checklist/local-seo-setup",
+          "title": "Local SEO Setup Checklist (itzfizz.com)",
+          "snippet": "A step-by-step checklist for optimizing local listings, NAP consistency, and geo-targeted content to strengthen local presence."
+        }
+      ]
+    },
+    {
+      "id": "blog-local-seo-agencies-k2",
+      "title": "customer momentum",
+      "used": 2,
+      "recommended": 3,
+      "sources": 10,
+      "type": "All Topics",
+      "mine": 1,
+      "avg": 4,
+      "results": 3,
+      "links": [
+        {
+          "url": "https://itzfizz.com/guide/local-user-behavior",
+          "title": "Local User Behavior Guide (itzfizz.com)",
+          "snippet": "Insights into how real customers search, compare, and choose local businesses based on accuracy, proximity, and relevance."
         },
         {
-          "id": "case-study-template",
-          "url": "https://itzfizz.com/case-study-template",
-          "title": "Case Study Template Page",
-          "pageType": "template",
-          "kpis": {
-            "headings": 4,
-            "links": 6,
-            "images": 2
-          },
-          "keywords": [
-            {
-              "id": "case-study-template-k1",
-              "title": "case template",
-              "used": 2,
-              "recommended": 3,
-              "sources": 10,
-              "type": "All Topics",
-              "mine": 1,
-              "avg": 4,
-              "results": 3,
-              "links": [
-                {
-                  "url": "https://itzfizz.com/guide/case-template",
-                  "title": "Case Template Guide for itzfizz.com",
-                  "snippet": "A practical guide on case template tailored for itzfizz.com, aligned with the content of case-study-template."
-                },
-                {
-                  "url": "https://itzfizz.com/checklist/case-template",
-                  "title": "Case Template Checklist (itzfizz.com)",
-                  "snippet": "A short checklist to implement case template on itzfizz.com based on the associated content."
-                }
-              ]
-            },
-            {
-              "id": "case-study-template-k2",
-              "title": "customer background",
-              "used": 2,
-              "recommended": 3,
-              "sources": 10,
-              "type": "All Topics",
-              "mine": 1,
-              "avg": 4,
-              "results": 3,
-              "links": [
-                {
-                  "url": "https://itzfizz.com/guide/customer-background",
-                  "title": "Customer Background Guide for itzfizz.com",
-                  "snippet": "A practical guide on customer background tailored for itzfizz.com, aligned with the content of case-study-template."
-                },
-                {
-                  "url": "https://itzfizz.com/checklist/customer-background",
-                  "title": "Customer Background Checklist (itzfizz.com)",
-                  "snippet": "A short checklist to implement customer background on itzfizz.com based on the associated content."
-                }
-              ]
-            },
-            {
-              "id": "case-study-template-k3",
-              "title": "implementation story",
-              "used": 2,
-              "recommended": 3,
-              "sources": 10,
-              "type": "All Topics",
-              "mine": 1,
-              "avg": 4,
-              "results": 3,
-              "links": [
-                {
-                  "url": "https://itzfizz.com/guide/implementation-story",
-                  "title": "Implementation Story Guide for itzfizz.com",
-                  "snippet": "A practical guide on implementation story tailored for itzfizz.com, aligned with the content of case-study-template."
-                },
-                {
-                  "url": "https://itzfizz.com/checklist/implementation-story",
-                  "title": "Implementation Story Checklist (itzfizz.com)",
-                  "snippet": "A short checklist to implement implementation story on itzfizz.com based on the associated content."
-                }
-              ]
-            },
-            {
-              "id": "case-study-template-k4",
-              "title": "result metrics",
-              "used": 2,
-              "recommended": 3,
-              "sources": 10,
-              "type": "All Topics",
-              "mine": 1,
-              "avg": 4,
-              "results": 3,
-              "links": [
-                {
-                  "url": "https://itzfizz.com/guide/result-metrics",
-                  "title": "Result Metrics Guide for itzfizz.com",
-                  "snippet": "A practical guide on result metrics tailored for itzfizz.com, aligned with the content of case-study-template."
-                },
-                {
-                  "url": "https://itzfizz.com/checklist/result-metrics",
-                  "title": "Result Metrics Checklist (itzfizz.com)",
-                  "snippet": "A short checklist to implement result metrics on itzfizz.com based on the associated content."
-                }
-              ]
-            }
-          ],
-          "editorKey": "case-study-template"
+          "url": "https://itzfizz.com/checklist/customer-engagement",
+          "title": "Customer Engagement Checklist (itzfizz.com)",
+          "snippet": "A checklist to measure customer momentum through brand searches, map interactions, and intent-driven local actions."
+        }
+      ]
+    },
+    {
+      "id": "blog-local-seo-agencies-k3",
+      "title": "Google visibility",
+      "used": 2,
+      "recommended": 3,
+      "sources": 10,
+      "type": "All Topics",
+      "mine": 1,
+      "avg": 4,
+      "results": 3,
+      "links": [
+        {
+          "url": "https://itzfizz.com/guide/google-visibility-boost",
+          "title": "Google Visibility Boost Guide (itzfizz.com)",
+          "snippet": "A detailed guide on strengthening Google visibility through optimized GBP profiles, localized content, and trust signals."
         },
+        {
+          "url": "https://itzfizz.com/checklist/google-maps-ranking",
+          "title": "Google Maps Ranking Checklist (itzfizz.com)",
+          "snippet": "A checklist for improving map rankings using Q&A updates, consistent reviews, local citations, and profile engagement."
+        }
+      ]
+    },
+    {
+      "id": "blog-local-seo-agencies-k4",
+      "title": "local authority",
+      "used": 2,
+      "recommended": 3,
+      "sources": 10,
+      "type": "All Topics",
+      "mine": 1,
+      "avg": 4,
+      "results": 3,
+      "links": [
+        {
+          "url": "https://itzfizz.com/guide/local-authority-growth",
+          "title": "Local Authority Growth Guide (itzfizz.com)",
+          "snippet": "A guide explaining how businesses build local authority through community involvement, press mentions, and neighborhood partnerships."
+        },
+        {
+          "url": "https://itzfizz.com/checklist/local-trust-signals",
+          "title": "Local Trust Signals Checklist (itzfizz.com)",
+          "snippet": "A checklist to help businesses strengthen local authority through credible citations, collaborations, and consistent online reputation."
+        }
+      ]
+    }
+  ],
+  "editorKey": "blog-local-seo-agencies"
+},
+{
+  "id": "marketing-services-overview",
+  "url": "https://itzfizz.com/digital-marketing-overview",
+  "title": "Digital Marketing & Search Visibility Services",
+  "pageType": "service",
+  "kpis": {
+    "headings": 4,
+    "links": 6,
+    "images": 2
+  },
+  "keywords": [
+    {
+      "id": "marketing-services-overview-k1",
+      "title": "digital marketing",
+      "used": 2,
+      "recommended": 3,
+      "sources": 10,
+      "type": "All Topics",
+      "mine": 1,
+      "avg": 4,
+      "results": 3,
+      "links": [
+        {
+          "url": "https://itzfizz.com/guide/digital-marketing-fundamentals",
+          "title": "Digital Marketing Fundamentals Guide (itzfizz.com)",
+          "snippet": "A comprehensive guide explaining how digital marketing aligns messaging, channels, and outcomes to build long-term brand growth."
+        },
+        {
+          "url": "https://itzfizz.com/checklist/digital-marketing-readiness",
+          "title": "Digital Marketing Readiness Checklist (itzfizz.com)",
+          "snippet": "A checklist to help teams assess foundational clarity, goals, and resources before launching a digital marketing program."
+        }
+      ]
+    },
+    {
+      "id": "marketing-services-overview-k2",
+      "title": "search visibility",
+      "used": 2,
+      "recommended": 3,
+      "sources": 10,
+      "type": "All Topics",
+      "mine": 1,
+      "avg": 4,
+      "results": 3,
+      "links": [
+        {
+          "url": "https://itzfizz.com/guide/search-visibility-strategy",
+          "title": "Search Visibility Strategy Guide (itzfizz.com)",
+          "snippet": "A guide outlining how brands can increase search visibility through intent-driven SEO, structured content, and technical alignment."
+        },
+        {
+          "url": "https://itzfizz.com/checklist/search-visibility-audit",
+          "title": "Search Visibility Audit Checklist (itzfizz.com)",
+          "snippet": "A checklist for auditing visibility across keywords, pages, SERP features, and content relevance to uncover growth opportunities."
+        }
+      ]
+    },
+    {
+      "id": "marketing-services-overview-k3",
+      "title": "brand strategy",
+      "used": 2,
+      "recommended": 3,
+      "sources": 10,
+      "type": "All Topics",
+      "mine": 1,
+      "avg": 4,
+      "results": 3,
+      "links": [
+        {
+          "url": "https://itzfizz.com/guide/brand-strategy-foundations",
+          "title": "Brand Strategy Foundations Guide (itzfizz.com)",
+          "snippet": "A guide helping teams clarify audience, positioning, and narrative so future campaigns align with long-term brand identity."
+        },
+        {
+          "url": "https://itzfizz.com/checklist/brand-strategy-alignment",
+          "title": "Brand Strategy Alignment Checklist (itzfizz.com)",
+          "snippet": "A checklist that ensures messaging, visuals, and content all support a unified brand strategy across marketing channels."
+        }
+      ]
+    },
+    {
+      "id": "marketing-services-overview-k4",
+      "title": "content depth",
+      "used": 2,
+      "recommended": 3,
+      "sources": 10,
+      "type": "All Topics",
+      "mine": 1,
+      "avg": 4,
+      "results": 3,
+      "links": [
+        {
+          "url": "https://itzfizz.com/guide/content-depth-framework",
+          "title": "Content Depth Framework Guide (itzfizz.com)",
+          "snippet": "A guide showing how deeper, value-rich content builds trust, educates users, and compounds ROI over long-term marketing cycles."
+        },
+        {
+          "url": "https://itzfizz.com/checklist/content-depth-optimization",
+          "title": "Content Depth Optimization Checklist (itzfizz.com)",
+          "snippet": "A checklist designed to enhance content structure, clarity, and substance to improve engagement and customer understanding."
+        }
+      ]
+    }
+  ],
+  "editorKey": "marketing-services-overview"
+},
+{
+  "id": "case-study-template",
+  "url": "https://itzfizz.com/local-seo-gmb-template",
+  "title": "Local SEO & GMB Optimization Framework",
+  "pageType": "template",
+  "kpis": {
+    "headings": 4,
+    "links": 6,
+    "images": 2
+  },
+  "keywords": [
+    {
+      "id": "case-study-template-k1",
+      "title": "regional discovery",
+      "used": 2,
+      "recommended": 3,
+      "sources": 10,
+      "type": "All Topics",
+      "mine": 1,
+      "avg": 4,
+      "results": 3,
+      "links": [
+        {
+          "url": "https://itzfizz.com/guide/regional-discovery-insights",
+          "title": "Regional Discovery Insights Guide (itzfizz.com)",
+          "snippet": "A guide that explains how businesses can strengthen regional discovery through improved map placement, accurate listings, and local content signals."
+        },
+        {
+          "url": "https://itzfizz.com/checklist/regional-discovery-audit",
+          "title": "Regional Discovery Audit Checklist (itzfizz.com)",
+          "snippet": "A checklist for identifying gaps in local visibility, competitor coverage, and regional search relevance."
+        }
+      ]
+    },
+    {
+      "id": "case-study-template-k2",
+      "title": "location conversions",
+      "used": 2,
+      "recommended": 3,
+      "sources": 10,
+      "type": "All Topics",
+      "mine": 1,
+      "avg": 4,
+      "results": 3,
+      "links": [
+        {
+          "url": "https://itzfizz.com/guide/location-conversion-strategy",
+          "title": "Location Conversion Strategy Guide (itzfizz.com)",
+          "snippet": "A guide on improving location-based conversions through optimized GMB listings, accurate data, and customer action triggers."
+        },
+        {
+          "url": "https://itzfizz.com/checklist/location-conversion-metrics",
+          "title": "Location Conversion Metrics Checklist (itzfizz.com)",
+          "snippet": "A checklist to measure calls, direction requests, map interactions, and other high-intent local conversion signals."
+        }
+      ]
+    },
+    {
+      "id": "case-study-template-k3",
+      "title": "map rankings",
+      "used": 2,
+      "recommended": 3,
+      "sources": 10,
+      "type": "All Topics",
+      "mine": 1,
+      "avg": 4,
+      "results": 3,
+      "links": [
+        {
+          "url": "https://itzfizz.com/guide/map-ranking-boost",
+          "title": "Map Ranking Boost Guide (itzfizz.com)",
+          "snippet": "A guide to improving map rankings through category refinement, proximity signals, structured data, and review velocity."
+        },
+        {
+          "url": "https://itzfizz.com/checklist/map-ranking-readiness",
+          "title": "Map Ranking Readiness Checklist (itzfizz.com)",
+          "snippet": "A checklist for optimizing all factors that influence local map pack visibility and competitive placement."
+        }
+      ]
+    },
+    {
+      "id": "case-study-template-k4",
+      "title": "profile optimization",
+      "used": 2,
+      "recommended": 3,
+      "sources": 10,
+      "type": "All Topics",
+      "mine": 1,
+      "avg": 4,
+      "results": 3,
+      "links": [
+        {
+          "url": "https://itzfizz.com/guide/gmb-profile-optimization",
+          "title": "GMB Profile Optimization Guide (itzfizz.com)",
+          "snippet": "A guide covering best practices for optimizing Google Business Profiles, including photos, posts, categories, and completeness scores."
+        },
+        {
+          "url": "https://itzfizz.com/checklist/profile-optimization-essentials",
+          "title": "Profile Optimization Essentials Checklist (itzfizz.com)",
+          "snippet": "A checklist to ensure GMB profiles maintain accuracy, freshness, and strong engagement signals for sustained visibility."
+        }
+      ]
+    }
+  ],
+  "editorKey": "case-study-template"
+},
         {
           "id": "blog-saas-content-strategy-2",
           "url": "https://itzfizz.com/blog-saas-content-strategy-2",
@@ -3169,13 +3169,13 @@
               "links": [
                 {
                   "url": "https://itzfizz.com/guide/saas-content",
-                  "title": "Saas Content Guide for itzfizz.com",
-                  "snippet": "A practical guide on saas content tailored for itzfizz.com, aligned with the content of blog-saas-content-strategy."
+                  "title": "SaaS Content Strategy Guide (itzfizz.com)",
+                  "snippet": "A guide to planning SaaS content that supports acquisition, activation, and retention across the funnel."
                 },
                 {
                   "url": "https://itzfizz.com/checklist/saas-content",
-                  "title": "Saas Content Checklist (itzfizz.com)",
-                  "snippet": "A short checklist to implement saas content on itzfizz.com based on the associated content."
+                  "title": "SaaS Content Planning Checklist (itzfizz.com)",
+                  "snippet": "A checklist to organize SaaS content topics, formats, and publishing cadence for growing brands."
                 }
               ]
             },
@@ -3192,13 +3192,13 @@
               "links": [
                 {
                   "url": "https://itzfizz.com/guide/topic-mapping",
-                  "title": "Topic Mapping Guide for itzfizz.com",
-                  "snippet": "A practical guide on topic mapping tailored for itzfizz.com, aligned with the content of blog-saas-content-strategy."
+                  "title": "Topic Mapping for SaaS Content Guide (itzfizz.com)",
+                  "snippet": "A guide on topic mapping to structure SaaS content around themes, problems, and customer journeys."
                 },
                 {
                   "url": "https://itzfizz.com/checklist/topic-mapping",
-                  "title": "Topic Mapping Checklist (itzfizz.com)",
-                  "snippet": "A short checklist to implement topic mapping on itzfizz.com based on the associated content."
+                  "title": "Topic Mapping Workshop Checklist (itzfizz.com)",
+                  "snippet": "A checklist to run topic mapping sessions and translate ideas into a content roadmap."
                 }
               ]
             },
@@ -3215,13 +3215,13 @@
               "links": [
                 {
                   "url": "https://itzfizz.com/guide/signature-formats",
-                  "title": "Signature Formats Guide for itzfizz.com",
-                  "snippet": "A practical guide on signature formats tailored for itzfizz.com, aligned with the content of blog-saas-content-strategy."
+                  "title": "Signature Content Formats Guide (itzfizz.com)",
+                  "snippet": "A guide to developing signature content formats—like recurring series or frameworks—that SaaS brands can own."
                 },
                 {
                   "url": "https://itzfizz.com/checklist/signature-formats",
-                  "title": "Signature Formats Checklist (itzfizz.com)",
-                  "snippet": "A short checklist to implement signature formats on itzfizz.com based on the associated content."
+                  "title": "Signature Formats Creation Checklist (itzfizz.com)",
+                  "snippet": "A checklist for defining, piloting, and scaling signature content formats for SaaS marketing."
                 }
               ]
             },
@@ -3238,13 +3238,13 @@
               "links": [
                 {
                   "url": "https://itzfizz.com/guide/onboarding-content",
-                  "title": "Onboarding Content Guide for itzfizz.com",
-                  "snippet": "A practical guide on onboarding content tailored for itzfizz.com, aligned with the content of blog-saas-content-strategy."
+                  "title": "Onboarding Content for SaaS Guide (itzfizz.com)",
+                  "snippet": "A guide to onboarding content that reduces time-to-value and helps new SaaS users adopt key features quickly."
                 },
                 {
                   "url": "https://itzfizz.com/checklist/onboarding-content",
-                  "title": "Onboarding Content Checklist (itzfizz.com)",
-                  "snippet": "A short checklist to implement onboarding content on itzfizz.com based on the associated content."
+                  "title": "Onboarding Content Experience Checklist (itzfizz.com)",
+                  "snippet": "A checklist to design and audit onboarding content flows across email, in-app, and help resources."
                 }
               ]
             }

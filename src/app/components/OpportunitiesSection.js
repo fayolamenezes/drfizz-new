@@ -60,11 +60,13 @@ const slugify = (title = "") =>
     .replace(/^-|-$/g, "");
 
 /**
- * Try to recover current site/domain from URL or storage
+ * Try to recover current site/domain from storage or URL.
+ * IMPORTANT: Prefer storage (what wizard/editor last wrote),
+ * and only fall back to ?site= so we don't get stuck on an
+ * old query-string domain.
  */
 function getSiteFromStorageOrQuery(searchParams) {
-  const qp = searchParams?.get?.("site");
-  if (qp) return normalizeDomain(qp);
+  // 1) First try localStorage / sessionStorage
   try {
     for (const store of [localStorage, sessionStorage]) {
       for (const k of STORAGE_DOMAIN_KEYS) {
@@ -73,24 +75,29 @@ function getSiteFromStorageOrQuery(searchParams) {
         try {
           const o = JSON.parse(v);
           const cands = [o?.site, o?.website, o?.url, o?.domain, o?.value];
-          for (const c of cands) if (c) return normalizeDomain(String(c));
+          for (const c of cands) {
+            if (c) return normalizeDomain(String(c));
+          }
         } catch {
+          // plain string?
           return normalizeDomain(v);
         }
       }
     }
-  } catch {}
+  } catch {
+    // ignore storage errors (e.g. SSR/private mode)
+  }
+
+  // 2) Then fall back to ?site=... in the URL
+  const qp = searchParams?.get?.("site");
+  if (qp) return normalizeDomain(qp);
+
+  // 3) Finally, hard default
   return "example.com";
 }
 
 /**
  * Mapper for seo-data.json rows (metrics + basic content)
- * Shape (columns):
- *  - Domain/Website / Domain
- *  - Blog1_Title, Blog1_Word_Count, Blog1_Num_Keywords, Blog1_Score, Blog1_Status, Blog1_Content
- *  - Blog2_...
- *  - Page1_...
- *  - Page2_...
  */
 function mapSeoRowToSchema(row) {
   const n = (x, d = undefined) => {
@@ -152,24 +159,7 @@ function mapSeoRowToSchema(row) {
 
 /**
  * Mapper for multi-content.json:
- * [
- *   {
- *     "domain": "google.com",
- *     "blog1": {
- *       "title": "...",
- *       "content": "...",
- *       "primaryKeyword": "...",
- *       "lsiKeywords": [...],
- *       "plagiarism": 12,
- *       "searchVolume": 7833,
- *       "keywordDifficulty": 15
- *     },
- *     ...
- *   },
- *   ...
- * ]
- *
- * 👉 Now also keeps primaryKeyword, lsiKeywords, plagiarism, searchVolume, keywordDifficulty per slot.
+ * keeps primaryKeyword, lsiKeywords, plagiarism, searchVolume, keywordDifficulty per slot.
  */
 function mapMultiRowToContent(row) {
   const safeSlot = (slot) =>
@@ -208,7 +198,7 @@ function mapMultiRowToContent(row) {
 }
 
 /* ============================================================
-   Start Modal (desktop unchanged; mobile = screenshot-exact)
+   Start Modal
 ============================================================ */
 function StartModal({
   open,
@@ -240,7 +230,6 @@ function StartModal({
 
   return (
     <div className="fixed inset-0 z-[100] grid place-items-center bg-black/40">
-      {/* Shell: mobile = 1 col with internal scroll, desktop(md+) = 2 cols */}
       <div
         className="
           relative grid overflow-hidden rounded-2xl bg-white shadow-2xl
@@ -259,7 +248,7 @@ function StartModal({
           <X size={16} />
         </button>
 
-        {/* Mobile banner (below md) */}
+        {/* Mobile banner */}
         <div className="md:hidden relative">
           <div
             aria-hidden
@@ -279,7 +268,7 @@ function StartModal({
           </div>
         </div>
 
-        {/* Desktop left banner (md+) */}
+        {/* Desktop left banner */}
         <div
           className="relative hidden min-h-[520px] flex-col justify-end p-10 md:flex"
           style={{
@@ -411,10 +400,11 @@ export default function OpportunitiesSection({ onOpenContentEditor }) {
   const startPayloadRef = useRef(null); // keep real title/kind/content/domain for "Edit existing"
 
   useEffect(() => {
-    setDomain(getSiteFromStorageOrQuery(searchParams));
+    const d = getSiteFromStorageOrQuery(searchParams);
+    setDomain(d);
   }, [searchParams]);
 
-  // Load seo-data.json (metrics + base)
+  // Load seo-data.json
   useEffect(() => {
     let alive = true;
     (async () => {
@@ -433,7 +423,7 @@ export default function OpportunitiesSection({ onOpenContentEditor }) {
     };
   }, []);
 
-  // Load multi-content.json (rich content + per-slot SEO: primary/LSI/plagiarism/searchVolume/KD)
+  // Load multi-content.json
   useEffect(() => {
     let alive = true;
     (async () => {
@@ -488,7 +478,7 @@ export default function OpportunitiesSection({ onOpenContentEditor }) {
       multiSlot?.title || seoSlot?.title || fallbackTitle || "Untitled";
     const content = multiSlot?.content || seoSlot?.content || "";
 
-    if (!seoSlot && !multiSlot) return {}; // no data at all
+    if (!seoSlot && !multiSlot) return {};
 
     const primaryKeyword =
       multiSlot?.primaryKeyword ?? seoSlot?.primaryKeyword ?? null;
@@ -505,7 +495,6 @@ export default function OpportunitiesSection({ onOpenContentEditor }) {
         ? seoSlot.plagiarism
         : null;
 
-    // Keep searchVolume / keywordDifficulty from multi (or seo as fallback if ever present)
     const searchVolume =
       typeof multiSlot?.searchVolume === "number"
         ? multiSlot.searchVolume
@@ -523,8 +512,8 @@ export default function OpportunitiesSection({ onOpenContentEditor }) {
     const baseTitle = multiSlot?.title || seoSlot?.title || fallbackTitle;
 
     return {
-      ...seoSlot, // keep numeric metrics (score, wordCount, etc.) from seo-data
-      ...multiSlot, // so title/content/seo fields from multi override if needed
+      ...seoSlot,
+      ...multiSlot,
       title,
       content,
       primaryKeyword,
@@ -532,7 +521,6 @@ export default function OpportunitiesSection({ onOpenContentEditor }) {
       plagiarism,
       searchVolume,
       keywordDifficulty,
-      // 👇 identity for the document, primarily from multi-content
       slug:
         multiSlot?.slug ||
         seoSlot?.slug ||
@@ -618,7 +606,6 @@ export default function OpportunitiesSection({ onOpenContentEditor }) {
       setStartOpen(false);
       return;
     }
-    // open with real title + content + domain + SEO fields so ContentEditor can use them
     dispatchOpen({
       title: real.title,
       slug: real.slug || (real.title ? slugify(real.title) : undefined),
@@ -640,15 +627,23 @@ export default function OpportunitiesSection({ onOpenContentEditor }) {
   };
 
   const handleCreateFromScratch = () => {
-    // Force a clean new doc; CE listens for 'content-editor:new'
-    dispatchNew({ title: "Untitled Document", kind: "blog", content: "" });
+    dispatchNew({
+      title: "Untitled Document",
+      kind: "blog",
+      content: "",
+      domain, // important: carry current domain into new docs
+    });
     setStartOpen(false);
   };
 
   const handleCreateWithStyle = (styleId) => {
     const tpl = styleTemplate(styleId);
-    // New doc seeded with content & styleId (CE can read it if needed)
-    dispatchNew({ ...tpl, kind: "blog", styleId });
+    dispatchNew({
+      ...tpl,
+      kind: "blog",
+      styleId,
+      domain, // important: carry current domain into styled docs
+    });
     setStartOpen(false);
   };
 
@@ -704,7 +699,6 @@ export default function OpportunitiesSection({ onOpenContentEditor }) {
     const kws = data?.keywords ?? 0;
     const status = data?.status ?? "Draft";
 
-    // We keep generic title for UI, but realTitle for payload (from seo or multi)
     const realTitle = data?.title;
     const displayTitle =
       GENERIC_CARD_TITLES[index % GENERIC_CARD_TITLES.length] ||
@@ -766,7 +760,6 @@ export default function OpportunitiesSection({ onOpenContentEditor }) {
           </button>
           <button
             onClick={() => {
-              // Keep all SEO fields (primary, LSI, plagiarism, SV, KD) from merged data
               const titleForSlug = realTitle || displayTitle;
               startPayloadRef.current = {
                 kind: type, // "blog" or "page"
@@ -856,7 +849,6 @@ export default function OpportunitiesSection({ onOpenContentEditor }) {
         </div>
       </section>
 
-      {/* Start modal */}
       <StartModal
         open={startOpen}
         onClose={() => setStartOpen(false)}

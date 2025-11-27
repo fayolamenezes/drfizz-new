@@ -191,9 +191,10 @@ export default function ContentEditor({ data, onBackToDashboard }) {
 
   const WORD_TARGET_FROM_DATA =
     data?.metrics?.wordTarget ??
-    data?.wordTarget ??
-    pageConfig?.wordTarget ??
-    1480;
+//               vvvvvvvvvvv  <-- added
+        data?.wordTarget ??
+        pageConfig?.wordTarget ??
+        1480;
 
   // Initial plagiarism pulled from data (multi-content) when available
   const [metrics, setMetrics] = useState(() => ({
@@ -486,12 +487,41 @@ export default function ContentEditor({ data, onBackToDashboard }) {
     return () => window.removeEventListener("keydown", onKey);
   }, [mobileResearchOpen]);
 
+  // --------------------------------------
+  // Back handler: make dashboard domain match this doc's domain
+  // --------------------------------------
+  const handleBackToDashboard = useCallback(() => {
+    // Force the active site back to the doc's domain
+    if (pageDomain) {
+      try {
+        localStorage.setItem(
+          "websiteData",
+          JSON.stringify({ site: pageDomain })
+        );
+      } catch {
+        // ignore storage errors
+      }
+    }
+
+    // Emit the custom event your Home() listener uses
+    try {
+      window.dispatchEvent(
+        new CustomEvent("content-editor:back", {
+          detail: { domain: pageDomain || null },
+        })
+      );
+    } catch {}
+
+    // Call the prop so Home can switch step → "dashboard"
+    onBackToDashboard?.();
+  }, [pageDomain, onBackToDashboard]);
+
   return (
     <div className="min-h-screen bg-[var(--bg)] text-[var(--text)] transition-colors duration-300">
       <main className="bg-[var(--bg-panel)] px-2 py-6 sm:px-1 lg:px-2 xl:px-3 transition-colors duration-300">
         <CENavbar
           title={title}
-          onBack={onBackToDashboard}
+          onBack={handleBackToDashboard}
           onTitleChange={setTitle}
           searchVolume={navbarSearchVolume}
           keywordDifficulty={navbarKeywordDifficulty}

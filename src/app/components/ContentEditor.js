@@ -112,8 +112,6 @@ export default function ContentEditor({ data, onBackToDashboard }) {
     return hit || pages[0] || null;
   }, [config, pageKey, titleSlugKey, data?.title]);
 
-  // 🔍 DEBUG: see what pageConfig we resolved for this card
-
   /* editor state */
   const [title, setTitle] = useState(data?.title || "Untitled");
   const [content, setContent] = useState(
@@ -191,13 +189,6 @@ export default function ContentEditor({ data, onBackToDashboard }) {
 
   // ------------------------------------------------------------------
   // Persist the current domain to localStorage for the Research panel.
-  //
-  // The Research panel uses localStorage.websiteData.site (set by
-  // Step1Slide1) to determine which domain’s optimize dataset to load. If
-  // this value isn’t updated when the user opens a new document from a
-  // different domain, the panel will continue to load the previous
-  // domain’s optimize data and fall back to the first page of that
-  // domain.
   const pageDomain = data?.domain || pageConfig?.domain || "";
   useEffect(() => {
     if (!pageDomain) return;
@@ -417,6 +408,35 @@ export default function ContentEditor({ data, onBackToDashboard }) {
   ]);
 
   /* ===========================
+     Resolve navbar SV / KD
+     =========================== */
+
+  const resolveMetric = (rootVal, navbarVal) => {
+    const rootNum =
+      rootVal === undefined || rootVal === null ? null : Number(rootVal);
+    const navNum =
+      navbarVal === undefined || navbarVal === null ? null : Number(navbarVal);
+
+    if (typeof rootNum === "number" && !Number.isNaN(rootNum) && rootNum > 0) {
+      return rootNum;
+    }
+    if (typeof navNum === "number" && !Number.isNaN(navNum) && navNum > 0) {
+      return navNum;
+    }
+    return null;
+  };
+
+  const navbarSearchVolume = resolveMetric(
+    data?.searchVolume,
+    data?.navbar?.searchVolume
+  );
+
+  const navbarKeywordDifficulty = resolveMetric(
+    data?.keywordDifficulty,
+    data?.navbar?.keywordDifficulty
+  );
+
+  /* ===========================
      MOBILE research drawer state
      =========================== */
   const [mobileResearchOpen, setMobileResearchOpen] = useState(false);
@@ -436,10 +456,8 @@ export default function ContentEditor({ data, onBackToDashboard }) {
           title={title}
           onBack={onBackToDashboard}
           onTitleChange={setTitle}
-          searchVolume={data?.navbar?.searchVolume ?? data?.searchVolume}
-          keywordDifficulty={
-            data?.navbar?.keywordDifficulty ?? data?.keywordDifficulty
-          }
+          searchVolume={navbarSearchVolume}
+          keywordDifficulty={navbarKeywordDifficulty}
         />
 
         <CEMetricsStrip

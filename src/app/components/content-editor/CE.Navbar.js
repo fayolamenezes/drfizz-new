@@ -10,16 +10,26 @@ export default function CENavbar({
   searchVolume,
   keywordDifficulty,
 }) {
-  // Use the values passed from ContentEditor (which now come from multi-content.json)
-  // Show "-----" when value is missing or 0
+  // Coerce incoming values (numbers OR strings) into usable numbers
+  const svNum =
+    searchVolume === undefined || searchVolume === null
+      ? null
+      : Number(searchVolume);
+
+  const kdNum =
+    keywordDifficulty === undefined || keywordDifficulty === null
+      ? null
+      : Number(keywordDifficulty);
+
+  // Show "-----" when value is missing, 0, or not a valid number
   const sv =
-    typeof searchVolume === "number" && searchVolume > 0
-      ? searchVolume.toLocaleString()
+    typeof svNum === "number" && !Number.isNaN(svNum) && svNum > 0
+      ? svNum.toLocaleString()
       : "-----";
 
   const kd =
-    typeof keywordDifficulty === "number" && keywordDifficulty > 0
-      ? keywordDifficulty
+    typeof kdNum === "number" && !Number.isNaN(kdNum) && kdNum > 0
+      ? kdNum.toString()
       : "-----";
 
   const [editing, setEditing] = useState(false);

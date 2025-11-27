@@ -18912,7 +18912,39 @@
     "content": "",
     "articleSummary": "",
     "finalContent": "",
-    "seoBasics": null,
+    "seoBasics": {
+      "basicSEO": [
+        "Write a unique, descriptive title with the primary keyword once.",
+        "Use one H1, logical H2/H3 hierarchy, and scannable lists.",
+        "Add meta description with clear benefit and CTA.",
+        "Compress images, lazy\u2011load below\u2011the\u2011fold media.",
+        "Add schema (Article / Product / FAQ) where relevant.",
+        "Add internal links to 3\u20135 related pages; 1\u20132 external citations."
+      ],
+      "additional": [
+        "Include last\u2011updated timestamp for freshness.",
+        "Use jump links for long guides.",
+        "Provide a downloadable checklist or template."
+      ],
+      "titleReadability": {
+        "score": 86,
+        "notes": [
+          "Number\u2011led headline improves CTR.",
+          "Avoid vague adjectives; add outcomes.",
+          "Keep under ~60 chars to prevent truncation."
+        ],
+        "expansion": "<p>Try variants that emphasize specificity, e.g., \u201c7 Proven Ways \u2026\u201d or \u201cA Practical Guide to \u2026\u201d.</p>"
+      },
+      "contentReadability": {
+        "score": 65,
+        "notes": [
+          "Short paragraphs and active voice.",
+          "Bullets for procedures; tables for comparisons.",
+          "Explain jargon on first use."
+        ],
+        "expansion": "<p>Use reading grade 8\u201310 for broad audiences; link deeper resources for experts.</p>"
+      }
+    },
     "advanced": null,
     "linksTab": {
       "external": [],
@@ -18960,7 +18992,39 @@
     "content": "",
     "articleSummary": "",
     "finalContent": "",
-    "seoBasics": null,
+    "seoBasics": {
+      "basicSEO": [
+        "Write a unique, descriptive title with the primary keyword once.",
+        "Use one H1, logical H2/H3 hierarchy, and scannable lists.",
+        "Add meta description with clear benefit and CTA.",
+        "Compress images, lazy\u2011load below\u2011the\u2011fold media.",
+        "Add schema (Article / Product / FAQ) where relevant.",
+        "Add internal links to 3\u20135 related pages; 1\u20132 external citations."
+      ],
+      "additional": [
+        "Include last\u2011updated timestamp for freshness.",
+        "Use jump links for long guides.",
+        "Provide a downloadable checklist or template."
+      ],
+      "titleReadability": {
+        "score": 86,
+        "notes": [
+          "Number\u2011led headline improves CTR.",
+          "Avoid vague adjectives; add outcomes.",
+          "Keep under ~60 chars to prevent truncation."
+        ],
+        "expansion": "<p>Try variants that emphasize specificity, e.g., \u201c7 Proven Ways \u2026\u201d or \u201cA Practical Guide to \u2026\u201d.</p>"
+      },
+      "contentReadability": {
+        "score": 65,
+        "notes": [
+          "Short paragraphs and active voice.",
+          "Bullets for procedures; tables for comparisons.",
+          "Explain jargon on first use."
+        ],
+        "expansion": "<p>Use reading grade 8\u201310 for broad audiences; link deeper resources for experts.</p>"
+      }
+    },
     "advanced": null,
     "linksTab": {
       "external": [],
@@ -19008,7 +19072,39 @@
     "content": "",
     "articleSummary": "",
     "finalContent": "",
-    "seoBasics": null,
+    "seoBasics": {
+      "basicSEO": [
+        "Write a unique, descriptive title with the primary keyword once.",
+        "Use one H1, logical H2/H3 hierarchy, and scannable lists.",
+        "Add meta description with clear benefit and CTA.",
+        "Compress images, lazy\u2011load below\u2011the\u2011fold media.",
+        "Add schema (Article / Product / FAQ) where relevant.",
+        "Add internal links to 3\u20135 related pages; 1\u20132 external citations."
+      ],
+      "additional": [
+        "Include last\u2011updated timestamp for freshness.",
+        "Use jump links for long guides.",
+        "Provide a downloadable checklist or template."
+      ],
+      "titleReadability": {
+        "score": 86,
+        "notes": [
+          "Number\u2011led headline improves CTR.",
+          "Avoid vague adjectives; add outcomes.",
+          "Keep under ~60 chars to prevent truncation."
+        ],
+        "expansion": "<p>Try variants that emphasize specificity, e.g., \u201c7 Proven Ways \u2026\u201d or \u201cA Practical Guide to \u2026\u201d.</p>"
+      },
+      "contentReadability": {
+        "score": 65,
+        "notes": [
+          "Short paragraphs and active voice.",
+          "Bullets for procedures; tables for comparisons.",
+          "Explain jargon on first use."
+        ],
+        "expansion": "<p>Use reading grade 8\u201310 for broad audiences; link deeper resources for experts.</p>"
+      }
+    },
     "advanced": null,
     "linksTab": {
       "external": [],
@@ -19056,7 +19152,39 @@
     "content": "",
     "articleSummary": "",
     "finalContent": "",
-    "seoBasics": null,
+    "seoBasics": {
+      "basicSEO": [
+        "Write a unique, descriptive title with the primary keyword once.",
+        "Use one H1, logical H2/H3 hierarchy, and scannable lists.",
+        "Add meta description with clear benefit and CTA.",
+        "Compress images, lazy\u2011load below\u2011the\u2011fold media.",
+        "Add schema (Article / Product / FAQ) where relevant.",
+        "Add internal links to 3\u20135 related pages; 1\u20132 external citations."
+      ],
+      "additional": [
+        "Include last\u2011updated timestamp for freshness.",
+        "Use jump links for long guides.",
+        "Provide a downloadable checklist or template."
+      ],
+      "titleReadability": {
+        "score": 86,
+        "notes": [
+          "Number\u2011led headline improves CTR.",
+          "Avoid vague adjectives; add outcomes.",
+          "Keep under ~60 chars to prevent truncation."
+        ],
+        "expansion": "<p>Try variants that emphasize specificity, e.g., \u201c7 Proven Ways \u2026\u201d or \u201cA Practical Guide to \u2026\u201d.</p>"
+      },
+      "contentReadability": {
+        "score": 65,
+        "notes": [
+          "Short paragraphs and active voice.",
+          "Bullets for procedures; tables for comparisons.",
+          "Explain jargon on first use."
+        ],
+        "expansion": "<p>Use reading grade 8\u201310 for broad audiences; link deeper resources for experts.</p>"
+      }
+    },
     "advanced": null,
     "linksTab": {
       "external": [],
@@ -19104,7 +19232,39 @@
     "content": "",
     "articleSummary": "",
     "finalContent": "",
-    "seoBasics": null,
+    "seoBasics": {
+      "basicSEO": [
+        "Write a unique, descriptive title with the primary keyword once.",
+        "Use one H1, logical H2/H3 hierarchy, and scannable lists.",
+        "Add meta description with clear benefit and CTA.",
+        "Compress images, lazy\u2011load below\u2011the\u2011fold media.",
+        "Add schema (Article / Product / FAQ) where relevant.",
+        "Add internal links to 3\u20135 related pages; 1\u20132 external citations."
+      ],
+      "additional": [
+        "Include last\u2011updated timestamp for freshness.",
+        "Use jump links for long guides.",
+        "Provide a downloadable checklist or template."
+      ],
+      "titleReadability": {
+        "score": 86,
+        "notes": [
+          "Number\u2011led headline improves CTR.",
+          "Avoid vague adjectives; add outcomes.",
+          "Keep under ~60 chars to prevent truncation."
+        ],
+        "expansion": "<p>Try variants that emphasize specificity, e.g., \u201c7 Proven Ways \u2026\u201d or \u201cA Practical Guide to \u2026\u201d.</p>"
+      },
+      "contentReadability": {
+        "score": 65,
+        "notes": [
+          "Short paragraphs and active voice.",
+          "Bullets for procedures; tables for comparisons.",
+          "Explain jargon on first use."
+        ],
+        "expansion": "<p>Use reading grade 8\u201310 for broad audiences; link deeper resources for experts.</p>"
+      }
+    },
     "advanced": null,
     "linksTab": {
       "external": [],
@@ -19152,7 +19312,39 @@
     "content": "",
     "articleSummary": "",
     "finalContent": "",
-    "seoBasics": null,
+    "seoBasics": {
+      "basicSEO": [
+        "Write a unique, descriptive title with the primary keyword once.",
+        "Use one H1, logical H2/H3 hierarchy, and scannable lists.",
+        "Add meta description with clear benefit and CTA.",
+        "Compress images, lazy\u2011load below\u2011the\u2011fold media.",
+        "Add schema (Article / Product / FAQ) where relevant.",
+        "Add internal links to 3\u20135 related pages; 1\u20132 external citations."
+      ],
+      "additional": [
+        "Include last\u2011updated timestamp for freshness.",
+        "Use jump links for long guides.",
+        "Provide a downloadable checklist or template."
+      ],
+      "titleReadability": {
+        "score": 86,
+        "notes": [
+          "Number\u2011led headline improves CTR.",
+          "Avoid vague adjectives; add outcomes.",
+          "Keep under ~60 chars to prevent truncation."
+        ],
+        "expansion": "<p>Try variants that emphasize specificity, e.g., \u201c7 Proven Ways \u2026\u201d or \u201cA Practical Guide to \u2026\u201d.</p>"
+      },
+      "contentReadability": {
+        "score": 65,
+        "notes": [
+          "Short paragraphs and active voice.",
+          "Bullets for procedures; tables for comparisons.",
+          "Explain jargon on first use."
+        ],
+        "expansion": "<p>Use reading grade 8\u201310 for broad audiences; link deeper resources for experts.</p>"
+      }
+    },
     "advanced": null,
     "linksTab": {
       "external": [],
@@ -19200,7 +19392,39 @@
     "content": "",
     "articleSummary": "",
     "finalContent": "",
-    "seoBasics": null,
+    "seoBasics": {
+      "basicSEO": [
+        "Write a unique, descriptive title with the primary keyword once.",
+        "Use one H1, logical H2/H3 hierarchy, and scannable lists.",
+        "Add meta description with clear benefit and CTA.",
+        "Compress images, lazy\u2011load below\u2011the\u2011fold media.",
+        "Add schema (Article / Product / FAQ) where relevant.",
+        "Add internal links to 3\u20135 related pages; 1\u20132 external citations."
+      ],
+      "additional": [
+        "Include last\u2011updated timestamp for freshness.",
+        "Use jump links for long guides.",
+        "Provide a downloadable checklist or template."
+      ],
+      "titleReadability": {
+        "score": 86,
+        "notes": [
+          "Number\u2011led headline improves CTR.",
+          "Avoid vague adjectives; add outcomes.",
+          "Keep under ~60 chars to prevent truncation."
+        ],
+        "expansion": "<p>Try variants that emphasize specificity, e.g., \u201c7 Proven Ways \u2026\u201d or \u201cA Practical Guide to \u2026\u201d.</p>"
+      },
+      "contentReadability": {
+        "score": 65,
+        "notes": [
+          "Short paragraphs and active voice.",
+          "Bullets for procedures; tables for comparisons.",
+          "Explain jargon on first use."
+        ],
+        "expansion": "<p>Use reading grade 8\u201310 for broad audiences; link deeper resources for experts.</p>"
+      }
+    },
     "advanced": null,
     "linksTab": {
       "external": [],
@@ -19248,7 +19472,39 @@
     "content": "",
     "articleSummary": "",
     "finalContent": "",
-    "seoBasics": null,
+    "seoBasics": {
+      "basicSEO": [
+        "Write a unique, descriptive title with the primary keyword once.",
+        "Use one H1, logical H2/H3 hierarchy, and scannable lists.",
+        "Add meta description with clear benefit and CTA.",
+        "Compress images, lazy\u2011load below\u2011the\u2011fold media.",
+        "Add schema (Article / Product / FAQ) where relevant.",
+        "Add internal links to 3\u20135 related pages; 1\u20132 external citations."
+      ],
+      "additional": [
+        "Include last\u2011updated timestamp for freshness.",
+        "Use jump links for long guides.",
+        "Provide a downloadable checklist or template."
+      ],
+      "titleReadability": {
+        "score": 86,
+        "notes": [
+          "Number\u2011led headline improves CTR.",
+          "Avoid vague adjectives; add outcomes.",
+          "Keep under ~60 chars to prevent truncation."
+        ],
+        "expansion": "<p>Try variants that emphasize specificity, e.g., \u201c7 Proven Ways \u2026\u201d or \u201cA Practical Guide to \u2026\u201d.</p>"
+      },
+      "contentReadability": {
+        "score": 65,
+        "notes": [
+          "Short paragraphs and active voice.",
+          "Bullets for procedures; tables for comparisons.",
+          "Explain jargon on first use."
+        ],
+        "expansion": "<p>Use reading grade 8\u201310 for broad audiences; link deeper resources for experts.</p>"
+      }
+    },
     "advanced": null,
     "linksTab": {
       "external": [],
@@ -19296,7 +19552,39 @@
     "content": "",
     "articleSummary": "",
     "finalContent": "",
-    "seoBasics": null,
+    "seoBasics": {
+      "basicSEO": [
+        "Write a unique, descriptive title with the primary keyword once.",
+        "Use one H1, logical H2/H3 hierarchy, and scannable lists.",
+        "Add meta description with clear benefit and CTA.",
+        "Compress images, lazy\u2011load below\u2011the\u2011fold media.",
+        "Add schema (Article / Product / FAQ) where relevant.",
+        "Add internal links to 3\u20135 related pages; 1\u20132 external citations."
+      ],
+      "additional": [
+        "Include last\u2011updated timestamp for freshness.",
+        "Use jump links for long guides.",
+        "Provide a downloadable checklist or template."
+      ],
+      "titleReadability": {
+        "score": 86,
+        "notes": [
+          "Number\u2011led headline improves CTR.",
+          "Avoid vague adjectives; add outcomes.",
+          "Keep under ~60 chars to prevent truncation."
+        ],
+        "expansion": "<p>Try variants that emphasize specificity, e.g., \u201c7 Proven Ways \u2026\u201d or \u201cA Practical Guide to \u2026\u201d.</p>"
+      },
+      "contentReadability": {
+        "score": 65,
+        "notes": [
+          "Short paragraphs and active voice.",
+          "Bullets for procedures; tables for comparisons.",
+          "Explain jargon on first use."
+        ],
+        "expansion": "<p>Use reading grade 8\u201310 for broad audiences; link deeper resources for experts.</p>"
+      }
+    },
     "advanced": null,
     "linksTab": {
       "external": [],
@@ -19344,7 +19632,39 @@
     "content": "",
     "articleSummary": "",
     "finalContent": "",
-    "seoBasics": null,
+    "seoBasics": {
+      "basicSEO": [
+        "Write a unique, descriptive title with the primary keyword once.",
+        "Use one H1, logical H2/H3 hierarchy, and scannable lists.",
+        "Add meta description with clear benefit and CTA.",
+        "Compress images, lazy\u2011load below\u2011the\u2011fold media.",
+        "Add schema (Article / Product / FAQ) where relevant.",
+        "Add internal links to 3\u20135 related pages; 1\u20132 external citations."
+      ],
+      "additional": [
+        "Include last\u2011updated timestamp for freshness.",
+        "Use jump links for long guides.",
+        "Provide a downloadable checklist or template."
+      ],
+      "titleReadability": {
+        "score": 86,
+        "notes": [
+          "Number\u2011led headline improves CTR.",
+          "Avoid vague adjectives; add outcomes.",
+          "Keep under ~60 chars to prevent truncation."
+        ],
+        "expansion": "<p>Try variants that emphasize specificity, e.g., \u201c7 Proven Ways \u2026\u201d or \u201cA Practical Guide to \u2026\u201d.</p>"
+      },
+      "contentReadability": {
+        "score": 65,
+        "notes": [
+          "Short paragraphs and active voice.",
+          "Bullets for procedures; tables for comparisons.",
+          "Explain jargon on first use."
+        ],
+        "expansion": "<p>Use reading grade 8\u201310 for broad audiences; link deeper resources for experts.</p>"
+      }
+    },
     "advanced": null,
     "linksTab": {
       "external": [],
@@ -19392,7 +19712,39 @@
     "content": "",
     "articleSummary": "",
     "finalContent": "",
-    "seoBasics": null,
+    "seoBasics": {
+      "basicSEO": [
+        "Write a unique, descriptive title with the primary keyword once.",
+        "Use one H1, logical H2/H3 hierarchy, and scannable lists.",
+        "Add meta description with clear benefit and CTA.",
+        "Compress images, lazy\u2011load below\u2011the\u2011fold media.",
+        "Add schema (Article / Product / FAQ) where relevant.",
+        "Add internal links to 3\u20135 related pages; 1\u20132 external citations."
+      ],
+      "additional": [
+        "Include last\u2011updated timestamp for freshness.",
+        "Use jump links for long guides.",
+        "Provide a downloadable checklist or template."
+      ],
+      "titleReadability": {
+        "score": 86,
+        "notes": [
+          "Number\u2011led headline improves CTR.",
+          "Avoid vague adjectives; add outcomes.",
+          "Keep under ~60 chars to prevent truncation."
+        ],
+        "expansion": "<p>Try variants that emphasize specificity, e.g., \u201c7 Proven Ways \u2026\u201d or \u201cA Practical Guide to \u2026\u201d.</p>"
+      },
+      "contentReadability": {
+        "score": 65,
+        "notes": [
+          "Short paragraphs and active voice.",
+          "Bullets for procedures; tables for comparisons.",
+          "Explain jargon on first use."
+        ],
+        "expansion": "<p>Use reading grade 8\u201310 for broad audiences; link deeper resources for experts.</p>"
+      }
+    },
     "advanced": null,
     "linksTab": {
       "external": [],
@@ -19440,7 +19792,39 @@
     "content": "",
     "articleSummary": "",
     "finalContent": "",
-    "seoBasics": null,
+    "seoBasics": {
+      "basicSEO": [
+        "Write a unique, descriptive title with the primary keyword once.",
+        "Use one H1, logical H2/H3 hierarchy, and scannable lists.",
+        "Add meta description with clear benefit and CTA.",
+        "Compress images, lazy\u2011load below\u2011the\u2011fold media.",
+        "Add schema (Article / Product / FAQ) where relevant.",
+        "Add internal links to 3\u20135 related pages; 1\u20132 external citations."
+      ],
+      "additional": [
+        "Include last\u2011updated timestamp for freshness.",
+        "Use jump links for long guides.",
+        "Provide a downloadable checklist or template."
+      ],
+      "titleReadability": {
+        "score": 86,
+        "notes": [
+          "Number\u2011led headline improves CTR.",
+          "Avoid vague adjectives; add outcomes.",
+          "Keep under ~60 chars to prevent truncation."
+        ],
+        "expansion": "<p>Try variants that emphasize specificity, e.g., \u201c7 Proven Ways \u2026\u201d or \u201cA Practical Guide to \u2026\u201d.</p>"
+      },
+      "contentReadability": {
+        "score": 65,
+        "notes": [
+          "Short paragraphs and active voice.",
+          "Bullets for procedures; tables for comparisons.",
+          "Explain jargon on first use."
+        ],
+        "expansion": "<p>Use reading grade 8\u201310 for broad audiences; link deeper resources for experts.</p>"
+      }
+    },
     "advanced": null,
     "linksTab": {
       "external": [],
@@ -19488,7 +19872,39 @@
     "content": "",
     "articleSummary": "",
     "finalContent": "",
-    "seoBasics": null,
+    "seoBasics": {
+      "basicSEO": [
+        "Write a unique, descriptive title with the primary keyword once.",
+        "Use one H1, logical H2/H3 hierarchy, and scannable lists.",
+        "Add meta description with clear benefit and CTA.",
+        "Compress images, lazy\u2011load below\u2011the\u2011fold media.",
+        "Add schema (Article / Product / FAQ) where relevant.",
+        "Add internal links to 3\u20135 related pages; 1\u20132 external citations."
+      ],
+      "additional": [
+        "Include last\u2011updated timestamp for freshness.",
+        "Use jump links for long guides.",
+        "Provide a downloadable checklist or template."
+      ],
+      "titleReadability": {
+        "score": 86,
+        "notes": [
+          "Number\u2011led headline improves CTR.",
+          "Avoid vague adjectives; add outcomes.",
+          "Keep under ~60 chars to prevent truncation."
+        ],
+        "expansion": "<p>Try variants that emphasize specificity, e.g., \u201c7 Proven Ways \u2026\u201d or \u201cA Practical Guide to \u2026\u201d.</p>"
+      },
+      "contentReadability": {
+        "score": 65,
+        "notes": [
+          "Short paragraphs and active voice.",
+          "Bullets for procedures; tables for comparisons.",
+          "Explain jargon on first use."
+        ],
+        "expansion": "<p>Use reading grade 8\u201310 for broad audiences; link deeper resources for experts.</p>"
+      }
+    },
     "advanced": null,
     "linksTab": {
       "external": [],
@@ -19536,7 +19952,39 @@
     "content": "",
     "articleSummary": "",
     "finalContent": "",
-    "seoBasics": null,
+    "seoBasics": {
+      "basicSEO": [
+        "Write a unique, descriptive title with the primary keyword once.",
+        "Use one H1, logical H2/H3 hierarchy, and scannable lists.",
+        "Add meta description with clear benefit and CTA.",
+        "Compress images, lazy\u2011load below\u2011the\u2011fold media.",
+        "Add schema (Article / Product / FAQ) where relevant.",
+        "Add internal links to 3\u20135 related pages; 1\u20132 external citations."
+      ],
+      "additional": [
+        "Include last\u2011updated timestamp for freshness.",
+        "Use jump links for long guides.",
+        "Provide a downloadable checklist or template."
+      ],
+      "titleReadability": {
+        "score": 86,
+        "notes": [
+          "Number\u2011led headline improves CTR.",
+          "Avoid vague adjectives; add outcomes.",
+          "Keep under ~60 chars to prevent truncation."
+        ],
+        "expansion": "<p>Try variants that emphasize specificity, e.g., \u201c7 Proven Ways \u2026\u201d or \u201cA Practical Guide to \u2026\u201d.</p>"
+      },
+      "contentReadability": {
+        "score": 65,
+        "notes": [
+          "Short paragraphs and active voice.",
+          "Bullets for procedures; tables for comparisons.",
+          "Explain jargon on first use."
+        ],
+        "expansion": "<p>Use reading grade 8\u201310 for broad audiences; link deeper resources for experts.</p>"
+      }
+    },
     "advanced": null,
     "linksTab": {
       "external": [],
@@ -19584,7 +20032,39 @@
     "content": "",
     "articleSummary": "",
     "finalContent": "",
-    "seoBasics": null,
+    "seoBasics": {
+      "basicSEO": [
+        "Write a unique, descriptive title with the primary keyword once.",
+        "Use one H1, logical H2/H3 hierarchy, and scannable lists.",
+        "Add meta description with clear benefit and CTA.",
+        "Compress images, lazy\u2011load below\u2011the\u2011fold media.",
+        "Add schema (Article / Product / FAQ) where relevant.",
+        "Add internal links to 3\u20135 related pages; 1\u20132 external citations."
+      ],
+      "additional": [
+        "Include last\u2011updated timestamp for freshness.",
+        "Use jump links for long guides.",
+        "Provide a downloadable checklist or template."
+      ],
+      "titleReadability": {
+        "score": 86,
+        "notes": [
+          "Number\u2011led headline improves CTR.",
+          "Avoid vague adjectives; add outcomes.",
+          "Keep under ~60 chars to prevent truncation."
+        ],
+        "expansion": "<p>Try variants that emphasize specificity, e.g., \u201c7 Proven Ways \u2026\u201d or \u201cA Practical Guide to \u2026\u201d.</p>"
+      },
+      "contentReadability": {
+        "score": 65,
+        "notes": [
+          "Short paragraphs and active voice.",
+          "Bullets for procedures; tables for comparisons.",
+          "Explain jargon on first use."
+        ],
+        "expansion": "<p>Use reading grade 8\u201310 for broad audiences; link deeper resources for experts.</p>"
+      }
+    },
     "advanced": null,
     "linksTab": {
       "external": [],
@@ -19632,7 +20112,39 @@
     "content": "",
     "articleSummary": "",
     "finalContent": "",
-    "seoBasics": null,
+    "seoBasics": {
+      "basicSEO": [
+        "Write a unique, descriptive title with the primary keyword once.",
+        "Use one H1, logical H2/H3 hierarchy, and scannable lists.",
+        "Add meta description with clear benefit and CTA.",
+        "Compress images, lazy\u2011load below\u2011the\u2011fold media.",
+        "Add schema (Article / Product / FAQ) where relevant.",
+        "Add internal links to 3\u20135 related pages; 1\u20132 external citations."
+      ],
+      "additional": [
+        "Include last\u2011updated timestamp for freshness.",
+        "Use jump links for long guides.",
+        "Provide a downloadable checklist or template."
+      ],
+      "titleReadability": {
+        "score": 86,
+        "notes": [
+          "Number\u2011led headline improves CTR.",
+          "Avoid vague adjectives; add outcomes.",
+          "Keep under ~60 chars to prevent truncation."
+        ],
+        "expansion": "<p>Try variants that emphasize specificity, e.g., \u201c7 Proven Ways \u2026\u201d or \u201cA Practical Guide to \u2026\u201d.</p>"
+      },
+      "contentReadability": {
+        "score": 65,
+        "notes": [
+          "Short paragraphs and active voice.",
+          "Bullets for procedures; tables for comparisons.",
+          "Explain jargon on first use."
+        ],
+        "expansion": "<p>Use reading grade 8\u201310 for broad audiences; link deeper resources for experts.</p>"
+      }
+    },
     "advanced": null,
     "linksTab": {
       "external": [],
@@ -19680,7 +20192,39 @@
     "content": "",
     "articleSummary": "",
     "finalContent": "",
-    "seoBasics": null,
+    "seoBasics": {
+      "basicSEO": [
+        "Write a unique, descriptive title with the primary keyword once.",
+        "Use one H1, logical H2/H3 hierarchy, and scannable lists.",
+        "Add meta description with clear benefit and CTA.",
+        "Compress images, lazy\u2011load below\u2011the\u2011fold media.",
+        "Add schema (Article / Product / FAQ) where relevant.",
+        "Add internal links to 3\u20135 related pages; 1\u20132 external citations."
+      ],
+      "additional": [
+        "Include last\u2011updated timestamp for freshness.",
+        "Use jump links for long guides.",
+        "Provide a downloadable checklist or template."
+      ],
+      "titleReadability": {
+        "score": 86,
+        "notes": [
+          "Number\u2011led headline improves CTR.",
+          "Avoid vague adjectives; add outcomes.",
+          "Keep under ~60 chars to prevent truncation."
+        ],
+        "expansion": "<p>Try variants that emphasize specificity, e.g., \u201c7 Proven Ways \u2026\u201d or \u201cA Practical Guide to \u2026\u201d.</p>"
+      },
+      "contentReadability": {
+        "score": 65,
+        "notes": [
+          "Short paragraphs and active voice.",
+          "Bullets for procedures; tables for comparisons.",
+          "Explain jargon on first use."
+        ],
+        "expansion": "<p>Use reading grade 8\u201310 for broad audiences; link deeper resources for experts.</p>"
+      }
+    },
     "advanced": null,
     "linksTab": {
       "external": [],
@@ -19728,7 +20272,39 @@
     "content": "",
     "articleSummary": "",
     "finalContent": "",
-    "seoBasics": null,
+    "seoBasics": {
+      "basicSEO": [
+        "Write a unique, descriptive title with the primary keyword once.",
+        "Use one H1, logical H2/H3 hierarchy, and scannable lists.",
+        "Add meta description with clear benefit and CTA.",
+        "Compress images, lazy\u2011load below\u2011the\u2011fold media.",
+        "Add schema (Article / Product / FAQ) where relevant.",
+        "Add internal links to 3\u20135 related pages; 1\u20132 external citations."
+      ],
+      "additional": [
+        "Include last\u2011updated timestamp for freshness.",
+        "Use jump links for long guides.",
+        "Provide a downloadable checklist or template."
+      ],
+      "titleReadability": {
+        "score": 86,
+        "notes": [
+          "Number\u2011led headline improves CTR.",
+          "Avoid vague adjectives; add outcomes.",
+          "Keep under ~60 chars to prevent truncation."
+        ],
+        "expansion": "<p>Try variants that emphasize specificity, e.g., \u201c7 Proven Ways \u2026\u201d or \u201cA Practical Guide to \u2026\u201d.</p>"
+      },
+      "contentReadability": {
+        "score": 65,
+        "notes": [
+          "Short paragraphs and active voice.",
+          "Bullets for procedures; tables for comparisons.",
+          "Explain jargon on first use."
+        ],
+        "expansion": "<p>Use reading grade 8\u201310 for broad audiences; link deeper resources for experts.</p>"
+      }
+    },
     "advanced": null,
     "linksTab": {
       "external": [],
@@ -19776,7 +20352,39 @@
     "content": "",
     "articleSummary": "",
     "finalContent": "",
-    "seoBasics": null,
+    "seoBasics": {
+      "basicSEO": [
+        "Write a unique, descriptive title with the primary keyword once.",
+        "Use one H1, logical H2/H3 hierarchy, and scannable lists.",
+        "Add meta description with clear benefit and CTA.",
+        "Compress images, lazy\u2011load below\u2011the\u2011fold media.",
+        "Add schema (Article / Product / FAQ) where relevant.",
+        "Add internal links to 3\u20135 related pages; 1\u20132 external citations."
+      ],
+      "additional": [
+        "Include last\u2011updated timestamp for freshness.",
+        "Use jump links for long guides.",
+        "Provide a downloadable checklist or template."
+      ],
+      "titleReadability": {
+        "score": 86,
+        "notes": [
+          "Number\u2011led headline improves CTR.",
+          "Avoid vague adjectives; add outcomes.",
+          "Keep under ~60 chars to prevent truncation."
+        ],
+        "expansion": "<p>Try variants that emphasize specificity, e.g., \u201c7 Proven Ways \u2026\u201d or \u201cA Practical Guide to \u2026\u201d.</p>"
+      },
+      "contentReadability": {
+        "score": 65,
+        "notes": [
+          "Short paragraphs and active voice.",
+          "Bullets for procedures; tables for comparisons.",
+          "Explain jargon on first use."
+        ],
+        "expansion": "<p>Use reading grade 8\u201310 for broad audiences; link deeper resources for experts.</p>"
+      }
+    },
     "advanced": null,
     "linksTab": {
       "external": [],
@@ -19824,7 +20432,39 @@
     "content": "",
     "articleSummary": "",
     "finalContent": "",
-    "seoBasics": null,
+    "seoBasics": {
+      "basicSEO": [
+        "Write a unique, descriptive title with the primary keyword once.",
+        "Use one H1, logical H2/H3 hierarchy, and scannable lists.",
+        "Add meta description with clear benefit and CTA.",
+        "Compress images, lazy\u2011load below\u2011the\u2011fold media.",
+        "Add schema (Article / Product / FAQ) where relevant.",
+        "Add internal links to 3\u20135 related pages; 1\u20132 external citations."
+      ],
+      "additional": [
+        "Include last\u2011updated timestamp for freshness.",
+        "Use jump links for long guides.",
+        "Provide a downloadable checklist or template."
+      ],
+      "titleReadability": {
+        "score": 86,
+        "notes": [
+          "Number\u2011led headline improves CTR.",
+          "Avoid vague adjectives; add outcomes.",
+          "Keep under ~60 chars to prevent truncation."
+        ],
+        "expansion": "<p>Try variants that emphasize specificity, e.g., \u201c7 Proven Ways \u2026\u201d or \u201cA Practical Guide to \u2026\u201d.</p>"
+      },
+      "contentReadability": {
+        "score": 65,
+        "notes": [
+          "Short paragraphs and active voice.",
+          "Bullets for procedures; tables for comparisons.",
+          "Explain jargon on first use."
+        ],
+        "expansion": "<p>Use reading grade 8\u201310 for broad audiences; link deeper resources for experts.</p>"
+      }
+    },
     "advanced": null,
     "linksTab": {
       "external": [],
@@ -19872,7 +20512,39 @@
     "content": "",
     "articleSummary": "",
     "finalContent": "",
-    "seoBasics": null,
+    "seoBasics": {
+      "basicSEO": [
+        "Write a unique, descriptive title with the primary keyword once.",
+        "Use one H1, logical H2/H3 hierarchy, and scannable lists.",
+        "Add meta description with clear benefit and CTA.",
+        "Compress images, lazy\u2011load below\u2011the\u2011fold media.",
+        "Add schema (Article / Product / FAQ) where relevant.",
+        "Add internal links to 3\u20135 related pages; 1\u20132 external citations."
+      ],
+      "additional": [
+        "Include last\u2011updated timestamp for freshness.",
+        "Use jump links for long guides.",
+        "Provide a downloadable checklist or template."
+      ],
+      "titleReadability": {
+        "score": 86,
+        "notes": [
+          "Number\u2011led headline improves CTR.",
+          "Avoid vague adjectives; add outcomes.",
+          "Keep under ~60 chars to prevent truncation."
+        ],
+        "expansion": "<p>Try variants that emphasize specificity, e.g., \u201c7 Proven Ways \u2026\u201d or \u201cA Practical Guide to \u2026\u201d.</p>"
+      },
+      "contentReadability": {
+        "score": 65,
+        "notes": [
+          "Short paragraphs and active voice.",
+          "Bullets for procedures; tables for comparisons.",
+          "Explain jargon on first use."
+        ],
+        "expansion": "<p>Use reading grade 8\u201310 for broad audiences; link deeper resources for experts.</p>"
+      }
+    },
     "advanced": null,
     "linksTab": {
       "external": [],
@@ -19920,7 +20592,39 @@
     "content": "",
     "articleSummary": "",
     "finalContent": "",
-    "seoBasics": null,
+    "seoBasics": {
+      "basicSEO": [
+        "Write a unique, descriptive title with the primary keyword once.",
+        "Use one H1, logical H2/H3 hierarchy, and scannable lists.",
+        "Add meta description with clear benefit and CTA.",
+        "Compress images, lazy\u2011load below\u2011the\u2011fold media.",
+        "Add schema (Article / Product / FAQ) where relevant.",
+        "Add internal links to 3\u20135 related pages; 1\u20132 external citations."
+      ],
+      "additional": [
+        "Include last\u2011updated timestamp for freshness.",
+        "Use jump links for long guides.",
+        "Provide a downloadable checklist or template."
+      ],
+      "titleReadability": {
+        "score": 86,
+        "notes": [
+          "Number\u2011led headline improves CTR.",
+          "Avoid vague adjectives; add outcomes.",
+          "Keep under ~60 chars to prevent truncation."
+        ],
+        "expansion": "<p>Try variants that emphasize specificity, e.g., \u201c7 Proven Ways \u2026\u201d or \u201cA Practical Guide to \u2026\u201d.</p>"
+      },
+      "contentReadability": {
+        "score": 65,
+        "notes": [
+          "Short paragraphs and active voice.",
+          "Bullets for procedures; tables for comparisons.",
+          "Explain jargon on first use."
+        ],
+        "expansion": "<p>Use reading grade 8\u201310 for broad audiences; link deeper resources for experts.</p>"
+      }
+    },
     "advanced": null,
     "linksTab": {
       "external": [],
@@ -19968,7 +20672,39 @@
     "content": "",
     "articleSummary": "",
     "finalContent": "",
-    "seoBasics": null,
+    "seoBasics": {
+      "basicSEO": [
+        "Write a unique, descriptive title with the primary keyword once.",
+        "Use one H1, logical H2/H3 hierarchy, and scannable lists.",
+        "Add meta description with clear benefit and CTA.",
+        "Compress images, lazy\u2011load below\u2011the\u2011fold media.",
+        "Add schema (Article / Product / FAQ) where relevant.",
+        "Add internal links to 3\u20135 related pages; 1\u20132 external citations."
+      ],
+      "additional": [
+        "Include last\u2011updated timestamp for freshness.",
+        "Use jump links for long guides.",
+        "Provide a downloadable checklist or template."
+      ],
+      "titleReadability": {
+        "score": 86,
+        "notes": [
+          "Number\u2011led headline improves CTR.",
+          "Avoid vague adjectives; add outcomes.",
+          "Keep under ~60 chars to prevent truncation."
+        ],
+        "expansion": "<p>Try variants that emphasize specificity, e.g., \u201c7 Proven Ways \u2026\u201d or \u201cA Practical Guide to \u2026\u201d.</p>"
+      },
+      "contentReadability": {
+        "score": 65,
+        "notes": [
+          "Short paragraphs and active voice.",
+          "Bullets for procedures; tables for comparisons.",
+          "Explain jargon on first use."
+        ],
+        "expansion": "<p>Use reading grade 8\u201310 for broad audiences; link deeper resources for experts.</p>"
+      }
+    },
     "advanced": null,
     "linksTab": {
       "external": [],
@@ -20016,7 +20752,39 @@
     "content": "",
     "articleSummary": "",
     "finalContent": "",
-    "seoBasics": null,
+    "seoBasics": {
+      "basicSEO": [
+        "Write a unique, descriptive title with the primary keyword once.",
+        "Use one H1, logical H2/H3 hierarchy, and scannable lists.",
+        "Add meta description with clear benefit and CTA.",
+        "Compress images, lazy\u2011load below\u2011the\u2011fold media.",
+        "Add schema (Article / Product / FAQ) where relevant.",
+        "Add internal links to 3\u20135 related pages; 1\u20132 external citations."
+      ],
+      "additional": [
+        "Include last\u2011updated timestamp for freshness.",
+        "Use jump links for long guides.",
+        "Provide a downloadable checklist or template."
+      ],
+      "titleReadability": {
+        "score": 86,
+        "notes": [
+          "Number\u2011led headline improves CTR.",
+          "Avoid vague adjectives; add outcomes.",
+          "Keep under ~60 chars to prevent truncation."
+        ],
+        "expansion": "<p>Try variants that emphasize specificity, e.g., \u201c7 Proven Ways \u2026\u201d or \u201cA Practical Guide to \u2026\u201d.</p>"
+      },
+      "contentReadability": {
+        "score": 65,
+        "notes": [
+          "Short paragraphs and active voice.",
+          "Bullets for procedures; tables for comparisons.",
+          "Explain jargon on first use."
+        ],
+        "expansion": "<p>Use reading grade 8\u201310 for broad audiences; link deeper resources for experts.</p>"
+      }
+    },
     "advanced": null,
     "linksTab": {
       "external": [],
@@ -20064,7 +20832,39 @@
     "content": "",
     "articleSummary": "",
     "finalContent": "",
-    "seoBasics": null,
+    "seoBasics": {
+      "basicSEO": [
+        "Write a unique, descriptive title with the primary keyword once.",
+        "Use one H1, logical H2/H3 hierarchy, and scannable lists.",
+        "Add meta description with clear benefit and CTA.",
+        "Compress images, lazy\u2011load below\u2011the\u2011fold media.",
+        "Add schema (Article / Product / FAQ) where relevant.",
+        "Add internal links to 3\u20135 related pages; 1\u20132 external citations."
+      ],
+      "additional": [
+        "Include last\u2011updated timestamp for freshness.",
+        "Use jump links for long guides.",
+        "Provide a downloadable checklist or template."
+      ],
+      "titleReadability": {
+        "score": 86,
+        "notes": [
+          "Number\u2011led headline improves CTR.",
+          "Avoid vague adjectives; add outcomes.",
+          "Keep under ~60 chars to prevent truncation."
+        ],
+        "expansion": "<p>Try variants that emphasize specificity, e.g., \u201c7 Proven Ways \u2026\u201d or \u201cA Practical Guide to \u2026\u201d.</p>"
+      },
+      "contentReadability": {
+        "score": 65,
+        "notes": [
+          "Short paragraphs and active voice.",
+          "Bullets for procedures; tables for comparisons.",
+          "Explain jargon on first use."
+        ],
+        "expansion": "<p>Use reading grade 8\u201310 for broad audiences; link deeper resources for experts.</p>"
+      }
+    },
     "advanced": null,
     "linksTab": {
       "external": [],
@@ -20112,7 +20912,39 @@
     "content": "",
     "articleSummary": "",
     "finalContent": "",
-    "seoBasics": null,
+    "seoBasics": {
+      "basicSEO": [
+        "Write a unique, descriptive title with the primary keyword once.",
+        "Use one H1, logical H2/H3 hierarchy, and scannable lists.",
+        "Add meta description with clear benefit and CTA.",
+        "Compress images, lazy\u2011load below\u2011the\u2011fold media.",
+        "Add schema (Article / Product / FAQ) where relevant.",
+        "Add internal links to 3\u20135 related pages; 1\u20132 external citations."
+      ],
+      "additional": [
+        "Include last\u2011updated timestamp for freshness.",
+        "Use jump links for long guides.",
+        "Provide a downloadable checklist or template."
+      ],
+      "titleReadability": {
+        "score": 86,
+        "notes": [
+          "Number\u2011led headline improves CTR.",
+          "Avoid vague adjectives; add outcomes.",
+          "Keep under ~60 chars to prevent truncation."
+        ],
+        "expansion": "<p>Try variants that emphasize specificity, e.g., \u201c7 Proven Ways \u2026\u201d or \u201cA Practical Guide to \u2026\u201d.</p>"
+      },
+      "contentReadability": {
+        "score": 65,
+        "notes": [
+          "Short paragraphs and active voice.",
+          "Bullets for procedures; tables for comparisons.",
+          "Explain jargon on first use."
+        ],
+        "expansion": "<p>Use reading grade 8\u201310 for broad audiences; link deeper resources for experts.</p>"
+      }
+    },
     "advanced": null,
     "linksTab": {
       "external": [],
@@ -20160,7 +20992,39 @@
     "content": "",
     "articleSummary": "",
     "finalContent": "",
-    "seoBasics": null,
+    "seoBasics": {
+      "basicSEO": [
+        "Write a unique, descriptive title with the primary keyword once.",
+        "Use one H1, logical H2/H3 hierarchy, and scannable lists.",
+        "Add meta description with clear benefit and CTA.",
+        "Compress images, lazy\u2011load below\u2011the\u2011fold media.",
+        "Add schema (Article / Product / FAQ) where relevant.",
+        "Add internal links to 3\u20135 related pages; 1\u20132 external citations."
+      ],
+      "additional": [
+        "Include last\u2011updated timestamp for freshness.",
+        "Use jump links for long guides.",
+        "Provide a downloadable checklist or template."
+      ],
+      "titleReadability": {
+        "score": 86,
+        "notes": [
+          "Number\u2011led headline improves CTR.",
+          "Avoid vague adjectives; add outcomes.",
+          "Keep under ~60 chars to prevent truncation."
+        ],
+        "expansion": "<p>Try variants that emphasize specificity, e.g., \u201c7 Proven Ways \u2026\u201d or \u201cA Practical Guide to \u2026\u201d.</p>"
+      },
+      "contentReadability": {
+        "score": 65,
+        "notes": [
+          "Short paragraphs and active voice.",
+          "Bullets for procedures; tables for comparisons.",
+          "Explain jargon on first use."
+        ],
+        "expansion": "<p>Use reading grade 8\u201310 for broad audiences; link deeper resources for experts.</p>"
+      }
+    },
     "advanced": null,
     "linksTab": {
       "external": [],
@@ -20208,7 +21072,39 @@
     "content": "",
     "articleSummary": "",
     "finalContent": "",
-    "seoBasics": null,
+    "seoBasics": {
+      "basicSEO": [
+        "Write a unique, descriptive title with the primary keyword once.",
+        "Use one H1, logical H2/H3 hierarchy, and scannable lists.",
+        "Add meta description with clear benefit and CTA.",
+        "Compress images, lazy\u2011load below\u2011the\u2011fold media.",
+        "Add schema (Article / Product / FAQ) where relevant.",
+        "Add internal links to 3\u20135 related pages; 1\u20132 external citations."
+      ],
+      "additional": [
+        "Include last\u2011updated timestamp for freshness.",
+        "Use jump links for long guides.",
+        "Provide a downloadable checklist or template."
+      ],
+      "titleReadability": {
+        "score": 86,
+        "notes": [
+          "Number\u2011led headline improves CTR.",
+          "Avoid vague adjectives; add outcomes.",
+          "Keep under ~60 chars to prevent truncation."
+        ],
+        "expansion": "<p>Try variants that emphasize specificity, e.g., \u201c7 Proven Ways \u2026\u201d or \u201cA Practical Guide to \u2026\u201d.</p>"
+      },
+      "contentReadability": {
+        "score": 65,
+        "notes": [
+          "Short paragraphs and active voice.",
+          "Bullets for procedures; tables for comparisons.",
+          "Explain jargon on first use."
+        ],
+        "expansion": "<p>Use reading grade 8\u201310 for broad audiences; link deeper resources for experts.</p>"
+      }
+    },
     "advanced": null,
     "linksTab": {
       "external": [],
@@ -20256,7 +21152,39 @@
     "content": "",
     "articleSummary": "",
     "finalContent": "",
-    "seoBasics": null,
+    "seoBasics": {
+      "basicSEO": [
+        "Write a unique, descriptive title with the primary keyword once.",
+        "Use one H1, logical H2/H3 hierarchy, and scannable lists.",
+        "Add meta description with clear benefit and CTA.",
+        "Compress images, lazy\u2011load below\u2011the\u2011fold media.",
+        "Add schema (Article / Product / FAQ) where relevant.",
+        "Add internal links to 3\u20135 related pages; 1\u20132 external citations."
+      ],
+      "additional": [
+        "Include last\u2011updated timestamp for freshness.",
+        "Use jump links for long guides.",
+        "Provide a downloadable checklist or template."
+      ],
+      "titleReadability": {
+        "score": 86,
+        "notes": [
+          "Number\u2011led headline improves CTR.",
+          "Avoid vague adjectives; add outcomes.",
+          "Keep under ~60 chars to prevent truncation."
+        ],
+        "expansion": "<p>Try variants that emphasize specificity, e.g., \u201c7 Proven Ways \u2026\u201d or \u201cA Practical Guide to \u2026\u201d.</p>"
+      },
+      "contentReadability": {
+        "score": 65,
+        "notes": [
+          "Short paragraphs and active voice.",
+          "Bullets for procedures; tables for comparisons.",
+          "Explain jargon on first use."
+        ],
+        "expansion": "<p>Use reading grade 8\u201310 for broad audiences; link deeper resources for experts.</p>"
+      }
+    },
     "advanced": null,
     "linksTab": {
       "external": [],
@@ -20304,7 +21232,39 @@
     "content": "",
     "articleSummary": "",
     "finalContent": "",
-    "seoBasics": null,
+    "seoBasics": {
+      "basicSEO": [
+        "Write a unique, descriptive title with the primary keyword once.",
+        "Use one H1, logical H2/H3 hierarchy, and scannable lists.",
+        "Add meta description with clear benefit and CTA.",
+        "Compress images, lazy\u2011load below\u2011the\u2011fold media.",
+        "Add schema (Article / Product / FAQ) where relevant.",
+        "Add internal links to 3\u20135 related pages; 1\u20132 external citations."
+      ],
+      "additional": [
+        "Include last\u2011updated timestamp for freshness.",
+        "Use jump links for long guides.",
+        "Provide a downloadable checklist or template."
+      ],
+      "titleReadability": {
+        "score": 86,
+        "notes": [
+          "Number\u2011led headline improves CTR.",
+          "Avoid vague adjectives; add outcomes.",
+          "Keep under ~60 chars to prevent truncation."
+        ],
+        "expansion": "<p>Try variants that emphasize specificity, e.g., \u201c7 Proven Ways \u2026\u201d or \u201cA Practical Guide to \u2026\u201d.</p>"
+      },
+      "contentReadability": {
+        "score": 65,
+        "notes": [
+          "Short paragraphs and active voice.",
+          "Bullets for procedures; tables for comparisons.",
+          "Explain jargon on first use."
+        ],
+        "expansion": "<p>Use reading grade 8\u201310 for broad audiences; link deeper resources for experts.</p>"
+      }
+    },
     "advanced": null,
     "linksTab": {
       "external": [],
@@ -20352,7 +21312,39 @@
     "content": "",
     "articleSummary": "",
     "finalContent": "",
-    "seoBasics": null,
+    "seoBasics": {
+      "basicSEO": [
+        "Write a unique, descriptive title with the primary keyword once.",
+        "Use one H1, logical H2/H3 hierarchy, and scannable lists.",
+        "Add meta description with clear benefit and CTA.",
+        "Compress images, lazy\u2011load below\u2011the\u2011fold media.",
+        "Add schema (Article / Product / FAQ) where relevant.",
+        "Add internal links to 3\u20135 related pages; 1\u20132 external citations."
+      ],
+      "additional": [
+        "Include last\u2011updated timestamp for freshness.",
+        "Use jump links for long guides.",
+        "Provide a downloadable checklist or template."
+      ],
+      "titleReadability": {
+        "score": 86,
+        "notes": [
+          "Number\u2011led headline improves CTR.",
+          "Avoid vague adjectives; add outcomes.",
+          "Keep under ~60 chars to prevent truncation."
+        ],
+        "expansion": "<p>Try variants that emphasize specificity, e.g., \u201c7 Proven Ways \u2026\u201d or \u201cA Practical Guide to \u2026\u201d.</p>"
+      },
+      "contentReadability": {
+        "score": 65,
+        "notes": [
+          "Short paragraphs and active voice.",
+          "Bullets for procedures; tables for comparisons.",
+          "Explain jargon on first use."
+        ],
+        "expansion": "<p>Use reading grade 8\u201310 for broad audiences; link deeper resources for experts.</p>"
+      }
+    },
     "advanced": null,
     "linksTab": {
       "external": [],
@@ -20400,7 +21392,39 @@
     "content": "",
     "articleSummary": "",
     "finalContent": "",
-    "seoBasics": null,
+    "seoBasics": {
+      "basicSEO": [
+        "Write a unique, descriptive title with the primary keyword once.",
+        "Use one H1, logical H2/H3 hierarchy, and scannable lists.",
+        "Add meta description with clear benefit and CTA.",
+        "Compress images, lazy\u2011load below\u2011the\u2011fold media.",
+        "Add schema (Article / Product / FAQ) where relevant.",
+        "Add internal links to 3\u20135 related pages; 1\u20132 external citations."
+      ],
+      "additional": [
+        "Include last\u2011updated timestamp for freshness.",
+        "Use jump links for long guides.",
+        "Provide a downloadable checklist or template."
+      ],
+      "titleReadability": {
+        "score": 86,
+        "notes": [
+          "Number\u2011led headline improves CTR.",
+          "Avoid vague adjectives; add outcomes.",
+          "Keep under ~60 chars to prevent truncation."
+        ],
+        "expansion": "<p>Try variants that emphasize specificity, e.g., \u201c7 Proven Ways \u2026\u201d or \u201cA Practical Guide to \u2026\u201d.</p>"
+      },
+      "contentReadability": {
+        "score": 65,
+        "notes": [
+          "Short paragraphs and active voice.",
+          "Bullets for procedures; tables for comparisons.",
+          "Explain jargon on first use."
+        ],
+        "expansion": "<p>Use reading grade 8\u201310 for broad audiences; link deeper resources for experts.</p>"
+      }
+    },
     "advanced": null,
     "linksTab": {
       "external": [],
@@ -20448,7 +21472,39 @@
     "content": "",
     "articleSummary": "",
     "finalContent": "",
-    "seoBasics": null,
+    "seoBasics": {
+      "basicSEO": [
+        "Write a unique, descriptive title with the primary keyword once.",
+        "Use one H1, logical H2/H3 hierarchy, and scannable lists.",
+        "Add meta description with clear benefit and CTA.",
+        "Compress images, lazy\u2011load below\u2011the\u2011fold media.",
+        "Add schema (Article / Product / FAQ) where relevant.",
+        "Add internal links to 3\u20135 related pages; 1\u20132 external citations."
+      ],
+      "additional": [
+        "Include last\u2011updated timestamp for freshness.",
+        "Use jump links for long guides.",
+        "Provide a downloadable checklist or template."
+      ],
+      "titleReadability": {
+        "score": 86,
+        "notes": [
+          "Number\u2011led headline improves CTR.",
+          "Avoid vague adjectives; add outcomes.",
+          "Keep under ~60 chars to prevent truncation."
+        ],
+        "expansion": "<p>Try variants that emphasize specificity, e.g., \u201c7 Proven Ways \u2026\u201d or \u201cA Practical Guide to \u2026\u201d.</p>"
+      },
+      "contentReadability": {
+        "score": 65,
+        "notes": [
+          "Short paragraphs and active voice.",
+          "Bullets for procedures; tables for comparisons.",
+          "Explain jargon on first use."
+        ],
+        "expansion": "<p>Use reading grade 8\u201310 for broad audiences; link deeper resources for experts.</p>"
+      }
+    },
     "advanced": null,
     "linksTab": {
       "external": [],
@@ -20496,7 +21552,39 @@
     "content": "",
     "articleSummary": "",
     "finalContent": "",
-    "seoBasics": null,
+    "seoBasics": {
+      "basicSEO": [
+        "Write a unique, descriptive title with the primary keyword once.",
+        "Use one H1, logical H2/H3 hierarchy, and scannable lists.",
+        "Add meta description with clear benefit and CTA.",
+        "Compress images, lazy\u2011load below\u2011the\u2011fold media.",
+        "Add schema (Article / Product / FAQ) where relevant.",
+        "Add internal links to 3\u20135 related pages; 1\u20132 external citations."
+      ],
+      "additional": [
+        "Include last\u2011updated timestamp for freshness.",
+        "Use jump links for long guides.",
+        "Provide a downloadable checklist or template."
+      ],
+      "titleReadability": {
+        "score": 86,
+        "notes": [
+          "Number\u2011led headline improves CTR.",
+          "Avoid vague adjectives; add outcomes.",
+          "Keep under ~60 chars to prevent truncation."
+        ],
+        "expansion": "<p>Try variants that emphasize specificity, e.g., \u201c7 Proven Ways \u2026\u201d or \u201cA Practical Guide to \u2026\u201d.</p>"
+      },
+      "contentReadability": {
+        "score": 65,
+        "notes": [
+          "Short paragraphs and active voice.",
+          "Bullets for procedures; tables for comparisons.",
+          "Explain jargon on first use."
+        ],
+        "expansion": "<p>Use reading grade 8\u201310 for broad audiences; link deeper resources for experts.</p>"
+      }
+    },
     "advanced": null,
     "linksTab": {
       "external": [],
@@ -20544,7 +21632,39 @@
     "content": "",
     "articleSummary": "",
     "finalContent": "",
-    "seoBasics": null,
+    "seoBasics": {
+      "basicSEO": [
+        "Write a unique, descriptive title with the primary keyword once.",
+        "Use one H1, logical H2/H3 hierarchy, and scannable lists.",
+        "Add meta description with clear benefit and CTA.",
+        "Compress images, lazy\u2011load below\u2011the\u2011fold media.",
+        "Add schema (Article / Product / FAQ) where relevant.",
+        "Add internal links to 3\u20135 related pages; 1\u20132 external citations."
+      ],
+      "additional": [
+        "Include last\u2011updated timestamp for freshness.",
+        "Use jump links for long guides.",
+        "Provide a downloadable checklist or template."
+      ],
+      "titleReadability": {
+        "score": 86,
+        "notes": [
+          "Number\u2011led headline improves CTR.",
+          "Avoid vague adjectives; add outcomes.",
+          "Keep under ~60 chars to prevent truncation."
+        ],
+        "expansion": "<p>Try variants that emphasize specificity, e.g., \u201c7 Proven Ways \u2026\u201d or \u201cA Practical Guide to \u2026\u201d.</p>"
+      },
+      "contentReadability": {
+        "score": 65,
+        "notes": [
+          "Short paragraphs and active voice.",
+          "Bullets for procedures; tables for comparisons.",
+          "Explain jargon on first use."
+        ],
+        "expansion": "<p>Use reading grade 8\u201310 for broad audiences; link deeper resources for experts.</p>"
+      }
+    },
     "advanced": null,
     "linksTab": {
       "external": [],
@@ -20592,7 +21712,39 @@
     "content": "",
     "articleSummary": "",
     "finalContent": "",
-    "seoBasics": null,
+    "seoBasics": {
+      "basicSEO": [
+        "Write a unique, descriptive title with the primary keyword once.",
+        "Use one H1, logical H2/H3 hierarchy, and scannable lists.",
+        "Add meta description with clear benefit and CTA.",
+        "Compress images, lazy\u2011load below\u2011the\u2011fold media.",
+        "Add schema (Article / Product / FAQ) where relevant.",
+        "Add internal links to 3\u20135 related pages; 1\u20132 external citations."
+      ],
+      "additional": [
+        "Include last\u2011updated timestamp for freshness.",
+        "Use jump links for long guides.",
+        "Provide a downloadable checklist or template."
+      ],
+      "titleReadability": {
+        "score": 86,
+        "notes": [
+          "Number\u2011led headline improves CTR.",
+          "Avoid vague adjectives; add outcomes.",
+          "Keep under ~60 chars to prevent truncation."
+        ],
+        "expansion": "<p>Try variants that emphasize specificity, e.g., \u201c7 Proven Ways \u2026\u201d or \u201cA Practical Guide to \u2026\u201d.</p>"
+      },
+      "contentReadability": {
+        "score": 65,
+        "notes": [
+          "Short paragraphs and active voice.",
+          "Bullets for procedures; tables for comparisons.",
+          "Explain jargon on first use."
+        ],
+        "expansion": "<p>Use reading grade 8\u201310 for broad audiences; link deeper resources for experts.</p>"
+      }
+    },
     "advanced": null,
     "linksTab": {
       "external": [],
@@ -20640,7 +21792,39 @@
     "content": "",
     "articleSummary": "",
     "finalContent": "",
-    "seoBasics": null,
+    "seoBasics": {
+      "basicSEO": [
+        "Write a unique, descriptive title with the primary keyword once.",
+        "Use one H1, logical H2/H3 hierarchy, and scannable lists.",
+        "Add meta description with clear benefit and CTA.",
+        "Compress images, lazy\u2011load below\u2011the\u2011fold media.",
+        "Add schema (Article / Product / FAQ) where relevant.",
+        "Add internal links to 3\u20135 related pages; 1\u20132 external citations."
+      ],
+      "additional": [
+        "Include last\u2011updated timestamp for freshness.",
+        "Use jump links for long guides.",
+        "Provide a downloadable checklist or template."
+      ],
+      "titleReadability": {
+        "score": 86,
+        "notes": [
+          "Number\u2011led headline improves CTR.",
+          "Avoid vague adjectives; add outcomes.",
+          "Keep under ~60 chars to prevent truncation."
+        ],
+        "expansion": "<p>Try variants that emphasize specificity, e.g., \u201c7 Proven Ways \u2026\u201d or \u201cA Practical Guide to \u2026\u201d.</p>"
+      },
+      "contentReadability": {
+        "score": 65,
+        "notes": [
+          "Short paragraphs and active voice.",
+          "Bullets for procedures; tables for comparisons.",
+          "Explain jargon on first use."
+        ],
+        "expansion": "<p>Use reading grade 8\u201310 for broad audiences; link deeper resources for experts.</p>"
+      }
+    },
     "advanced": null,
     "linksTab": {
       "external": [],
@@ -20688,7 +21872,39 @@
     "content": "",
     "articleSummary": "",
     "finalContent": "",
-    "seoBasics": null,
+    "seoBasics": {
+      "basicSEO": [
+        "Write a unique, descriptive title with the primary keyword once.",
+        "Use one H1, logical H2/H3 hierarchy, and scannable lists.",
+        "Add meta description with clear benefit and CTA.",
+        "Compress images, lazy\u2011load below\u2011the\u2011fold media.",
+        "Add schema (Article / Product / FAQ) where relevant.",
+        "Add internal links to 3\u20135 related pages; 1\u20132 external citations."
+      ],
+      "additional": [
+        "Include last\u2011updated timestamp for freshness.",
+        "Use jump links for long guides.",
+        "Provide a downloadable checklist or template."
+      ],
+      "titleReadability": {
+        "score": 86,
+        "notes": [
+          "Number\u2011led headline improves CTR.",
+          "Avoid vague adjectives; add outcomes.",
+          "Keep under ~60 chars to prevent truncation."
+        ],
+        "expansion": "<p>Try variants that emphasize specificity, e.g., \u201c7 Proven Ways \u2026\u201d or \u201cA Practical Guide to \u2026\u201d.</p>"
+      },
+      "contentReadability": {
+        "score": 65,
+        "notes": [
+          "Short paragraphs and active voice.",
+          "Bullets for procedures; tables for comparisons.",
+          "Explain jargon on first use."
+        ],
+        "expansion": "<p>Use reading grade 8\u201310 for broad audiences; link deeper resources for experts.</p>"
+      }
+    },
     "advanced": null,
     "linksTab": {
       "external": [],
@@ -20736,7 +21952,39 @@
     "content": "",
     "articleSummary": "",
     "finalContent": "",
-    "seoBasics": null,
+    "seoBasics": {
+      "basicSEO": [
+        "Write a unique, descriptive title with the primary keyword once.",
+        "Use one H1, logical H2/H3 hierarchy, and scannable lists.",
+        "Add meta description with clear benefit and CTA.",
+        "Compress images, lazy\u2011load below\u2011the\u2011fold media.",
+        "Add schema (Article / Product / FAQ) where relevant.",
+        "Add internal links to 3\u20135 related pages; 1\u20132 external citations."
+      ],
+      "additional": [
+        "Include last\u2011updated timestamp for freshness.",
+        "Use jump links for long guides.",
+        "Provide a downloadable checklist or template."
+      ],
+      "titleReadability": {
+        "score": 86,
+        "notes": [
+          "Number\u2011led headline improves CTR.",
+          "Avoid vague adjectives; add outcomes.",
+          "Keep under ~60 chars to prevent truncation."
+        ],
+        "expansion": "<p>Try variants that emphasize specificity, e.g., \u201c7 Proven Ways \u2026\u201d or \u201cA Practical Guide to \u2026\u201d.</p>"
+      },
+      "contentReadability": {
+        "score": 65,
+        "notes": [
+          "Short paragraphs and active voice.",
+          "Bullets for procedures; tables for comparisons.",
+          "Explain jargon on first use."
+        ],
+        "expansion": "<p>Use reading grade 8\u201310 for broad audiences; link deeper resources for experts.</p>"
+      }
+    },
     "advanced": null,
     "linksTab": {
       "external": [],
@@ -20784,7 +22032,39 @@
     "content": "",
     "articleSummary": "",
     "finalContent": "",
-    "seoBasics": null,
+    "seoBasics": {
+      "basicSEO": [
+        "Write a unique, descriptive title with the primary keyword once.",
+        "Use one H1, logical H2/H3 hierarchy, and scannable lists.",
+        "Add meta description with clear benefit and CTA.",
+        "Compress images, lazy\u2011load below\u2011the\u2011fold media.",
+        "Add schema (Article / Product / FAQ) where relevant.",
+        "Add internal links to 3\u20135 related pages; 1\u20132 external citations."
+      ],
+      "additional": [
+        "Include last\u2011updated timestamp for freshness.",
+        "Use jump links for long guides.",
+        "Provide a downloadable checklist or template."
+      ],
+      "titleReadability": {
+        "score": 86,
+        "notes": [
+          "Number\u2011led headline improves CTR.",
+          "Avoid vague adjectives; add outcomes.",
+          "Keep under ~60 chars to prevent truncation."
+        ],
+        "expansion": "<p>Try variants that emphasize specificity, e.g., \u201c7 Proven Ways \u2026\u201d or \u201cA Practical Guide to \u2026\u201d.</p>"
+      },
+      "contentReadability": {
+        "score": 65,
+        "notes": [
+          "Short paragraphs and active voice.",
+          "Bullets for procedures; tables for comparisons.",
+          "Explain jargon on first use."
+        ],
+        "expansion": "<p>Use reading grade 8\u201310 for broad audiences; link deeper resources for experts.</p>"
+      }
+    },
     "advanced": null,
     "linksTab": {
       "external": [],

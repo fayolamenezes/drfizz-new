@@ -149,14 +149,16 @@ function mapSeoRowToSchema(row) {
  *       "content": "...",
  *       "primaryKeyword": "...",
  *       "lsiKeywords": [...],
- *       "plagiarism": 12
+ *       "plagiarism": 12,
+ *       "searchVolume": 7833,
+ *       "keywordDifficulty": 15
  *     },
  *     ...
  *   },
  *   ...
  * ]
  *
- * 👉 Now also keeps primaryKeyword, lsiKeywords, plagiarism per slot.
+ * 👉 Now also keeps primaryKeyword, lsiKeywords, plagiarism, searchVolume, keywordDifficulty per slot.
  */
 function mapMultiRowToContent(row) {
   const safeSlot = (slot) =>
@@ -168,6 +170,12 @@ function mapMultiRowToContent(row) {
           lsiKeywords: Array.isArray(slot.lsiKeywords) ? slot.lsiKeywords : [],
           plagiarism:
             typeof slot.plagiarism === "number" ? slot.plagiarism : null,
+          searchVolume:
+            typeof slot.searchVolume === "number" ? slot.searchVolume : null,
+          keywordDifficulty:
+            typeof slot.keywordDifficulty === "number"
+              ? slot.keywordDifficulty
+              : null,
         }
       : {
           title: null,
@@ -175,6 +183,8 @@ function mapMultiRowToContent(row) {
           primaryKeyword: null,
           lsiKeywords: [],
           plagiarism: null,
+          searchVolume: null,
+          keywordDifficulty: null,
         };
 
   return {
@@ -412,7 +422,7 @@ export default function OpportunitiesSection({ onOpenContentEditor }) {
     };
   }, []);
 
-  // Load multi-content.json (rich content + per-slot SEO: primary/LSI/plagiarism)
+  // Load multi-content.json (rich content + per-slot SEO: primary/LSI/plagiarism/searchVolume/KD)
   useEffect(() => {
     let alive = true;
     (async () => {
@@ -484,6 +494,21 @@ export default function OpportunitiesSection({ onOpenContentEditor }) {
         ? seoSlot.plagiarism
         : null;
 
+    // Keep searchVolume / keywordDifficulty from multi (or seo as fallback if ever present)
+    const searchVolume =
+      typeof multiSlot?.searchVolume === "number"
+        ? multiSlot.searchVolume
+        : typeof seoSlot?.searchVolume === "number"
+        ? seoSlot.searchVolume
+        : null;
+
+    const keywordDifficulty =
+      typeof multiSlot?.keywordDifficulty === "number"
+        ? multiSlot.keywordDifficulty
+        : typeof seoSlot?.keywordDifficulty === "number"
+        ? seoSlot.keywordDifficulty
+        : null;
+
     return {
       ...seoSlot, // keep numeric metrics (score, wordCount, etc.) from seo-data
       ...multiSlot, // so title/content/seo fields from multi override if needed
@@ -492,6 +517,8 @@ export default function OpportunitiesSection({ onOpenContentEditor }) {
       primaryKeyword,
       lsiKeywords,
       plagiarism,
+      searchVolume,
+      keywordDifficulty,
     };
   };
 
@@ -579,6 +606,12 @@ export default function OpportunitiesSection({ onOpenContentEditor }) {
       lsiKeywords: real.lsiKeywords || [],
       plagiarism:
         typeof real.plagiarism === "number" ? real.plagiarism : null,
+      searchVolume:
+        typeof real.searchVolume === "number" ? real.searchVolume : null,
+      keywordDifficulty:
+        typeof real.keywordDifficulty === "number"
+          ? real.keywordDifficulty
+          : null,
     });
     setStartOpen(false);
   };
@@ -674,7 +707,11 @@ export default function OpportunitiesSection({ onOpenContentEditor }) {
         <div className="mt-3 flex items-center gap-2">
           <PriorityBadge score={score} />
           <span className="inline-flex items-center gap-2 rounded-[10px] border border-[var(--border)] bg-[#F6F8FB] px-2.5 py-1 text-[12px] text-[var(--muted)]">
-            {status === "Published" ? <Check size={14} /> : <PencilLine size={14} />}
+            {status === "Published" ? (
+              <Check size={14} />
+            ) : (
+              <PencilLine size={14} />
+            )}
             {status}
           </span>
         </div>
@@ -682,7 +719,9 @@ export default function OpportunitiesSection({ onOpenContentEditor }) {
         <div className="mt-4 rounded-[12px] border border-[var(--border)] bg-[var(--input)] px-4 py-3">
           <div className="grid grid-cols-2 gap-6">
             <div>
-              <div className="text-[12px] text-[var(--muted)]">Word Count</div>
+              <div className="text-[12px] text-[var(--muted)]">
+                Word Count
+              </div>
               <div className="mt-1 text-[28px] font-semibold leading-none text-[var(--text)] tabular-nums">
                 {wc.toLocaleString()}
               </div>
@@ -702,7 +741,7 @@ export default function OpportunitiesSection({ onOpenContentEditor }) {
           </button>
           <button
             onClick={() => {
-              // Keep all SEO fields (primary, LSI, plagiarism) from merged data
+              // Keep all SEO fields (primary, LSI, plagiarism, SV, KD) from merged data
               startPayloadRef.current = {
                 kind: type, // "blog" or "page"
                 title: realTitle || displayTitle,
@@ -713,6 +752,14 @@ export default function OpportunitiesSection({ onOpenContentEditor }) {
                 plagiarism:
                   typeof data?.plagiarism === "number"
                     ? data.plagiarism
+                    : null,
+                searchVolume:
+                  typeof data?.searchVolume === "number"
+                    ? data.searchVolume
+                    : null,
+                keywordDifficulty:
+                  typeof data?.keywordDifficulty === "number"
+                    ? data.keywordDifficulty
                     : null,
               };
               setStartOpen(true);
@@ -745,9 +792,16 @@ export default function OpportunitiesSection({ onOpenContentEditor }) {
             <span className="text-[13px] font-semibold">BLOG</span>
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
-            {(blogCards.length ? blogCards.slice(0, 2) : [{}, {}]).map((b, i) => (
-              <OpportunityCard key={`b-${i}`} type="blog" index={i} data={b} />
-            ))}
+            {(blogCards.length ? blogCards.slice(0, 2) : [{}, {}]).map(
+              (b, i) => (
+                <OpportunityCard
+                  key={`b-${i}`}
+                  type="blog"
+                  index={i}
+                  data={b}
+                />
+              )
+            )}
           </div>
         </div>
 
@@ -759,9 +813,16 @@ export default function OpportunitiesSection({ onOpenContentEditor }) {
             <span className="text-[13px] font-semibold">PAGES</span>
           </div>
           <div className="grid gap-4 sm:grid-cols-2">
-            {(pageCards.length ? pageCards.slice(0, 2) : [{}, {}]).map((p, i) => (
-              <OpportunityCard key={`p-${i}`} type="page" index={i} data={p} />
-            ))}
+            {(pageCards.length ? pageCards.slice(0, 2) : [{}, {}]).map(
+              (p, i) => (
+                <OpportunityCard
+                  key={`p-${i}`}
+                  type="page"
+                  index={i}
+                  data={p}
+                />
+              )
+            )}
           </div>
         </div>
       </section>

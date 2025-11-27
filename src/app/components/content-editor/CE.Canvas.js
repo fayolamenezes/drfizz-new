@@ -33,6 +33,9 @@ const CECanvas = forwardRef(function CECanvas(
   // highlight rules sent from Optimize
   const highlightRulesRef = useRef([]);
 
+  // RAF guard for highlights (prevents flicker / overlapping passes)
+  const runHighlightsRafRef = useRef(null);
+
   // state guards
   const lastLocalHtmlRef = useRef("");
   const lastLocalEditAtRef = useRef(0);
@@ -197,14 +200,29 @@ const CECanvas = forwardRef(function CECanvas(
     }
   }, []);
 
+  // Debounced / guarded highlighter scheduling
+  const scheduleHighlights = useCallback(() => {
+    if (runHighlightsRafRef.current) {
+      cancelAnimationFrame(runHighlightsRafRef.current);
+    }
+    runHighlightsRafRef.current = requestAnimationFrame(() => {
+      runHighlights();
+    });
+  }, [runHighlights]);
+
   useEffect(() => {
     function onRules(e) {
       highlightRulesRef.current = Array.isArray(e.detail) ? e.detail : [];
-      requestAnimationFrame(runHighlights);
+      scheduleHighlights();
     }
     window.addEventListener("ce:highlightRules", onRules);
-    return () => window.removeEventListener("ce:highlightRules", onRules);
-  }, [runHighlights]);
+    return () => {
+      window.removeEventListener("ce:highlightRules", onRules);
+      if (runHighlightsRafRef.current) {
+        cancelAnimationFrame(runHighlightsRafRef.current);
+      }
+    };
+  }, [scheduleHighlights]);
 
   /** =========================
    * Autosave + bubble
@@ -239,7 +257,7 @@ const CECanvas = forwardRef(function CECanvas(
     }
     scheduleAutosave(html);
     saveSelectionSnapshot();
-    requestAnimationFrame(runHighlights);
+    scheduleHighlights();
   }
 
   /** =========================
@@ -281,9 +299,9 @@ const CECanvas = forwardRef(function CECanvas(
       undoStack.current = [el.innerHTML];
       redoStack.current = [];
       seededRef.current = true;
-      requestAnimationFrame(runHighlights);
+      scheduleHighlights();
     }
-  }, [AUTOSAVE_KEY, isTrulyEmpty, setContent, content, runHighlights]);
+  }, [AUTOSAVE_KEY, isTrulyEmpty, setContent, content, scheduleHighlights]);
 
   /** =========================
    * External sync
@@ -326,8 +344,8 @@ const CECanvas = forwardRef(function CECanvas(
     redoStack.current = [];
 
     // Don't touch caret here – avoids surprise jumps while editing
-    requestAnimationFrame(runHighlights);
-  }, [content, runHighlights]);
+    scheduleHighlights();
+  }, [content, scheduleHighlights]);
 
   /** =========================
    * execCommand
@@ -359,6 +377,8 @@ const CECanvas = forwardRef(function CECanvas(
       sel.removeAllRanges();
       sel.addRange(range);
     };
+
+    let moveCaretToEndAfter = false;
 
     switch (cmd) {
       case "saveSelection":
@@ -394,7 +414,7 @@ const CECanvas = forwardRef(function CECanvas(
           });
 
           saveSelectionSnapshot();
-          requestAnimationFrame(runHighlights);
+          scheduleHighlights();
         }
         return;
       }
@@ -418,14 +438,26 @@ const CECanvas = forwardRef(function CECanvas(
           });
 
           saveSelectionSnapshot();
-          requestAnimationFrame(runHighlights);
+          scheduleHighlights();
         }
         return;
+      }
+
+      case "insertText": {
+        // Used by Research Panel / external paste into canvas
+        document.execCommand("insertText", false, value);
+        moveCaretToEndAfter = true; // ensure you can continue typing
+        break;
       }
 
       default:
         document.execCommand(cmd, false, value);
         break;
+    }
+
+    if (moveCaretToEndAfter) {
+      // put caret at the end so typing continues smoothly
+      setCaretToEnd(el);
     }
 
     lastLocalHtmlRef.current = el.innerHTML;

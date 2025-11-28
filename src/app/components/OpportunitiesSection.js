@@ -1,4 +1,3 @@
-// src/components/OpportunitiesSection.js
 "use client";
 
 import { useEffect, useMemo, useRef, useState, useCallback } from "react";
@@ -260,7 +259,9 @@ function StartModal({
           />
           <div className="pt-12 pb-3 px-6 text-center">
             <div className="text-[34px] font-extrabold leading-[1.05] tracking-tight text-[#0F172A]">
-              CREATE,<br />OPTIMIZE &<br />PUBLISH
+              CREATE,<br />
+              OPTIMIZE &<br />
+              PUBLISH
             </div>
             <div className="mt-2 text-[13px] text-[#9CA3AF]">
               No tab-hopping required.
@@ -278,7 +279,9 @@ function StartModal({
         >
           <div className="pointer-events-none select-none">
             <div className="text-[56px] font-extrabold leading-[0.95] tracking-tight text-[#0F172A]">
-              CREATE,<br />OPTIMIZE &<br />PUBLISH
+              CREATE,<br />
+              OPTIMIZE &<br />
+              PUBLISH
             </div>
             <div className="mt-4 text-[15px] text-[#6B7280]">
               No tab-hopping required.
@@ -591,15 +594,6 @@ export default function OpportunitiesSection({ onOpenContentEditor }) {
     onOpenContentEditor?.(payload);
   };
 
-  const dispatchNew = (payload = {}) => {
-    try {
-      window.dispatchEvent(
-        new CustomEvent("content-editor:new", { detail: payload })
-      );
-    } catch {}
-    onOpenContentEditor?.(payload);
-  };
-
   const handleEditExisting = () => {
     const real = startPayloadRef.current || {};
     if (!real.title && !real.content) {
@@ -626,24 +620,36 @@ export default function OpportunitiesSection({ onOpenContentEditor }) {
     setStartOpen(false);
   };
 
+  // 👉 Brand-new doc: make a unique slug/id so Canvas does NOT re-use autosave
   const handleCreateFromScratch = () => {
-    dispatchNew({
-      title: "Untitled Document",
+    const base = `untitled-${Date.now()}`;
+    const slug = slugify(base);
+    const payload = {
+      title: "Untitled",
+      content: "", // empty so CE.Canvas starts blank
       kind: "blog",
-      content: "",
-      domain, // important: carry current domain into new docs
-    });
+      domain,
+      slug,
+      id: slug,
+    };
+    dispatchOpen(payload);
     setStartOpen(false);
   };
 
+  // Styled docs also get their own unique slug/id
   const handleCreateWithStyle = (styleId) => {
     const tpl = styleTemplate(styleId);
-    dispatchNew({
+    const base = `${tpl.title || "styled-doc"}-${Date.now()}`;
+    const slug = slugify(base);
+    const payload = {
       ...tpl,
       kind: "blog",
       styleId,
-      domain, // important: carry current domain into styled docs
-    });
+      domain,
+      slug,
+      id: slug,
+    };
+    dispatchOpen(payload);
     setStartOpen(false);
   };
 
@@ -701,7 +707,7 @@ export default function OpportunitiesSection({ onOpenContentEditor }) {
 
     const realTitle = data?.title;
 
-    // 🔑 Change: prefer realTitle (from multi-content/seo-data) first
+    // prefer realTitle (from multi-content/seo-data) first
     const displayTitle =
       realTitle ||
       GENERIC_CARD_TITLES[index % GENERIC_CARD_TITLES.length] ||
@@ -738,17 +744,13 @@ export default function OpportunitiesSection({ onOpenContentEditor }) {
         <div className="mt-4 rounded-[12px] border border-[var(--border)] bg-[var(--input)] px-4 py-3">
           <div className="grid grid-cols-2 gap-6">
             <div>
-              <div className="text-[12px] text-[var(--muted)]">
-                Word Count
-              </div>
+              <div className="text-[12px] text-[var(--muted)]">Word Count</div>
               <div className="mt-1 text-[28px] font-semibold leading-none text-[var(--text)] tabular-nums">
                 {wc.toLocaleString()}
               </div>
             </div>
             <div>
-              <div className="text-[12px] text-[var(--muted)]">
-                Keywords
-              </div>
+              <div className="text-[12px] text-[var(--muted)]">Keywords</div>
               <div className="mt-1 text-[28px] font-semibold leading-none text-[var(--text)] tabular-nums">
                 {kws}
               </div>

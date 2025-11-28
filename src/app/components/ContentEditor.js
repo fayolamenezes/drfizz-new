@@ -191,10 +191,10 @@ export default function ContentEditor({ data, onBackToDashboard }) {
 
   const WORD_TARGET_FROM_DATA =
     data?.metrics?.wordTarget ??
-//               vvvvvvvvvvv  <-- added
-        data?.wordTarget ??
-        pageConfig?.wordTarget ??
-        1480;
+    //               vvvvvvvvvvv  <-- added
+    data?.wordTarget ??
+    pageConfig?.wordTarget ??
+    1480;
 
   // Initial plagiarism pulled from data (multi-content) when available
   const [metrics, setMetrics] = useState(() => ({
@@ -341,7 +341,11 @@ export default function ContentEditor({ data, onBackToDashboard }) {
       try {
         localStorage.setItem(
           STORAGE_KEY,
-          JSON.stringify({ title: nextTitle, content: nextContent, query: "" })
+          JSON.stringify({
+            title: nextTitle,
+            content: nextContent,
+            query: "",
+          })
         );
       } catch {}
       newDocRef.current = true;
@@ -491,12 +495,34 @@ export default function ContentEditor({ data, onBackToDashboard }) {
   // Back handler: make dashboard domain match this doc's domain
   // --------------------------------------
   const handleBackToDashboard = useCallback(() => {
-    // Force the active site back to the doc's domain
-    if (pageDomain) {
+    // Prefer the doc's explicit domain
+    let effectiveDomain = pageDomain;
+
+    // If this is a "new" doc with no domain, fall back to the
+    // currently active domain from websiteData in localStorage
+    if (!effectiveDomain) {
+      try {
+        const raw = localStorage.getItem("websiteData");
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          effectiveDomain =
+            parsed?.site ||
+            parsed?.website ||
+            parsed?.domain ||
+            parsed?.value ||
+            "";
+        }
+      } catch {
+        // ignore storage / parse errors
+      }
+    }
+
+    // Persist the (possibly fallback) domain back into storage
+    if (effectiveDomain) {
       try {
         localStorage.setItem(
           "websiteData",
-          JSON.stringify({ site: pageDomain })
+          JSON.stringify({ site: effectiveDomain })
         );
       } catch {
         // ignore storage errors
@@ -507,10 +533,12 @@ export default function ContentEditor({ data, onBackToDashboard }) {
     try {
       window.dispatchEvent(
         new CustomEvent("content-editor:back", {
-          detail: { domain: pageDomain || null },
+          detail: { domain: effectiveDomain || null },
         })
       );
-    } catch {}
+    } catch {
+      // ignore event errors
+    }
 
     // Call the prop so Home can switch step → "dashboard"
     onBackToDashboard?.();
